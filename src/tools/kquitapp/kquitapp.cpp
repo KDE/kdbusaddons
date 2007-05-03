@@ -40,6 +40,12 @@ int main(int argc, char* argv[])
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
+    if (args->count() == 0)
+    {
+        args->usage(0);
+        return 1;
+    }
+
     QString service;
     if (args->isSet("service"))
     {
