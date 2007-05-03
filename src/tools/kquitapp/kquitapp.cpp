@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
     if (args->count() == 0)
     {
         args->usage(0);
-        return 1;
     }
 
     QString service;
