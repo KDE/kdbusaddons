@@ -22,21 +22,18 @@
 #include <KCmdLineArgs>
 #include <KLocale>
 
-static KCmdLineOptions options[] =
-{
-    { "service", I18N_NOOP("Full service name, overrides application name provided"), 0 },
-    { "path <path>", I18N_NOOP("Path in the dbus interface to use"), "/MainApplication" },
-    { "+application", I18N_NOOP("The name of the application to quit"), 0 },
-    KCmdLineLastOption
-};
-
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData( "kquitapp", I18N_NOOP("Command line application quitter"),
-                          "1.0", I18N_NOOP("Quit a DBUS enabled application easily"), KAboutData::License_GPL,
-                           I18N_NOOP("(c) 2006, Aaron Seigo") );
-    aboutData.addAuthor("Aaron J. Seigo", I18N_NOOP("Current maintainer"), "aseigo@kde.org");
+    KAboutData aboutData( "kquitapp", 0, ki18n("Command line application quitter"),
+                          "1.0", ki18n("Quit a DBUS enabled application easily"), KAboutData::License_GPL,
+                           ki18n("(c) 2006, Aaron Seigo") );
+    aboutData.addAuthor(ki18n("Aaron J. Seigo"), ki18n("Current maintainer"), "aseigo@kde.org");
     KCmdLineArgs::init(argc, argv, &aboutData);
+
+    KCmdLineOptions options;
+    options.add("service", ki18n("Full service name, overrides application name provided"));
+    options.add("path <path>", ki18n("Path in the dbus interface to use"), "/MainApplication");
+    options.add("+application", ki18n("The name of the application to quit"));
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
