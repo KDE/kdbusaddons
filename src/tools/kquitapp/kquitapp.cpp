@@ -25,14 +25,14 @@
 int main(int argc, char* argv[])
 {
     KAboutData aboutData( "kquitapp", 0, ki18n("Command line application quitter"),
-                          "1.0", ki18n("Quit a DBUS enabled application easily"), KAboutData::License_GPL,
+                          "1.0", ki18n("Quit a D-Bus enabled application easily"), KAboutData::License_GPL,
                            ki18n("(c) 2006, Aaron Seigo") );
     aboutData.addAuthor(ki18n("Aaron J. Seigo"), ki18n("Current maintainer"), "aseigo@kde.org");
     KCmdLineArgs::init(argc, argv, &aboutData);
 
     KCmdLineOptions options;
     options.add("service", ki18n("Full service name, overrides application name provided"));
-    options.add("path <path>", ki18n("Path in the dbus interface to use"), "/MainApplication");
+    options.add("path <path>", ki18n("Path in the D-Bus interface to use"), "/MainApplication");
     options.add("+application", ki18n("The name of the application to quit"));
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
