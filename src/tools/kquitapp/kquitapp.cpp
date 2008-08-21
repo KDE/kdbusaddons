@@ -60,19 +60,14 @@ int main(int argc, char* argv[])
     }
 
     QDBusInterface interface(service, path);
-    // TODO i18n those on string unfreeze
     if (!interface.isValid()) {
-	kError() << "Application" << args->arg(0)
-                 << "could not be found using service" << service
-                 << "and path" << path << ".";
+        kError() << i18n("Application %1 could not be found using service %2 and path %3.",args->arg(0),service,path);
         return 1;
     }
     interface.call("quit");
     QDBusError error = interface.lastError();
     if (error.type() != QDBusError::NoError) {
-	kError() << "Quitting application" << args->arg(0)
-                 << "failed. Error reported was:\n\n     " << error.name()
-                 << ": " << error.message();
+        kError() << i18n("Quitting application %1 failed. Error reported was:\n\n     %2 : %3",args->arg(0),error.name(), error.message());
         return 1;
     }
     return 0;
