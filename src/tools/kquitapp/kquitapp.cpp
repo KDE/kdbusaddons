@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     KCmdLineArgs::init(argc, argv, &aboutData);
 
     KCmdLineOptions options;
-    options.add("service", ki18n("Full service name, overrides application name provided"));
+    options.add("service <service>", ki18n("Full service name, overrides application name provided"));
     options.add("path <path>", ki18n("Path in the D-Bus interface to use"), "/MainApplication");
     options.add("+application", ki18n("The name of the application to quit"));
     KCmdLineArgs::addCmdLineOptions(options);
