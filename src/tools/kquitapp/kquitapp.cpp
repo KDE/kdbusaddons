@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 {
     KAboutData aboutData( "kquitapp", 0, ki18n("Command-line application quitter"),
                           "1.0", ki18n("Quit a D-Bus enabled application easily"), KAboutData::License_GPL,
-                           ki18n("Copyright © 2006–2011 Aaron Seigo") );
+                           ki18n("(c) 2006, Aaron Seigo") );
     aboutData.addAuthor(ki18n("Aaron J. Seigo"), ki18n("Current maintainer"), "aseigo@kde.org");
     KCmdLineArgs::init(argc, argv, &aboutData);
 
