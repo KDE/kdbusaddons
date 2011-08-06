@@ -16,6 +16,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include <QCoreApplication>
 #include <QDBusInterface>
 
 #include <KAboutData>
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
                            ki18n("(c) 2006, Aaron Seigo") );
     aboutData.addAuthor(ki18n("Aaron J. Seigo"), ki18n("Current maintainer"), "aseigo@kde.org");
     KCmdLineArgs::init(argc, argv, &aboutData);
+    QCoreApplication app(argc, argv);
 
     KCmdLineOptions options;
     options.add("service <service>", ki18n("Full service name, overrides application name provided"));
