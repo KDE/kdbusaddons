@@ -2,7 +2,6 @@
 
    Copyright (c) 2011 Kevin Ottens <ervin@kde.org>
 
-
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
    License version 2 as published by the Free Software Foundation.
@@ -65,13 +64,13 @@ QProcess *executeNewChild()
     qDebug() << "executeNewChild";
 
     // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
-    QProcess* proc = new QProcess();
+    QProcess *proc = new QProcess();
     QString appName = "kdbusinterprocesslocktest";
 #ifdef Q_OS_WIN
-    appName+= ".exe";
+    appName += ".exe";
 #else
-    if (QFile::exists(appName+".shell")) {
-        appName = "./" + appName+".shell";
+    if (QFile::exists(appName + ".shell")) {
+        appName = "./" + appName + ".shell";
     } else {
         Q_ASSERT(QFile::exists(appName));
         appName = "./" + appName;
@@ -84,7 +83,7 @@ QProcess *executeNewChild()
 
 void work(int id, KDBusInterProcessLock &lock)
 {
-    for (int i=0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
         qDebug("%d: retrieve lock...", id);
         lock.lock();
         qDebug("%d: waiting...", id);
@@ -112,7 +111,7 @@ int main(int argc, char *argv[])
 
     KDBusInterProcessLock lock("myfunnylock");
 
-    if (argc>=2) {
+    if (argc >= 2) {
         work(2, lock);
         return 0;
     }

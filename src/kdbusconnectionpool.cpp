@@ -24,22 +24,23 @@
 #include <QCoreApplication>
 #include <QThread>
 
-namespace {
+namespace
+{
 QAtomicInt s_connectionCounter;
 
 class KDBusConnectionPoolPrivate
 {
 public:
     KDBusConnectionPoolPrivate()
-        : m_connection( QDBusConnection::connectToBus(
-                            QDBusConnection::SessionBus,
-                            QString::fromLatin1("KDBusConnectionPoolConnection%1").arg(newNumber()) ) )
+        : m_connection(QDBusConnection::connectToBus(
+                           QDBusConnection::SessionBus,
+                           QString::fromLatin1("KDBusConnectionPoolConnection%1").arg(newNumber())))
     {
     }
 
     ~KDBusConnectionPoolPrivate()
     {
-        QDBusConnection::disconnectFromBus( m_connection.name() );
+        QDBusConnection::disconnectFromBus(m_connection.name());
     }
 
     QDBusConnection connection() const

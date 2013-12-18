@@ -1,4 +1,3 @@
-//! vim: ts=3 sw=3
 /*
    This file is part of the KDE libraries
 
@@ -31,69 +30,61 @@
 class KDEDModulePrivate
 {
 public:
-  QString moduleName;
+    QString moduleName;
 };
 
-KDEDModule::KDEDModule(QObject* parent)
+KDEDModule::KDEDModule(QObject *parent)
     : QObject(parent), d(new KDEDModulePrivate)
 {
 }
 
 KDEDModule::~KDEDModule()
 {
-   emit moduleDeleted(this);
-   delete d;
+    emit moduleDeleted(this);
+    delete d;
 }
 
-void KDEDModule::setModuleName( const QString& name )
+void KDEDModule::setModuleName(const QString &name)
 {
-   d->moduleName = name;
-   QDBusObjectPath realPath( QString::fromLatin1("/modules/") + d->moduleName);
+    d->moduleName = name;
+    QDBusObjectPath realPath(QString::fromLatin1("/modules/") + d->moduleName);
 
-   if (realPath.path().isEmpty())
-      {
-      qWarning() << "The kded module name" << name << "is invalid!";
-      return;
-      }
+    if (realPath.path().isEmpty()) {
+        qWarning() << "The kded module name" << name << "is invalid!";
+        return;
+    }
 
+    QDBusConnection::RegisterOptions regOptions;
 
-   QDBusConnection::RegisterOptions regOptions;
-
-   if (this->metaObject()->indexOfClassInfo("D-Bus Interface")!=-1)
-      {
-      // 1. There are kded modules that don't have a D-Bus interface.
-      // 2. qt 4.4.3 crashes when trying to emit signals on class without
-      //    Q_CLASSINFO("D-Bus Interface", "<your interface>") but
-      //    ExportSignal set.
-      // We try to solve that for now with just registering Properties and
-      // Adaptors. But we should investigate where the sense is in registering
-      // the module at all. Just for autoload? Is there a better solution?
-      regOptions = QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors;
-      }
-   else
-      {
-      // Full functional module. Register everything.
-      regOptions = QDBusConnection::ExportScriptableSlots
+    if (this->metaObject()->indexOfClassInfo("D-Bus Interface") != -1) {
+        // 1. There are kded modules that don't have a D-Bus interface.
+        // 2. qt 4.4.3 crashes when trying to emit signals on class without
+        //    Q_CLASSINFO("D-Bus Interface", "<your interface>") but
+        //    ExportSignal set.
+        // We try to solve that for now with just registering Properties and
+        // Adaptors. But we should investigate where the sense is in registering
+        // the module at all. Just for autoload? Is there a better solution?
+        regOptions = QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors;
+    } else {
+        // Full functional module. Register everything.
+        regOptions = QDBusConnection::ExportScriptableSlots
                      | QDBusConnection::ExportScriptableProperties
                      | QDBusConnection::ExportAdaptors;
-      qDebug() << "Registration of kded module" << d->moduleName << "without D-Bus interface.";
-      }
+        qDebug() << "Registration of kded module" << d->moduleName << "without D-Bus interface.";
+    }
 
-   if (!QDBusConnection::sessionBus().registerObject(realPath.path(), this, regOptions))
-      {
-      // Happens for khotkeys but the module works. Need some time to investigate.
-      qDebug() << "registerObject() returned false for" << d->moduleName;
-      }
-   else
-      {
-      //qDebug() << "registerObject() successful for" << d->moduleName;
-      emit moduleRegistered(realPath);
-      }
+    if (!QDBusConnection::sessionBus().registerObject(realPath.path(), this, regOptions)) {
+        // Happens for khotkeys but the module works. Need some time to investigate.
+        qDebug() << "registerObject() returned false for" << d->moduleName;
+    } else {
+        //qDebug() << "registerObject() successful for" << d->moduleName;
+        emit moduleRegistered(realPath);
+    }
 
 }
 
 QString KDEDModule::moduleName() const
 {
-   return d->moduleName;
+    return d->moduleName;
 }
 

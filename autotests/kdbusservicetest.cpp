@@ -4,7 +4,6 @@
    Copyright (c) 2011 David Faure <faure@kde.org>
    Copyright (c) 2011 Kevin Ottens <ervin@kde.org>
 
-
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
    License version 2 as published by the Free Software Foundation.
@@ -40,7 +39,10 @@ public:
           m_service(service)
     {}
 
-    int callCount() const { return m_callCount; }
+    int callCount() const
+    {
+        return m_callCount;
+    }
 
 private Q_SLOTS:
     void slotActivateRequested(const QStringList &args)
@@ -95,16 +97,16 @@ private:
         qDebug();
 
         // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
-        QProcess* proc = new QProcess(this);
+        QProcess *proc = new QProcess(this);
         connect(proc, SIGNAL(finished(int,QProcess::ExitStatus)),
                 this, SLOT(slotProcessFinished(int,QProcess::ExitStatus)));
         QString appName = "kdbusservicetest";
 #ifdef Q_OS_WIN
-        appName+= ".exe";
+        appName += ".exe";
 #else
-        if (QFile::exists(appName+".shell"))
-            appName = "./" + appName+".shell";
-        else {
+        if (QFile::exists(appName + ".shell")) {
+            appName = "./" + appName + ".shell";
+        } else {
             Q_ASSERT(QFile::exists(appName));
             appName = "./" + appName;
         }
@@ -115,7 +117,6 @@ private:
     int m_callCount;
     KDBusService *m_service;
 };
-
 
 int main(int argc, char *argv[])
 {
@@ -138,8 +139,8 @@ int main(int argc, char *argv[])
     args << "dummy call";
 
     QMetaObject::invokeMethod(&service, "activateRequested",
-            Qt::QueuedConnection, Q_ARG(QStringList,args) );
-    QTimer::singleShot( 400, &testObject, SLOT(firstCall()) );
+                              Qt::QueuedConnection, Q_ARG(QStringList, args));
+    QTimer::singleShot(400, &testObject, SLOT(firstCall()));
 
     qDebug() << "Running.";
     a.exec();

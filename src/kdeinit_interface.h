@@ -39,7 +39,7 @@
  */
 namespace KDEInitInterface
 {
-    KDBUSADDONS_EXPORT void ensureKdeinitRunning();
+KDBUSADDONS_EXPORT void ensureKdeinitRunning();
 }
 
 #endif

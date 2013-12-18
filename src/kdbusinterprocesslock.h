@@ -114,9 +114,9 @@ Q_SIGNALS:
 
 private:
     friend class KDBusInterProcessLockPrivate;
-    KDBusInterProcessLockPrivate * const d;
+    KDBusInterProcessLockPrivate *const d;
 
-    Q_PRIVATE_SLOT(d, void _k_serviceRegistered(const QString&))
+    Q_PRIVATE_SLOT(d, void _k_serviceRegistered(const QString &))
 };
 
 #endif

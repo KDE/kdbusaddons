@@ -3,7 +3,7 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 
-int main( int argc, char** argv )
+int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
@@ -15,8 +15,9 @@ int main( int argc, char** argv )
 
     qDebug() << "sending reparseConfiguration to object Konqueror in konqueror";
     QDBusMessage message = QDBusMessage::createSignal("/Konqueror", "org.kde.Konqueror", "reparseConfiguration");
-    if (!QDBusConnection::sessionBus().send(message))
+    if (!QDBusConnection::sessionBus().send(message)) {
         qDebug() << "void expected, " << QDBusConnection::sessionBus().lastError().name() << " returned";
+    }
 
     return 0;
 }

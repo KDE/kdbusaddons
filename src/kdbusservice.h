@@ -209,7 +209,7 @@ Q_SIGNALS:
      *
      * See the desktop entry specification for more information.
      */
-    void activateActionRequested(const QString &actionName, const QVariant& parameter);
+    void activateActionRequested(const QString &actionName, const QVariant &parameter);
 
 public Q_SLOTS:
     /**
@@ -232,7 +232,7 @@ private:
     friend class KDBusServiceExtensionsAdaptor;
 
 private:
-    KDBusServicePrivate * const d;
+    KDBusServicePrivate *const d;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDBusService::StartupOptions)

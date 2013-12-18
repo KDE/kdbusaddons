@@ -34,7 +34,7 @@ class QDBusObjectPath;
 
 /**
  * \class KDEDModule kdedmodule.h <KDEDModule>
- * 
+ *
  * The base class for KDED modules.
  *
  * KDED modules are realized as shared
@@ -46,53 +46,53 @@ class QDBusObjectPath;
  */
 class KDBUSADDONS_EXPORT KDEDModule: public QObject
 {
-  Q_OBJECT
-  Q_CLASSINFO("D-Bus Interface", "org.kde.KDEDModule")
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.kde.KDEDModule")
 
-  friend class Kded;
+    friend class Kded;
 public:
 
-  /**
-   * Constructor
-   */
-  explicit KDEDModule(QObject* parent = 0);
+    /**
+     * Constructor
+     */
+    explicit KDEDModule(QObject *parent = 0);
 
-  virtual ~KDEDModule();
+    virtual ~KDEDModule();
 
-  /**
-   * @internal called by kded after loading a module
-   * The module name is set from the path of the desktop file, and is
-   * used to register the module to D-Bus.
-   */
-  void setModuleName( const QString& name );
+    /**
+     * @internal called by kded after loading a module
+     * The module name is set from the path of the desktop file, and is
+     * used to register the module to D-Bus.
+     */
+    void setModuleName(const QString &name);
 
-  QString moduleName() const;
+    QString moduleName() const;
 
 Q_SIGNALS:
-  /**
-   * Emitted when the module is being deleted.
-   */
-  void moduleDeleted(KDEDModule *);
+    /**
+     * Emitted when the module is being deleted.
+     */
+    void moduleDeleted(KDEDModule *);
 
-  /**
-   * Emitted when a mainwindow registers itself.
-   */
-  void windowRegistered(qlonglong windowId);
+    /**
+     * Emitted when a mainwindow registers itself.
+     */
+    void windowRegistered(qlonglong windowId);
 
-  /**
-   * Emitted when a mainwindow unregisters itself.
-   */
-  void windowUnregistered(qlonglong windowId);
+    /**
+     * Emitted when a mainwindow unregisters itself.
+     */
+    void windowUnregistered(qlonglong windowId);
 
-  /**
-   * Emitted after the module is registered successfully with D-Bus
-   *
-   * @since 4.2
-   */
-  void moduleRegistered(const QDBusObjectPath &path);
+    /**
+     * Emitted after the module is registered successfully with D-Bus
+     *
+     * @since 4.2
+     */
+    void moduleRegistered(const QDBusObjectPath &path);
 
 private:
-  KDEDModulePrivate* const d;
+    KDEDModulePrivate *const d;
 };
 
 #endif

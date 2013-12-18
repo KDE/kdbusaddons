@@ -51,7 +51,7 @@ public:
         if (parts.isEmpty()) {
             reversedDomain = QLatin1String("local.");
         } else {
-            Q_FOREACH (const QString& part, parts) {
+            Q_FOREACH (const QString &part, parts) {
                 reversedDomain.prepend(QLatin1Char('.'));
                 reversedDomain.prepend(part);
             }
@@ -90,14 +90,13 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
         }
 
         QDBusConnection::sessionBus().registerObject(QLatin1String("/MainApplication"), QCoreApplication::instance(),
-                                                     QDBusConnection::ExportScriptableSlots |
-                                                     QDBusConnection::ExportScriptableProperties |
-                                                     QDBusConnection::ExportAdaptors);
+                QDBusConnection::ExportScriptableSlots |
+                QDBusConnection::ExportScriptableProperties |
+                QDBusConnection::ExportAdaptors);
         QDBusConnection::sessionBus().registerObject(objectPath, this,
-                                                     QDBusConnection::ExportAdaptors);
+                QDBusConnection::ExportAdaptors);
 
         d->registered = bus->registerService(d->serviceName) == QDBusConnectionInterface::ServiceRegistered;
-
 
         if (!d->registered) {
             if (options & Unique) {
@@ -116,12 +115,12 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 }
             } else {
                 d->errorMessage = QLatin1String("Couldn't register name '")
-                                + d->serviceName
-                                + QLatin1String("' with DBUS - another process owns it already!");
+                                  + d->serviceName
+                                  + QLatin1String("' with DBUS - another process owns it already!");
             }
 
         } else {
-            if (QCoreApplication* app = QCoreApplication::instance()) {
+            if (QCoreApplication *app = QCoreApplication::instance()) {
                 connect(app, SIGNAL(aboutToQuit()), this, SLOT(unregister()));
             }
         }
