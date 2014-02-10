@@ -21,35 +21,33 @@
 #include <QDBusInterface>
 #include <QDebug>
 
-#include <KAboutData>
-
 int main(int argc, char* argv[])
 {
     QCoreApplication app(argc, argv);
-    KAboutData aboutData( "kquitapp", 0, QCoreApplication::translate("main", "Command-line application quitter"),
-                          "1.0", QCoreApplication::translate("main", "Quit a D-Bus enabled application easily"), KAboutData::License_GPL,
-                           "(c) 2006, Aaron Seigo" );
-    aboutData.addAuthor("Aaron J. Seigo", QCoreApplication::translate("main", "Current maintainer"), "aseigo@kde.org");
+    app.setApplicationName("kquitapp");
+    app.setApplicationVersion("2.0");
 
     QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Quit a D-Bus enabled application easily"));
     parser.addOption(QCommandLineOption("service", QCoreApplication::translate("main", "Full service name, overrides application name provided"), "service"));
     parser.addOption(QCommandLineOption("path", QCoreApplication::translate("main", "Path in the D-Bus interface to use"), "path", "/MainApplication"));
     parser.addPositionalArgument("application", QCoreApplication::translate("main", "The name of the application to quit"));
-    aboutData.setupCommandLine(&parser);
+    parser.addHelpOption();
+    parser.addVersionOption();
     parser.process(app);
-    aboutData.processCommandLine(&parser);
-
-    if(parser.positionalArguments().isEmpty())
-        parser.showHelp(1);
 
     QString service;
     if (parser.isSet(QStringLiteral("service")))
     {
         service = parser.value("service");
     }
-    else
+    else if(parser.positionalArguments().isEmpty())
     {
         service = QStringLiteral("org.kde.%1").arg(parser.positionalArguments()[0]);
+    }
+    else
+    {
+        parser.showHelp(1);
     }
 
     QString path(parser.value("path"));
