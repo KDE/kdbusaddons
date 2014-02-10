@@ -17,59 +17,52 @@
  */
 
 #include <QCoreApplication>
+#include <QCommandLineParser>
 #include <QDBusInterface>
+#include <QDebug>
 
 #include <KAboutData>
-#include <KCmdLineArgs>
-#include <KLocale>
-#include <KDebug>
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData( "kquitapp", 0, ki18n("Command-line application quitter"),
-                          "1.0", ki18n("Quit a D-Bus enabled application easily"), KAboutData::License_GPL,
-                           ki18n("(c) 2006, Aaron Seigo") );
-    aboutData.addAuthor(ki18n("Aaron J. Seigo"), ki18n("Current maintainer"), "aseigo@kde.org");
-    KCmdLineArgs::init(argc, argv, &aboutData);
     QCoreApplication app(argc, argv);
+    KAboutData aboutData( "kquitapp", 0, QCoreApplication::translate("main", "Command-line application quitter"),
+                          "1.0", QCoreApplication::translate("main", "Quit a D-Bus enabled application easily"), KAboutData::License_GPL,
+                           "(c) 2006, Aaron Seigo" );
+    aboutData.addAuthor("Aaron J. Seigo", QCoreApplication::translate("main", "Current maintainer"), "aseigo@kde.org");
 
-    KCmdLineOptions options;
-    options.add("service <service>", ki18n("Full service name, overrides application name provided"));
-    options.add("path <path>", ki18n("Path in the D-Bus interface to use"), "/MainApplication");
-    options.add("+application", ki18n("The name of the application to quit"));
-    KCmdLineArgs::addCmdLineOptions(options);
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    QCommandLineParser parser;
+    parser.addOption(QCommandLineOption("service", QCoreApplication::translate("main", "Full service name, overrides application name provided"), "service"));
+    parser.addOption(QCommandLineOption("path", QCoreApplication::translate("main", "Path in the D-Bus interface to use"), "path", "/MainApplication"));
+    parser.addPositionalArgument("application", QCoreApplication::translate("main", "The name of the application to quit"));
+    aboutData.setupCommandLine(&parser);
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
-    if (args->count() == 0)
-    {
-        args->usage(0);
-    }
+    if(parser.positionalArguments().isEmpty())
+        parser.showHelp(1);
 
     QString service;
-    if (args->isSet("service"))
+    if (parser.isSet(QStringLiteral("service")))
     {
-        service = args->getOption("service");
+        service = parser.value("service");
     }
     else
     {
-        service = QString("org.kde.%1").arg(QString(args->arg(0)));
+        service = QStringLiteral("org.kde.%1").arg(parser.positionalArguments()[0]);
     }
 
-    QString path("/MainApplication");
-    if (args->isSet("path"))
-    {
-        path = args->getOption("path");
-    }
+    QString path(parser.value("path"));
 
     QDBusInterface interface(service, path);
     if (!interface.isValid()) {
-        kError() << i18n("Application %1 could not be found using service %2 and path %3.",args->arg(0),service,path);
+        qWarning() << QCoreApplication::translate("main", "Application %1 could not be found using service %2 and path %3.").arg(parser.positionalArguments().first()).arg(service).arg(path);
         return 1;
     }
     interface.call("quit");
     QDBusError error = interface.lastError();
     if (error.type() != QDBusError::NoError) {
-        kError() << i18n("Quitting application %1 failed. Error reported was:\n\n     %2 : %3",args->arg(0),error.name(), error.message());
+        qWarning() << QCoreApplication::translate("main", "Quitting application %1 failed. Error reported was:\n\n     %2 : %3").arg(parser.positionalArguments().first()).arg(error.name()).arg(error.message());
         return 1;
     }
     return 0;
