@@ -1,3 +1,4 @@
+add_subdirectory(tools/kquitapp)
 
 set(libkdbusaddons_SRCS
     kdbusconnectionpool.cpp
