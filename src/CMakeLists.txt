@@ -36,7 +36,8 @@ set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION_S
                                                EXPORT_NAME DBusAddons
 )
 
-ecm_generate_headers(
+ecm_generate_headers(KDBusAddons_HEADERS
+  HEADER_NAMES
   KDBusConnectionPool
   KDBusInterProcessLock
   KDBusService
@@ -44,7 +45,6 @@ ecm_generate_headers(
   KDEInitInterface
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/KDBusAddons DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
 
 install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
