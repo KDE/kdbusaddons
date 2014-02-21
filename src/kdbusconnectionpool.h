@@ -33,6 +33,22 @@ namespace KDBusConnectionPool
  * has been fixed (either directly in libdbus or with a work-
  * around in Qt) this method can be dropped in favor of
  * QDBusConnection::sessionBus().
+ *
+ * Note that this will create a thread-local QDBusConnection
+ * object, which means whichever thread this is called
+ * from must have both an event loop and be as long-lived as
+ * the object using it. If either condition is not met, the
+ * returned QDBusConnection will not send or receive DBus
+ * events (calls, return values, etc).
+ *
+ * Using this within libraries can create complexities for
+ * application developers working with threads as its use
+ * in the library may not be apparent to the application
+ * developer, and so functionality may appear to be broken
+ * simply due to the nature of the thread from which this
+ * ends up being called from. Library developers using
+ * this facility are strongly encouraged to note this
+ * caveat in the library's documentation.
  */
 KDBUSADDONS_EXPORT QDBusConnection threadConnection();
 }
