@@ -6,6 +6,7 @@ set(libkdbusaddons_SRCS
     kdbusservice.cpp
     kdedmodule.cpp
     kdeinitinterface.cpp
+    ${libkdbusaddons_QM_LOADER}
 )
 
 qt5_add_dbus_adaptor(libkdbusaddons_SRCS
