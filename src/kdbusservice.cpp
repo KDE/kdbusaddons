@@ -104,10 +104,13 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 QDBusInterface iface(d->serviceName, objectPath);
                 iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
                 QVariantMap platform_data;
-
-                // TODO getter for startup id in qapp (documented to be empty after showing the first window)
-                // platform_data.insert("desktop-startup-id", ?);
-                QDBusReply<int> reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), platform_data);
+                platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
+                QDBusReply<int> reply;
+                if (QCoreApplication::arguments().count() > 1) {
+                    reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), platform_data);
+                } else {
+                    reply = iface.call(QLatin1String("Activate"), platform_data);
+                }
                 if (reply.isValid()) {
                     exit(reply.value());
                 } else {
