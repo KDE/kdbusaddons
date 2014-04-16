@@ -1,5 +1,7 @@
 add_subdirectory(tools/kquitapp)
 
+ecm_create_qm_loader(libkdbusaddons_QM_LOADER kdbusaddons5)
+
 set(libkdbusaddons_SRCS
     kdbusconnectionpool.cpp
     kdbusinterprocesslock.cpp

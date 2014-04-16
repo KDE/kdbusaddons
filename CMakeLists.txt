@@ -20,6 +20,8 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMMarkNonGuiExecutable)
 
+include(ECMCreateQmFromPoFiles)
+
 set(KF5_VERSION "4.98.0")
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDBUSADDONS
@@ -29,14 +31,9 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDBUSADDONS
 
 
 
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/po)
-  include(ECMCreateQmFromPoFiles)
-  ecm_create_qm_from_po_files(
-    PO_DIR po
-    POT_NAME kdbusaddons5.pot
-    DATA_INSTALL_SUB_DIR kdbusaddons
-    CREATE_LOADER libkdbusaddons_QM_LOADER
-  )
+file(GLOB PO_FILES "po/*.po")
+if (PO_FILES)
+  ecm_create_qm_from_po_files(PO_FILES ${PO_FILES} CATALOG_NAME kdbusaddons5)
 endif()
 
 add_subdirectory(src)
