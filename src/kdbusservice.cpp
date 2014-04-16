@@ -90,7 +90,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
         }
 
         QDBusConnection::sessionBus().registerObject(QLatin1String("/MainApplication"), QCoreApplication::instance(),
-                QDBusConnection::ExportScriptableSlots |
+                QDBusConnection::ExportAllSlots |
                 QDBusConnection::ExportScriptableProperties |
                 QDBusConnection::ExportAdaptors);
         QDBusConnection::sessionBus().registerObject(objectPath, this,
