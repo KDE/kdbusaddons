@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     parser.setApplicationDescription(QCoreApplication::translate("main", "Quit a D-Bus enabled application easily"));
     parser.addOption(QCommandLineOption(QStringLiteral("service"), QCoreApplication::translate("main", "Full service name, overrides application name provided"), QStringLiteral("service")));
     parser.addOption(QCommandLineOption(QStringLiteral("path"), QCoreApplication::translate("main", "Path in the D-Bus interface to use"), QStringLiteral("path"), QStringLiteral("/MainApplication")));
-    parser.addPositionalArgument(QStringLiteral("application"), QCoreApplication::translate("main", "The name of the application to quit"));
+    parser.addPositionalArgument(QStringLiteral("[application]"), QCoreApplication::translate("main", "The name of the application to quit"));
     parser.addHelpOption();
     parser.addVersionOption();
     parser.process(app);
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     {
         service = parser.value(QStringLiteral("service"));
     }
-    else if(parser.positionalArguments().isEmpty())
+    else if(!parser.positionalArguments().isEmpty())
     {
         service = QStringLiteral("org.kde.%1").arg(parser.positionalArguments()[0]);
     }
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     interface.call(QStringLiteral("quit"));
     QDBusError error = interface.lastError();
     if (error.type() != QDBusError::NoError) {
-        qWarning() << QCoreApplication::translate("main", "Quitting application %1 failed. Error reported was:\n\n     %2 : %3").arg(parser.positionalArguments().first()).arg(error.name()).arg(error.message());
+        qWarning() << QCoreApplication::translate("main", "Quitting application %1 failed. Error reported was:\n\n     %2 : %3").arg(parser.positionalArguments().join(QStringLiteral(" "))).arg(error.name()).arg(error.message());
         return 1;
     }
     return 0;
