@@ -33,7 +33,7 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDBUSADDONS
 
 file(GLOB PO_FILES "po/*.po")
 if (PO_FILES)
-  ecm_create_qm_from_po_files(PO_FILES ${PO_FILES} CATALOG_NAME kdbusaddons5)
+  ecm_create_qm_from_po_files(PO_FILES ${PO_FILES} CATALOG_NAME kdbusaddons5_qt)
 endif()
 
 add_subdirectory(src)
