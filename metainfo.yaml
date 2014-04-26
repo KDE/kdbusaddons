@@ -1,1 +1,9 @@
+maintainer: dfaure
+description: Addons to QtDBus
 tier: 1
+type: functional
+platforms:
+    - name: All
+portingAid: false
+deprecated: false
+release: true
