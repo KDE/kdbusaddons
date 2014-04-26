@@ -32,7 +32,7 @@ add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
 
 target_link_libraries(KF5DBusAddons PUBLIC Qt5::DBus)
 
-target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/KDBusAddons>")
+target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KDBusAddons>")
 
 set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION_STRING}
                                                SOVERSION ${KDBUSADDONS_SOVERSION}
@@ -49,12 +49,12 @@ ecm_generate_headers(KDBusAddons_HEADERS
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
 
-install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${KDBusAddons_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/KDBusAddons COMPONENT Devel
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KDBusAddons COMPONENT Devel
 )
 
 
