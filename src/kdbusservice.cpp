@@ -167,7 +167,7 @@ void KDBusService::unregister()
 void KDBusService::Activate(const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
-    // TODO (via hook) KStartupInfo::setStartupId(platform_data.value("desktop-startup-id"))
+    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit activateRequested(QStringList());
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
 }
@@ -175,7 +175,7 @@ void KDBusService::Activate(const QVariantMap &platform_data)
 void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
-    // TODO (via hook) KStartupInfo::setStartupId(platform_data.value("desktop-startup-id"))
+    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit openRequested(QUrl::fromStringList(uris));
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
 }
@@ -183,18 +183,19 @@ void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_dat
 void KDBusService::ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
-    // TODO (via hook) KStartupInfo::setStartupId(platform_data.value("desktop-startup-id"))
     // This is a workaround for DBus not supporting null variants.
     const QVariant param = maybeParameter.count() == 1 ? maybeParameter.first() : QVariant();
     emit activateActionRequested(action_name, param);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
+    // if desktop-startup-id is set, the action is supposed to show a window (since it could be
+    // called when the app is not running)
 }
 
 int KDBusService::CommandLine(const QStringList &arguments, const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
     d->exitValue = 0;
-    // TODO (via hook) KStartupInfo::setStartupId(platform_data.value("desktop-startup-id"))
+    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit activateRequested(arguments);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     return d->exitValue;
