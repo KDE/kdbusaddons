@@ -170,6 +170,7 @@ void KDBusService::Activate(const QVariantMap &platform_data)
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit activateRequested(QStringList());
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
+    // ^^ same discussion as below
 }
 
 void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_data)
@@ -178,6 +179,9 @@ void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_dat
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit openRequested(QUrl::fromStringList(uris));
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
+    // ^^ not needed if the app actually opened a new window.
+    // Solution 1: do it all the time anyway (needs API in QX11Info)
+    // Solution 2: pass the id to the app and let it use KStartupInfo::appStarted if reusing a window
 }
 
 void KDBusService::ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data)
@@ -195,6 +199,9 @@ int KDBusService::CommandLine(const QStringList &arguments, const QVariantMap &p
 {
     Q_UNUSED(platform_data);
     d->exitValue = 0;
+    // The TODOs here only make sense if this method can be called from the GUI.
+    // If it's for pure "usage in the terminal" then no startup notification got started.
+    // But maybe one day the workspace wants to call this for the Exec key of a .desktop file?
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit activateRequested(arguments);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
