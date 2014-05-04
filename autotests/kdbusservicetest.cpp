@@ -39,6 +39,13 @@ public:
           m_service(service)
     {}
 
+    ~TestObject()
+    {
+        if (m_proc) {
+            m_proc->waitForFinished();
+        }
+    }
+
     int callCount() const
     {
         return m_callCount;
@@ -71,6 +78,7 @@ private Q_SLOTS:
     {
         Q_UNUSED(exitStatus)
         qDebug() << "Process exited with code" << exitCode;
+        m_proc = 0;
         if (m_callCount == 2) {
             Q_ASSERT(exitCode == 4);
             secondCall();
@@ -97,8 +105,8 @@ private:
         qDebug();
 
         // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
-        QProcess *proc = new QProcess(this);
-        connect(proc, SIGNAL(finished(int,QProcess::ExitStatus)),
+        m_proc = new QProcess(this);
+        connect(m_proc, SIGNAL(finished(int,QProcess::ExitStatus)),
                 this, SLOT(slotProcessFinished(int,QProcess::ExitStatus)));
         QString appName = "kdbusservicetest";
 #ifdef Q_OS_WIN
@@ -111,9 +119,10 @@ private:
             appName = "./" + appName;
         }
 #endif
-        proc->start(appName, args);
+        m_proc->start(appName, args);
     }
 
+    QProcess *m_proc;
     int m_callCount;
     KDBusService *m_service;
 };
