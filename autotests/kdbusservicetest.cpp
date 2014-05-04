@@ -21,6 +21,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QMetaObject>
 #include <QProcess>
@@ -52,8 +53,9 @@ public:
     }
 
 private Q_SLOTS:
-    void slotActivateRequested(const QStringList &args)
+    void slotActivateRequested(const QStringList &args, const QString &workingDirectory)
     {
+        Q_UNUSED(workingDirectory);
         qDebug() << "Application executed with args" << args;
 
         ++m_callCount;
@@ -102,8 +104,6 @@ private Q_SLOTS:
 private:
     void executeNewChild(const QStringList &args)
     {
-        qDebug();
-
         // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
         m_proc = new QProcess(this);
         connect(m_proc, SIGNAL(finished(int,QProcess::ExitStatus)),
@@ -119,6 +119,7 @@ private:
             appName = "./" + appName;
         }
 #endif
+        qDebug() << "about to run" << appName << args;
         m_proc->start(appName, args);
     }
 
@@ -136,8 +137,8 @@ int main(int argc, char *argv[])
 
     KDBusService service(KDBusService::Unique);
     TestObject testObject(&service);
-    QObject::connect(&service, SIGNAL(activateRequested(QStringList)),
-                     &testObject, SLOT(slotActivateRequested(QStringList)));
+    QObject::connect(&service, SIGNAL(activateRequested(QStringList, QString)),
+                     &testObject, SLOT(slotActivateRequested(QStringList, QString)));
 
     // Testcase for the problem coming from the old fork-on-startup solution:
     // the "Activate" D-Bus call would time out if the app took too much time
@@ -148,7 +149,9 @@ int main(int argc, char *argv[])
     args << "dummy call";
 
     QMetaObject::invokeMethod(&service, "activateRequested",
-                              Qt::QueuedConnection, Q_ARG(QStringList, args));
+                              Qt::QueuedConnection,
+                              Q_ARG(QStringList, args),
+                              Q_ARG(QString, QDir::currentPath()));
     QTimer::singleShot(400, &testObject, SLOT(firstCall()));
 
     qDebug() << "Running.";

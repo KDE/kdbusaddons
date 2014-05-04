@@ -195,7 +195,7 @@ Q_SIGNALS:
      *
      * @see setExitValue()
      */
-    void activateRequested(const QStringList &arguments);
+    void activateRequested(const QStringList &arguments, const QString &workingDirectory);
 
     /**
      * Signals that one or more files should be opened in the application.
@@ -227,8 +227,8 @@ private:
     void Open(const QStringList &uris, const QVariantMap &platform_data);
     void ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data);
     friend class KDBusServiceAdaptor;
-    // org.kde.Application
-    int CommandLine(const QStringList &arguments, const QVariantMap &platform_data);
+    // org.kde.KDBusService
+    int CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data);
     friend class KDBusServiceExtensionsAdaptor;
 
 private:

@@ -107,7 +107,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
                 QDBusReply<int> reply;
                 if (QCoreApplication::arguments().count() > 1) {
-                    reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), platform_data);
+                    reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
                 } else {
                     reply = iface.call(QLatin1String("Activate"), platform_data);
                 }
@@ -168,7 +168,7 @@ void KDBusService::Activate(const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
-    emit activateRequested(QStringList());
+    emit activateRequested(QStringList(), QString());
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     // ^^ same discussion as below
 }
@@ -195,7 +195,7 @@ void KDBusService::ActivateAction(const QString &action_name, const QVariantList
     // called when the app is not running)
 }
 
-int KDBusService::CommandLine(const QStringList &arguments, const QVariantMap &platform_data)
+int KDBusService::CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
     d->exitValue = 0;
@@ -203,7 +203,7 @@ int KDBusService::CommandLine(const QStringList &arguments, const QVariantMap &p
     // If it's for pure "usage in the terminal" then no startup notification got started.
     // But maybe one day the workspace wants to call this for the Exec key of a .desktop file?
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
-    emit activateRequested(arguments);
+    emit activateRequested(arguments, workingDirectory);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     return d->exitValue;
 }

@@ -3,9 +3,10 @@
   <interface name='org.kde.KDBusService'>
     <method name='CommandLine'>
       <arg type='as' name='arguments' direction='in'/>
+      <arg type='s' name='working-dir' direction='in'/>
       <arg type='a{sv}' name='platform-data' direction='in' />
       <arg type='i' name='exit-status' direction='out'/>
-      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="QVariantMap"/>
     </method>
     <!--
     <property name='Busy' type='b' access='read'/>
