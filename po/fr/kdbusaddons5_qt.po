@@ -1,0 +1,57 @@
+# translation of kquitapp.po to Français
+# French translation of PACKAGE.
+# Copyright (C) 2007 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Amine Say <aminesay@yahoo.fr>, 2007, 2008, 2009.
+# Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2007, 2008, 2009.
+# xavier <ktranslator31@yahoo.fr>, 2013.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kquitapp\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.5\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:31
+msgctxt "main|"
+msgid "Quit a D-Bus enabled application easily"
+msgstr ""
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:32
+msgctxt "main|"
+msgid "Full service name, overrides application name provided"
+msgstr ""
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:33
+msgctxt "main|"
+msgid "Path in the D-Bus interface to use"
+msgstr ""
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:34
+msgctxt "main|"
+msgid "The name of the application to quit"
+msgstr ""
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:57
+#, qt-format
+msgctxt "main|"
+msgid "Application %1 could not be found using service %2 and path %3."
+msgstr ""
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:63
+#, qt-format
+msgctxt "main|"
+msgid ""
+"Quitting application %1 failed. Error reported was:\n"
+"\n"
+"     %2 : %3"
+msgstr ""

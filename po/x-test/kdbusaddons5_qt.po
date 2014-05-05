@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdbusaddons5_qt\n"
+"PO-Revision-Date: 2014-04-28 09:02+0000\n"
+"Last-Translator: transxx.py program <null@kde.org>\n"
+"Language-Team: KDE Test Language <kde-i18n-doc@kde.org>\n"
+"Language: x-test\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:31
+msgctxt "main|"
+msgid "Quit a D-Bus enabled application easily"
+msgstr "xxQuit a D-Bus enabled application easilyxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:32
+msgctxt "main|"
+msgid "Full service name, overrides application name provided"
+msgstr "xxFull service name, overrides application name providedxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:33
+msgctxt "main|"
+msgid "Path in the D-Bus interface to use"
+msgstr "xxPath in the D-Bus interface to usexx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:34
+msgctxt "main|"
+msgid "The name of the application to quit"
+msgstr "xxThe name of the application to quitxx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:57
+#, qt-format
+msgctxt "main|"
+msgid "Application %1 could not be found using service %2 and path %3."
+msgstr "xxApplication %1 could not be found using service %2 and path %3.xx"
+
+#: ../../home/scripty/prod/git-unstable/frameworks_kdbusaddons/src/tools/kquitapp/kquitapp.cpp:63
+#, qt-format
+msgctxt "main|"
+msgid ""
+"Quitting application %1 failed. Error reported was:\n"
+"\n"
+"     %2 : %3"
+msgstr ""
+"xxQuitting application %1 failed. Error reported was:\n"
+"\n"
+"     %2 : %3xx"
