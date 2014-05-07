@@ -30,6 +30,12 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 
+#include "config-kdbusaddons.h"
+
+#if HAVE_X11
+#include <QX11Info>
+#endif
+
 #include "kdbusservice_adaptor.h"
 #include "kdbusserviceextensions_adaptor.h"
 
@@ -167,6 +173,11 @@ void KDBusService::unregister()
 void KDBusService::Activate(const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
+#if HAVE_X11
+    if (QX11Info::isPlatformX11()) {
+        QX11Info::setAppTime(QX11Info::getTimestamp());
+    }
+#endif
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     emit activateRequested(QStringList(), QString());
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))

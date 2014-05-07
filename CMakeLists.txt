@@ -12,6 +12,7 @@ include(KDECMakeSettings)
 
 set(REQUIRED_QT_VERSION 5.2.0)
 find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE)
 
 include(FeatureSummary)
 include(GenerateExportHeader)
@@ -29,6 +30,12 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDBUSADDONS
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfigVersion.cmake"
                         SOVERSION 5)
 
+if(Qt5X11Extras_FOUND)
+    set(qtx11extras Qt5::X11Extras)
+    set(HAVE_X11 TRUE)
+else()
+    set(HAVE_X11 FALSE)
+endif()
 
 
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
