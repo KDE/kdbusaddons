@@ -20,8 +20,8 @@
 */
 
 #include "kdeinitinterface.h"
+#include "kdbusconnectionpool.h"
 
-#include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDir>
 #include <QLockFile>
@@ -31,7 +31,8 @@
 
 void KDEInitInterface::ensureKdeinitRunning()
 {
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
+    QDBusConnectionInterface *dbusDaemon = KDBusConnectionPool::threadConnection().interface();
+    if (dbusDaemon->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
         return;
     }
     qDebug() << "klauncher not running... launching kdeinit";
@@ -39,7 +40,7 @@ void KDEInitInterface::ensureKdeinitRunning()
     QLockFile lock(QDir::tempPath() + QLatin1Char('/') + QLatin1String("startkdeinitlock"));
     if (!lock.tryLock()) {
         lock.lock();
-        if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
+        if (dbusDaemon->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
             return;    // whoever held the lock has already started it
         }
     }
