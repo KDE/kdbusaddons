@@ -111,16 +111,20 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
                 QVariantMap platform_data;
                 platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
-                QDBusReply<int> reply;
                 if (QCoreApplication::arguments().count() > 1) {
-                    reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+                    QDBusReply<int> reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+                    if (reply.isValid()) {
+                        exit(reply.value());
+                    } else {
+                        d->errorMessage = reply.error().message();
+                    }
                 } else {
-                    reply = iface.call(QLatin1String("Activate"), platform_data);
-                }
-                if (reply.isValid()) {
-                    exit(reply.value());
-                } else {
-                    d->errorMessage = reply.error().message();
+                    QDBusReply<void> reply = iface.call(QLatin1String("Activate"), platform_data);
+                    if (reply.isValid()) {
+                        exit(0);
+                    } else {
+                        d->errorMessage = reply.error().message();
+                    }
                 }
             } else {
                 d->errorMessage = QLatin1String("Couldn't register name '")
