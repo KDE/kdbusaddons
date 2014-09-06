@@ -89,6 +89,11 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
         d->serviceName = d->generateServiceName();
         QString objectPath = QLatin1Char('/') + d->serviceName;
         objectPath.replace(QLatin1Char('.'), QLatin1Char('/'));
+        if (objectPath.contains(QLatin1Char('-'))) {
+            QString previous = objectPath;
+            objectPath.remove(QLatin1Char('-'));
+            qWarning() << "Invalid service name" << previous << "using:" << objectPath;
+        }
 
         if (options & Multiple) {
             const QString pid = QString::number(QCoreApplication::applicationPid());
