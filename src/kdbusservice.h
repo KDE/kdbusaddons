@@ -184,8 +184,8 @@ Q_SIGNALS:
      * duplicate instance), and the duplicate instance will then exit.
      *
      * If this application's desktop file indicates that it supports D-Bus
-     * activation, a command launcher may also call the Activate() D-Bus method
-     * to trigger this signal.  In this case, @p args will be empty.
+     * activation (DBusActivatable=true), a command launcher may also call the Activate()
+     * D-Bus method to trigger this signal. In this case, @p args will be empty.
      *
      * In single-window applications, the connected signal should typically
      * raise the window.
