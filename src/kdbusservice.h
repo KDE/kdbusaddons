@@ -193,6 +193,12 @@ Q_SIGNALS:
      * @param arguments  The arguments the executable was called with.
      *                   See QCoreApplication::arguments().
      *
+     * A typical implementation of the slot would be
+     * @code
+     *    commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
+     *    handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
+     * @endcode
+     *
      * @see setExitValue()
      */
     void activateRequested(const QStringList &arguments, const QString &workingDirectory);
