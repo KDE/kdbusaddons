@@ -31,7 +31,7 @@ add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
 
 target_link_libraries(KF5DBusAddons PUBLIC Qt5::DBus PRIVATE ${qtx11extras})
 
-target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KDBusAddons>")
+target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons>")
 
 set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION_STRING}
                                                SOVERSION ${KDBUSADDONS_SOVERSION}
@@ -55,10 +55,10 @@ install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF5_INSTALL_TARGETS_
 install(FILES
     ${KDBusAddons_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
-    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KDBusAddons COMPONENT Devel
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons COMPONENT Devel
 )
 
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KDBusAddons LIB_NAME KF5DBusAddons DEPS "dbus" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/KDBusAddons)
+ecm_generate_pri_file(BASE_NAME KDBusAddons LIB_NAME KF5DBusAddons DEPS "dbus" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

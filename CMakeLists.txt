@@ -47,7 +47,7 @@ add_subdirectory(autotests)
 add_subdirectory(tests)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5DBusAddons")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DBusAddons")
 
 ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5DBusAddonsConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfig.cmake"
@@ -61,6 +61,6 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfig.cmake"
 
 install(EXPORT KF5DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  FILE KF5DBusAddonsTargets.cmake  NAMESPACE KF5:: )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}  COMPONENT Devel )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}  COMPONENT Devel )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
