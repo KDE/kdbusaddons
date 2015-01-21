@@ -31,6 +31,7 @@ class KDEDModulePrivate;
 class Kded;
 
 class QDBusObjectPath;
+class QDBusMessage;
 
 /**
  * \class KDEDModule kdedmodule.h <KDEDModule>
@@ -60,13 +61,21 @@ public:
     virtual ~KDEDModule();
 
     /**
-     * @internal called by kded after loading a module
-     * The module name is set from the path of the desktop file, and is
-     * used to register the module to D-Bus.
+     * Sets the name of the module, and uses it to register the module to D-Bus.
+     *
+     * For modules loaded as plugins by a daemon, this is called automatically
+     * by the daemon after loading the module. Module authors should NOT call this.
      */
     void setModuleName(const QString &name);
 
     QString moduleName() const;
+
+    /**
+     * Returns the module being called by this dbus message.
+     * Useful for autoloading modules in kded and similar daemons.
+     * @since 5.7
+     */
+    static QString moduleForMessage(const QDBusMessage &message);
 
 Q_SIGNALS:
     /**

@@ -26,6 +26,7 @@
 #include <QTimer>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
+#include <QDBusMessage>
 
 class KDEDModulePrivate
 {
@@ -86,5 +87,30 @@ void KDEDModule::setModuleName(const QString &name)
 QString KDEDModule::moduleName() const
 {
     return d->moduleName;
+}
+
+static const char s_modules_path[] = "/modules/";
+
+QString KDEDModule::moduleForMessage(const QDBusMessage &message)
+{
+    if (message.type() != QDBusMessage::MethodCallMessage) {
+        return QString();
+    }
+
+    QString obj = message.path();
+    if (!obj.startsWith(QLatin1String(s_modules_path))) {
+        return QString();
+    }
+
+    // Remove the <s_modules_path> part
+    obj = obj.mid(strlen(s_modules_path));
+
+    // Remove the part after the modules name
+    const int index = obj.indexOf(QLatin1Char('/'));
+    if (index != -1) {
+        obj = obj.left(index);
+    }
+
+    return obj;
 }
 
