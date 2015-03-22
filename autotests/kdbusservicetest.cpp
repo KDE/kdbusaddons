@@ -36,7 +36,7 @@ class TestObject : public QObject
     Q_OBJECT
 public:
     TestObject(KDBusService *service)
-        : m_callCount(0),
+        : m_proc(0), m_callCount(0),
           m_service(service)
     {}
 
