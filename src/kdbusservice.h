@@ -50,7 +50,8 @@ class KDBusServicePrivate;
  * The first instance of the application registers with D-Bus without the PID,
  * and any attempt to run the application again will cause the
  * activateRequested() signal to be emitted in the already-running instance; the
- * duplicate instance will then quit.
+ * duplicate instance will then quit. The exit value can be set by the already
+ * running instance with setExitValue(), the default value is @c 0.
  *
  * Unique-mode applications should usually delay parsing command-line arguments
  * until after creating a KDBusService object; that way they know they are the
@@ -71,15 +72,17 @@ class KDBusServicePrivate;
  *
  * Example usage:
  *
- * <code>
+ * @code
      QApplication app(argc, argv);
      app.setApplicationName("kuiserver");
      app.setOrganizationDomain("kde.org");
      // Create your dbus objects here
      // ...
      KDBusService service(KDBusService::Unique);
+     // If this point is reached, this is the only running instance
+     // i.e. org.kde.kuiserver has been registered
      return app.exec();
- * </code>
+ * @endcode
  *
  * @since 5.0
  */
@@ -106,8 +109,11 @@ public:
         /** Indicates that the application should not exit if it failed to
          * register with D-Bus.
          *
-         * By default, KDBusService will quit the application if it failed to
-         * register the service with D-Bus (with error code @c 1).
+         * If not set, KDBusService will quit the application if it failed to
+         * register the service with D-Bus or a @c Unique instance can not be
+         * activated. A @c Multiple instance will exit with error code @c 1.
+         * The exit value of a @c Unique instance can be set from the running
+         * instance with setExitValue(), the default value is @c 0.
          */
         NoExitOnFailure = 4
     };
@@ -115,7 +121,7 @@ public:
     Q_DECLARE_FLAGS(StartupOptions, StartupOption)
 
     /**
-     * Registers the current process to D-Bus at an address based on the
+     * Tries to register the current process to D-Bus at an address based on the
      * application name and organization domain.
      *
      * The DBus service name is the reversed organization domain, followed by
