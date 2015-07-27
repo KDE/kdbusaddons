@@ -51,7 +51,7 @@ public:
 private:
     static int newNumber()
     {
-        return s_connectionCounter.fetchAndAddAcquire(1);
+        return s_connectionCounter.fetchAndAddRelaxed(1);
     }
 
     QDBusConnection m_connection;
