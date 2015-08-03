@@ -203,6 +203,9 @@ Q_SIGNALS:
      * @code
      *    commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
      *    handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
+     *    // and for GUI applications, also terminate startup notification and activate the mainwindow:
+     *    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
+     *    KWindowSystem::forceActiveWindow(mainWindow->winId());
      * @endcode
      *
      * @see setExitValue()
