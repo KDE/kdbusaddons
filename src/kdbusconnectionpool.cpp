@@ -34,7 +34,7 @@ public:
     KDBusConnectionPoolPrivate()
         : m_connection(QDBusConnection::connectToBus(
                            QDBusConnection::SessionBus,
-                           QString::fromLatin1("KDBusConnectionPoolConnection%1").arg(newNumber())))
+                           QStringLiteral("KDBusConnectionPoolConnection%1").arg(newNumber())))
     {
     }
 

@@ -65,7 +65,7 @@ QProcess *executeNewChild()
 
     // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
     QProcess *proc = new QProcess();
-    QString appName = "kdbusinterprocesslocktest";
+    QString appName = QStringLiteral("kdbusinterprocesslocktest");
 #ifdef Q_OS_WIN
     appName += ".exe";
 #else
@@ -77,7 +77,7 @@ QProcess *executeNewChild()
     }
 #endif
     proc->setProcessChannelMode(QProcess::ForwardedChannels);
-    proc->start(appName, QStringList() << "child");
+    proc->start(appName, QStringList() << QStringLiteral("child"));
     return proc;
 }
 
@@ -106,10 +106,10 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("kdbusinterprocesslocktest");
-    QCoreApplication::setOrganizationDomain("kde.org");
+    QCoreApplication::setApplicationName(QStringLiteral("kdbusinterprocesslocktest"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
 
-    KDBusInterProcessLock lock("myfunnylock");
+    KDBusInterProcessLock lock(QStringLiteral("myfunnylock"));
 
     if (argc >= 2) {
         work(2, lock);

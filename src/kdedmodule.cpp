@@ -48,7 +48,7 @@ KDEDModule::~KDEDModule()
 void KDEDModule::setModuleName(const QString &name)
 {
     d->moduleName = name;
-    QDBusObjectPath realPath(QString::fromLatin1("/modules/") + d->moduleName);
+    QDBusObjectPath realPath(QLatin1String("/modules/") + d->moduleName);
 
     if (realPath.path().isEmpty()) {
         qWarning() << "The kded module name" << name << "is invalid!";

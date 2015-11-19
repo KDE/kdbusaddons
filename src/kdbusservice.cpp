@@ -55,7 +55,7 @@ public:
 
         QString reversedDomain;
         if (parts.isEmpty()) {
-            reversedDomain = QLatin1String("local.");
+            reversedDomain = QStringLiteral("local.");
         } else {
             Q_FOREACH (const QString &part, parts) {
                 reversedDomain.prepend(QLatin1Char('.'));
@@ -80,7 +80,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
     QDBusConnectionInterface *bus = 0;
 
     if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
-        d->errorMessage = QLatin1String("Session bus not found\n"
+        d->errorMessage = QStringLiteral("Session bus not found\n"
                                         "To circumvent this problem try the following command (with Linux and bash)\n"
                                         "export $(dbus-launch)");
     }
@@ -100,7 +100,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
             d->serviceName += QLatin1Char('-') + pid;
         }
 
-        QDBusConnection::sessionBus().registerObject(QLatin1String("/MainApplication"), QCoreApplication::instance(),
+        QDBusConnection::sessionBus().registerObject(QStringLiteral("/MainApplication"), QCoreApplication::instance(),
                 QDBusConnection::ExportAllSlots |
                 QDBusConnection::ExportScriptableProperties |
                 QDBusConnection::ExportAdaptors);
@@ -117,14 +117,14 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 QVariantMap platform_data;
                 platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
                 if (QCoreApplication::arguments().count() > 1) {
-                    QDBusReply<int> reply = iface.call(QLatin1String("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+                    QDBusReply<int> reply = iface.call(QStringLiteral("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
                     if (reply.isValid()) {
                         exit(reply.value());
                     } else {
                         d->errorMessage = reply.error().message();
                     }
                 } else {
-                    QDBusReply<void> reply = iface.call(QLatin1String("Activate"), platform_data);
+                    QDBusReply<void> reply = iface.call(QStringLiteral("Activate"), platform_data);
                     if (reply.isValid()) {
                         exit(0);
                     } else {

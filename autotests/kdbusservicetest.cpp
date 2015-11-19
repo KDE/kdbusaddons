@@ -90,14 +90,14 @@ private Q_SLOTS:
     void firstCall()
     {
         QStringList args;
-        args << "bad call";
+        args << QStringLiteral("bad call");
         executeNewChild(args);
     }
 
     void secondCall()
     {
         QStringList args;
-        args << "real call" << "second arg";
+        args << QStringLiteral("real call") << QStringLiteral("second arg");
         executeNewChild(args);
     }
 
@@ -108,7 +108,7 @@ private:
         m_proc = new QProcess(this);
         connect(m_proc, SIGNAL(finished(int,QProcess::ExitStatus)),
                 this, SLOT(slotProcessFinished(int,QProcess::ExitStatus)));
-        QString appName = "kdbusservicetest";
+        QString appName = QStringLiteral("kdbusservicetest");
 #ifdef Q_OS_WIN
         appName += ".exe";
 #else
@@ -132,8 +132,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("kdbusservicetest");
-    QCoreApplication::setOrganizationDomain("kde.org");
+    QCoreApplication::setApplicationName(QStringLiteral("kdbusservicetest"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
 
     KDBusService service(KDBusService::Unique);
     TestObject testObject(&service);
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
     //printf("Sleeping.\n");
     //sleep(200);
     QStringList args;
-    args << "dummy call";
+    args << QStringLiteral("dummy call");
 
     QMetaObject::invokeMethod(&service, "activateRequested",
                               Qt::QueuedConnection,

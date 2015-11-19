@@ -32,7 +32,7 @@
 void KDEInitInterface::ensureKdeinitRunning()
 {
     QDBusConnectionInterface *dbusDaemon = KDBusConnectionPool::threadConnection().interface();
-    if (dbusDaemon->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
+    if (dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"))) {
         return;
     }
     qDebug() << "klauncher not running... launching kdeinit";
@@ -40,18 +40,18 @@ void KDEInitInterface::ensureKdeinitRunning()
     QLockFile lock(QDir::tempPath() + QLatin1Char('/') + QLatin1String("startkdeinitlock"));
     if (!lock.tryLock()) {
         lock.lock();
-        if (dbusDaemon->isServiceRegistered(QString::fromLatin1("org.kde.klauncher5"))) {
+        if (dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"))) {
             return;    // whoever held the lock has already started it
         }
     }
     // Try to launch kdeinit.
-    QString srv = QStandardPaths::findExecutable(QLatin1String("kdeinit5"));
+    QString srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"));
     if (srv.isEmpty()) {
         return;
     }
     QStringList args;
 #ifndef Q_OS_WIN
-    args += QString::fromLatin1("--suicide");
+    args += QLatin1String("--suicide");
 #endif
     QProcess::execute(srv, args);
 }
