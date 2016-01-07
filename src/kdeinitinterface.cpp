@@ -51,7 +51,7 @@ void KDEInitInterface::ensureKdeinitRunning()
     }
     QStringList args;
 #ifndef Q_OS_WIN
-    args += QLatin1String("--suicide");
+    args += QStringLiteral("--suicide");
 #endif
     QProcess::execute(srv, args);
 }

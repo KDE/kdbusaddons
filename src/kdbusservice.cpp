@@ -80,7 +80,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
     QDBusConnectionInterface *bus = 0;
 
     if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
-        d->errorMessage = QString::fromLatin1("Session bus not found\n"
+        d->errorMessage = QStringLiteral("Session bus not found\n"
                                         "To circumvent this problem try the following command (with Linux and bash)\n"
                                         "export $(dbus-launch)");
     }
