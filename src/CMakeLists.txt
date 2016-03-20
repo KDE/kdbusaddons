@@ -11,6 +11,11 @@ set(libkdbusaddons_SRCS
     ${libkdbusaddons_QM_LOADER}
 )
 
+
+qt5_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
+qt5_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)
+
+
 qt5_add_dbus_adaptor(libkdbusaddons_SRCS
    org.freedesktop.Application.xml
    kdbusservice.h

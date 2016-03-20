@@ -27,8 +27,10 @@
 
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
+
+#include "KDBusServiceIface.h"
+#include "FreeDesktopApplpicationIface.h"
 
 #include "config-kdbusaddons.h"
 
@@ -112,19 +114,21 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
         if (!d->registered) {
             if (options & Unique) {
                 // Already running so it's ok!
-                QDBusInterface iface(d->serviceName, objectPath);
-                iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
                 QVariantMap platform_data;
                 platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
                 if (QCoreApplication::arguments().count() > 1) {
-                    QDBusReply<int> reply = iface.call(QStringLiteral("CommandLine"), QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+                    OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
+                    iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
+                    QDBusReply<int> reply = iface.CommandLine(QCoreApplication::arguments(), QDir::currentPath(), platform_data);
                     if (reply.isValid()) {
                         exit(reply.value());
                     } else {
                         d->errorMessage = reply.error().message();
                     }
                 } else {
-                    QDBusReply<void> reply = iface.call(QStringLiteral("Activate"), platform_data);
+                    OrgFreedesktopApplicationInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
+                    iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
+                    QDBusReply<void> reply = iface.Activate(platform_data);
                     if (reply.isValid()) {
                         exit(0);
                     } else {
