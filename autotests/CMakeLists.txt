@@ -11,3 +11,10 @@ ecm_add_tests(
     LINK_LIBRARIES Qt5::Test KF5::DBusAddons
 )
 
+if (PythonModuleGeneration_FOUND AND EXISTS ${CMAKE_BINARY_DIR}/prefix/lib/python2.7/dist-packages)
+  add_test(NAME Py2${name} COMMAND python2 ${pythontest} ${CMAKE_BINARY_DIR}/prefix/lib/python2.7/dist-packages)
+endif()
+
+if (PythonModuleGeneration_FOUND AND EXISTS ${CMAKE_BINARY_DIR}/prefix/lib/python3.5/dist-packages)
+  add_test(NAME Py3${name} COMMAND python3 ${pythontest} ${CMAKE_BINARY_DIR}/prefix/lib/python3.5/dist-packages)
+endif()
