@@ -27,7 +27,7 @@ include(ECMMarkNonGuiExecutable)
 
 include(ECMPoQmTools)
 
-set(KF5_VERSION "5.21.0") # handled by release scripts
+set(KF5_VERSION "5.22.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KDBUSADDONS
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h"
