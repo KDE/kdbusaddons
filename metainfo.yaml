@@ -11,3 +11,7 @@ libraries:
  - qmake: KDBusAddons
    cmake: "KF5::DBusAddons"
 cmakename: KF5DBusAddons
+
+public_lib: true
+group: Frameworks
+subgroup: Tier 1
