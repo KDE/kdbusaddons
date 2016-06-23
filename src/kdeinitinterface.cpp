@@ -29,6 +29,9 @@
 #include <QStandardPaths>
 #include <QDebug>
 
+#include <QCoreApplication>
+#include <QLibraryInfo>
+
 void KDEInitInterface::ensureKdeinitRunning()
 {
     QDBusConnectionInterface *dbusDaemon = KDBusConnectionPool::threadConnection().interface();
@@ -46,9 +49,18 @@ void KDEInitInterface::ensureKdeinitRunning()
     }
     // Try to launch kdeinit.
     QString srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"));
+    // If not found in system paths, search other paths
     if (srv.isEmpty()) {
-        return;
+        const QStringList searchPaths = QStringList()
+            << QCoreApplication::applicationDirPath() // then look where our application binary is located
+            << QLibraryInfo::location(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
+        srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"), searchPaths);
+        if (srv.isEmpty()) {
+            qWarning() << "Can not find 'kdeinit5' executable at " << qgetenv("PATH") << searchPaths.join(QStringLiteral(", "));
+            return;
+        }
     }
+
     QStringList args;
 #ifndef Q_OS_WIN
     args += QStringLiteral("--suicide");
