@@ -89,8 +89,6 @@ class KDBusServicePrivate;
 class KDBUSADDONS_EXPORT KDBusService : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(StartupOption)
-    Q_FLAGS(StartupOptions)
 
 public:
     /** Options to control the behaviour of KDBusService */
@@ -117,8 +115,10 @@ public:
          */
         NoExitOnFailure = 4
     };
+    Q_ENUM(StartupOption)
 
     Q_DECLARE_FLAGS(StartupOptions, StartupOption)
+    Q_FLAG(StartupOptions)
 
     /**
      * Tries to register the current process to D-Bus at an address based on the
