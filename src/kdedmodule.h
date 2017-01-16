@@ -56,7 +56,7 @@ public:
     /**
      * Constructor
      */
-    explicit KDEDModule(QObject *parent = 0);
+    explicit KDEDModule(QObject *parent = nullptr);
 
     virtual ~KDEDModule();
 

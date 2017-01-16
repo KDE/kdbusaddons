@@ -79,7 +79,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
 {
     new KDBusServiceAdaptor(this);
     new KDBusServiceExtensionsAdaptor(this);
-    QDBusConnectionInterface *bus = 0;
+    QDBusConnectionInterface *bus = nullptr;
 
     if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
         d->errorMessage = QLatin1String("Session bus not found\n"
@@ -172,7 +172,7 @@ void KDBusService::setExitValue(int value)
 
 void KDBusService::unregister()
 {
-    QDBusConnectionInterface *bus = 0;
+    QDBusConnectionInterface *bus = nullptr;
     if (!d->registered || !QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
         return;
     }

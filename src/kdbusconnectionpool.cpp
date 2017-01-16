@@ -62,7 +62,7 @@ static QThreadStorage<KDBusConnectionPoolPrivate *> s_perThreadConnection;
 
 QDBusConnection KDBusConnectionPool::threadConnection()
 {
-    Q_ASSERT(QCoreApplication::instance() != 0);
+    Q_ASSERT(QCoreApplication::instance() != nullptr);
     if (QCoreApplication::instance()->thread() == QThread::currentThread()) {
         return QDBusConnection::sessionBus();
     }

@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    QDBusConnectionInterface *bus = 0;
+    QDBusConnectionInterface *bus = nullptr;
     if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
         qCritical() << "Session bus not found";
         return 125;

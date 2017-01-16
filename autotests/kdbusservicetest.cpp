@@ -36,7 +36,7 @@ class TestObject : public QObject
     Q_OBJECT
 public:
     TestObject(KDBusService *service)
-        : m_proc(0), m_callCount(0),
+        : m_proc(nullptr), m_callCount(0),
           m_service(service)
     {}
 
@@ -80,7 +80,7 @@ private Q_SLOTS:
     {
         Q_UNUSED(exitStatus)
         qDebug() << "Process exited with code" << exitCode;
-        m_proc = 0;
+        m_proc = nullptr;
         if (m_callCount == 2) {
             Q_ASSERT(exitCode == 4);
             secondCall();

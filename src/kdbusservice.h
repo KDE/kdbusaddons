@@ -135,7 +135,7 @@ public:
      * mode, and @c org.kde.kuiserver-1234 (if the process has PID @c 1234) in
      * @c Multiple mode.
      */
-    explicit KDBusService(StartupOptions options = Multiple, QObject *parent = 0);
+    explicit KDBusService(StartupOptions options = Multiple, QObject *parent = nullptr);
 
     /**
      * Destroys this object (but does not unregister the application).
