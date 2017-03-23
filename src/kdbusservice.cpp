@@ -170,6 +170,11 @@ void KDBusService::setExitValue(int value)
     d->exitValue = value;
 }
 
+QString KDBusService::serviceName() const
+{
+    return d->serviceName;
+}
+
 void KDBusService::unregister()
 {
     QDBusConnectionInterface *bus = nullptr;

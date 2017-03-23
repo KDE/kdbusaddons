@@ -157,6 +157,13 @@ public:
     bool isRegistered() const;
 
     /**
+     * Returns the name of the DBus service registered by this class.
+     * Mostly useful when using the option Multiple.
+     * @since 5.33
+     */
+    QString serviceName() const;
+
+    /**
      * Returns the error message from the D-Bus registration if it failed.
      *
      * Note that this is only useful when specifying the option NoExitOnFailure.
