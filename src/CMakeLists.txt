@@ -82,6 +82,27 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons COMPONENT Devel
 )
 
+if(BUILD_QCH)
+    ecm_add_qch(
+        KF5DBusAddons_QCH
+        NAME KDBusAddons
+        BASE_NAME KF5DBusAddons
+        VERSION ${KF5_VERSION}
+        ORG_DOMAIN org.kde
+        SOURCES # using only public headers, to cover only public API
+            ${KDBusAddons_HEADERS}
+        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
+        LINK_QCHS
+            Qt5DBus_QCH
+            Qt5Core_QCH
+        BLANK_MACROS
+            KDBUSADDONS_EXPORT
+            KDBUSADDONS_DEPRECATED
+        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        COMPONENT Devel
+    )
+endif()
 
 include(ECMGeneratePriFile)
 ecm_generate_pri_file(BASE_NAME KDBusAddons LIB_NAME KF5DBusAddons DEPS "dbus" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons)
