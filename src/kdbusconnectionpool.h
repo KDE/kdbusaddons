@@ -25,6 +25,11 @@
 
 #include <QtDBus/QDBusConnection>
 
+/**
+ * @namespace KDBusConnectionPool
+ * Provides utility functions working around the problem
+ * of QDBusConnection not being thread-safe.
+ */
 namespace KDBusConnectionPool
 {
 /**
