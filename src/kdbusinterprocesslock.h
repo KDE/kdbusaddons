@@ -30,6 +30,8 @@
 class KDBusInterProcessLockPrivate;
 
 /**
+ * @class KDBusInterProcessLock kdbusinterprocesslock.h <KDBusInterProcessLock>
+ *
  * @short A class for serializing access to a resource that is shared between multiple processes.
  *
  * This class can be used to serialize access to a resource between

@@ -31,6 +31,8 @@
 class KDBusServicePrivate;
 
 /**
+ * @class KDBusService kdbusservice.h <KDBusService>
+ *
  * KDBusService takes care of registering the current process with D-Bus.
  *
  * This registers the application at a predictable location on D-Bus, registers
