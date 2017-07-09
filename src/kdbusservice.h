@@ -210,9 +210,7 @@ Q_SIGNALS:
      *
      * A typical implementation of the slot would be
      * @code
-     *    QStringList args(arguments);
-     *    args.prepend(qApp->applicationFilePath()); // QCommandLineParser expects the executable name first
-     *    commandLineParser->parse(args); // same QCommandLineParser instance as the one used in main()
+     *    commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
      *    handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
      *    // and for GUI applications, also terminate startup notification and activate the mainwindow:
      *    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
