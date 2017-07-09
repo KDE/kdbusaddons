@@ -205,17 +205,24 @@ Q_SIGNALS:
      * In single-window applications, the connected signal should typically
      * raise the window.
      *
-     * @param arguments  The arguments the executable was called with.
+     * @param arguments  The arguments the executable was called with, starting with the executable file name.
      *                   See QCoreApplication::arguments().
+     *                   This can also be empty.
      *
      * A typical implementation of the slot would be
      * @code
-     *    commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
-     *    handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
+     *    if (!arguments.isEmpty()) {
+     *        commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
+     *        handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
+     *    }
      *    // and for GUI applications, also terminate startup notification and activate the mainwindow:
      *    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
      *    KWindowSystem::forceActiveWindow(mainWindow->winId());
      * @endcode
+     *
+     * If you're using the builtin handling of --help and --version in QCommandLineParser,
+     * you should call parser.process(arguments) before creating the KDBusService instance,
+     * since parse() doesn't handle those (and exiting the already-running instance would be wrong anyway).
      *
      * @see setExitValue()
      */
