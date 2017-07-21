@@ -36,7 +36,7 @@ class KDBusInterProcessLockPrivate;
  *
  * This class can be used to serialize access to a resource between
  * multiple processes. Instead of using lock files, which could
- * become stale easily, the registration of dummy dbus services is used
+ * become stale easily, the registration of dummy D-Bus services is used
  * to allow only one process at a time to access the resource.
  *
  * Example:

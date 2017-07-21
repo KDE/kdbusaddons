@@ -78,7 +78,7 @@ class KDBusServicePrivate;
      QApplication app(argc, argv);
      app.setApplicationName("kuiserver");
      app.setOrganizationDomain("kde.org");
-     // Create your dbus objects here
+     // Create your D-Bus objects here
      // ...
      KDBusService service(KDBusService::Unique);
      // If this point is reached, this is the only running instance
@@ -126,7 +126,7 @@ public:
      * Tries to register the current process to D-Bus at an address based on the
      * application name and organization domain.
      *
-     * The DBus service name is the reversed organization domain, followed by
+     * The D-Bus service name is the reversed organization domain, followed by
      * the application name.  If @p options includes the @c Multiple flag, the
      * application PID will be appended.  For example,
      * @code
@@ -159,7 +159,7 @@ public:
     bool isRegistered() const;
 
     /**
-     * Returns the name of the DBus service registered by this class.
+     * Returns the name of the D-Bus service registered by this class.
      * Mostly useful when using the option Multiple.
      * @since 5.33
      */

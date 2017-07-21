@@ -43,7 +43,7 @@ namespace KDBusConnectionPool
  * object, which means whichever thread this is called
  * from must have both an event loop and be as long-lived as
  * the object using it. If either condition is not met, the
- * returned QDBusConnection will not send or receive DBus
+ * returned QDBusConnection will not send or receive D-Bus
  * events (calls, return values, etc).
  *
  * Using this within libraries can create complexities for

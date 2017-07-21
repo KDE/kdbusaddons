@@ -1,6 +1,6 @@
 # KDBusAddons
 
-Convenience classes for DBus
+Convenience classes for D-Bus
 
 ## Introduction
 

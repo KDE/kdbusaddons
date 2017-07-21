@@ -222,7 +222,7 @@ void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_dat
 void KDBusService::ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data)
 {
     Q_UNUSED(platform_data);
-    // This is a workaround for DBus not supporting null variants.
+    // This is a workaround for D-Bus not supporting null variants.
     const QVariant param = maybeParameter.count() == 1 ? maybeParameter.first() : QVariant();
     emit activateActionRequested(action_name, param);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))

@@ -71,7 +71,7 @@ public:
     QString moduleName() const;
 
     /**
-     * Returns the module being called by this dbus message.
+     * Returns the module being called by this D-Bus message.
      * Useful for autoloading modules in kded and similar daemons.
      * @since 5.7
      */
