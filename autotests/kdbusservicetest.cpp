@@ -135,6 +135,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName(QStringLiteral("kdbusservicetest"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
 
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+
     KDBusService service(KDBusService::Unique);
     TestObject testObject(&service);
     QObject::connect(&service, SIGNAL(activateRequested(QStringList, QString)),

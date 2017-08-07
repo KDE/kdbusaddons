@@ -109,6 +109,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName(QStringLiteral("kdbusinterprocesslocktest"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
 
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+
     KDBusInterProcessLock lock(QStringLiteral("myfunnylock"));
 
     if (argc >= 2) {
