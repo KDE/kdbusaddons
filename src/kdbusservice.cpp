@@ -96,16 +96,14 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
         if (options & Multiple) {
             bool inSandbox = false;
             if (!qEnvironmentVariableIsEmpty("XDG_RUNTIME_DIR")) {
-                const QByteArray runtimeDir = qgetenv("XDG_RUNTIME_DIR");
-                if (!runtimeDir.isEmpty()) {
-                    inSandbox = QFileInfo::exists(QString::fromUtf8(runtimeDir) + QLatin1String("/flatpak-info"));
-                }
+                inSandbox = QFileInfo::exists(QString::fromUtf8(qgetenv("XDG_RUNTIME_DIR")) + QLatin1String("/flatpak-info"));
             }
 
-            if (inSandbox)
+            if (inSandbox) {
                 d->serviceName += QStringLiteral(".kdbus-") + QDBusConnection::sessionBus().baseService().replace(QRegularExpression(QStringLiteral("[\\.:]")), QStringLiteral("_"));
-            else
+            } else {
                 d->serviceName += QLatin1Char('-') + QString::number(QCoreApplication::applicationPid());
+            }
         }
 
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/MainApplication"), QCoreApplication::instance(),
