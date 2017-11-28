@@ -21,13 +21,13 @@
 
 #include "kdeinitinterface.h"
 #include "kdbusconnectionpool.h"
+#include "kdbusaddons_debug.h"
 
 #include <QDBusConnectionInterface>
 #include <QDir>
 #include <QLockFile>
 #include <QProcess>
 #include <QStandardPaths>
-#include <QDebug>
 
 #include <QCoreApplication>
 #include <QLibraryInfo>
@@ -38,7 +38,7 @@ void KDEInitInterface::ensureKdeinitRunning()
     if (dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"))) {
         return;
     }
-    qDebug() << "klauncher not running... launching kdeinit";
+    qCDebug(KDBUSADDONS_LOG) << "klauncher not running... launching kdeinit";
 
     QLockFile lock(QDir::tempPath() + QLatin1Char('/') + QLatin1String("startkdeinitlock"));
     if (!lock.tryLock()) {
@@ -56,7 +56,7 @@ void KDEInitInterface::ensureKdeinitRunning()
             << QLibraryInfo::location(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
         srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"), searchPaths);
         if (srv.isEmpty()) {
-            qWarning() << "Can not find 'kdeinit5' executable at " << qgetenv("PATH") << searchPaths.join(QStringLiteral(", "));
+            qCWarning(KDBUSADDONS_LOG) << "Can not find 'kdeinit5' executable at " << qgetenv("PATH") << searchPaths.join(QStringLiteral(", "));
             return;
         }
     }

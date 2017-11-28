@@ -10,7 +10,7 @@ set(libkdbusaddons_SRCS
     kdeinitinterface.cpp
     ${libkdbusaddons_QM_LOADER}
 )
-
+ecm_qt_declare_logging_category(libkdbusaddons_SRCS HEADER kdbusaddons_debug.h IDENTIFIER KDBUSADDONS_LOG CATEGORY_NAME kf5.kdbusaddons)
 
 qt5_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
 qt5_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)

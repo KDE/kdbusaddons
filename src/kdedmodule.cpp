@@ -21,8 +21,8 @@
 */
 
 #include "kdedmodule.h"
+#include "kdbusaddons_debug.h"
 
-#include <QDebug>
 #include <QTimer>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
@@ -51,7 +51,7 @@ void KDEDModule::setModuleName(const QString &name)
     QDBusObjectPath realPath(QLatin1String("/modules/") + d->moduleName);
 
     if (realPath.path().isEmpty()) {
-        qWarning() << "The kded module name" << name << "is invalid!";
+        qCWarning(KDBUSADDONS_LOG) << "The kded module name" << name << "is invalid!";
         return;
     }
 
@@ -71,14 +71,14 @@ void KDEDModule::setModuleName(const QString &name)
         regOptions = QDBusConnection::ExportScriptableSlots
                      | QDBusConnection::ExportScriptableProperties
                      | QDBusConnection::ExportAdaptors;
-        qDebug() << "Registration of kded module" << d->moduleName << "without D-Bus interface.";
+        qCDebug(KDBUSADDONS_LOG) << "Registration of kded module" << d->moduleName << "without D-Bus interface.";
     }
 
     if (!QDBusConnection::sessionBus().registerObject(realPath.path(), this, regOptions)) {
         // Happens for khotkeys but the module works. Need some time to investigate.
-        qDebug() << "registerObject() returned false for" << d->moduleName;
+        qCDebug(KDBUSADDONS_LOG) << "registerObject() returned false for" << d->moduleName;
     } else {
-        //qDebug() << "registerObject() successful for" << d->moduleName;
+        //qCDebug(KDBUSADDONS_LOG) << "registerObject() successful for" << d->moduleName;
         // Fix deadlock with Qt 5.6: this has to be delayed until the dbus thread is unlocked
         QMetaObject::invokeMethod(this, "moduleRegistered", Qt::QueuedConnection, Q_ARG(QDBusObjectPath, realPath));
     }
