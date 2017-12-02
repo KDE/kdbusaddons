@@ -1,0 +1,50 @@
+# Indonesian translations for kquitapp package.
+# Copyright (C) 2010 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kquitapp package.
+# Andhika Padmawan <andhika.padmawan@gmail.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kquitapp\n"
+"Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Qt-Contexts: true\n"
+
+#: tools/kquitapp/kquitapp.cpp:31
+msgctxt "main|"
+msgid "Quit a D-Bus enabled application easily"
+msgstr ""
+
+#: tools/kquitapp/kquitapp.cpp:32
+msgctxt "main|"
+msgid "Full service name, overrides application name provided"
+msgstr ""
+
+#: tools/kquitapp/kquitapp.cpp:33
+msgctxt "main|"
+msgid "Path in the D-Bus interface to use"
+msgstr ""
+
+#: tools/kquitapp/kquitapp.cpp:34
+msgctxt "main|"
+msgid "The name of the application to quit"
+msgstr ""
+
+#: tools/kquitapp/kquitapp.cpp:57
+#, qt-format
+msgctxt "main|"
+msgid "Application %1 could not be found using service %2 and path %3."
+msgstr ""
+
+#: tools/kquitapp/kquitapp.cpp:63
+#, qt-format
+msgctxt "main|"
+msgid ""
+"Quitting application %1 failed. Error reported was:\n"
+"\n"
+"     %2 : %3"
+msgstr ""
