@@ -23,7 +23,7 @@
 #ifndef KDBUSINTERPROCESSLOCK_H
 #define KDBUSINTERPROCESSLOCK_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <kdbusaddons_export.h>
 

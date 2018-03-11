@@ -23,7 +23,7 @@
 
 #include <kdbusaddons_export.h>
 
-#include <QtDBus/QDBusConnection>
+#include <QDBusConnection>
 
 /**
  * @namespace KDBusConnectionPool

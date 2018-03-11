@@ -24,8 +24,8 @@
 
 #include <kdbusaddons_export.h>
 
-#include <QtCore/QObject>
-#include <QtCore/QByteArray>
+#include <QObject>
+#include <QByteArray>
 
 class KDEDModulePrivate;
 class Kded;

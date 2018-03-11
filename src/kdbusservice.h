@@ -23,8 +23,8 @@
 #ifndef KDBUSSERVICE_H
 #define KDBUSSERVICE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
+#include <QObject>
+#include <QUrl>
 
 #include <kdbusaddons_export.h>
 

@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QCoreApplication>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusReply>
+#include <QDBusInterface>
+#include <QDBusReply>
 
 int main(int argc, char **argv)
 {

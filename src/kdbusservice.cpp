@@ -22,12 +22,12 @@
 
 #include "kdbusservice.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
+#include <QCoreApplication>
+#include <QDebug>
 
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusReply>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusReply>
 
 #include "KDBusServiceIface.h"
 #include "FreeDesktopApplpicationIface.h"

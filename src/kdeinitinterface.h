@@ -22,8 +22,8 @@
 #ifndef KDEINIT_IFACE_H
 #define KDEINIT_IFACE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
+#include <QObject>
+#include <QUrl>
 
 #include <kdbusaddons_export.h>
 

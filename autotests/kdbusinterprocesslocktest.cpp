@@ -17,11 +17,11 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
-#include <QtCore/QFile>
-#include <QtCore/QProcess>
-#include <QtCore/QTimer>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFile>
+#include <QProcess>
+#include <QTimer>
 
 #include <QtTest>
 
