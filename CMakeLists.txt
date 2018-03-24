@@ -16,7 +16,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(ECMQtDeclareLoggingCategory)
 
-set(REQUIRED_QT_VERSION 5.7.0)
+set(REQUIRED_QT_VERSION 5.8.0)
 find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE)
 
