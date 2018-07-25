@@ -41,10 +41,17 @@ void KDEInitInterface::ensureKdeinitRunning()
     qCDebug(KDBUSADDONS_LOG) << "klauncher not running... launching kdeinit";
 
     QLockFile lock(QDir::tempPath() + QLatin1Char('/') + QLatin1String("startkdeinitlock"));
+    // If we can't get the lock, then someone else is already in the process of starting kdeinit.
     if (!lock.tryLock()) {
-        lock.lock();
+        // Wait for that to happen, by locking again 30 seconds max.
+        if (!lock.tryLock(30000))
+        {
+            qCWarning(KDBUSADDONS_LOG) << "'kdeinit5' is taking more than 30 seconds to start.";
+            return;
+        }
+        // Check that the DBus name is up, i.e. the other process did manage to do it successfully.
         if (dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"))) {
-            return;    // whoever held the lock has already started it
+            return;
         }
     }
     // Try to launch kdeinit.
@@ -65,6 +72,7 @@ void KDEInitInterface::ensureKdeinitRunning()
 #ifndef Q_OS_WIN
     args += QStringLiteral("--suicide");
 #endif
+    // NOTE: kdeinit5 is supposed to finish quickly, certainly in less than 30 seconds.
     QProcess::execute(srv, args);
 }
 
