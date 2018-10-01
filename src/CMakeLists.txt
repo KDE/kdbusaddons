@@ -62,7 +62,6 @@ if (PythonModuleGeneration_FOUND)
     TARGET KF5::DBusAddons
     PYTHONNAMESPACE PyKF5
     MODULENAME KDBusAddons
-    INSTALL_DIR_SUFFIX ${KDE_INSTALL_PYTHONBINDINGSDIR}
     SIP_DEPENDS
       QtDBus/QtDBusmod.sip
     HEADERS
