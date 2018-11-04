@@ -139,8 +139,8 @@ int main(int argc, char *argv[])
 
     KDBusService service(KDBusService::Unique);
     TestObject testObject(&service);
-    QObject::connect(&service, SIGNAL(activateRequested(QStringList, QString)),
-                     &testObject, SLOT(slotActivateRequested(QStringList, QString)));
+    QObject::connect(&service, SIGNAL(activateRequested(QStringList,QString)),
+                     &testObject, SLOT(slotActivateRequested(QStringList,QString)));
 
     // Testcase for the problem coming from the old fork-on-startup solution:
     // the "Activate" D-Bus call would time out if the app took too much time
