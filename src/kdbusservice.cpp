@@ -2,6 +2,7 @@
 
    Copyright (c) 2011 David Faure <faure@kde.org>
    Copyright (c) 2011 Kevin Ottens <ervin@kde.org>
+   Copyright (c) 2019 Harald Sitter <sitter@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -74,26 +75,50 @@ public:
     int exitValue;
 };
 
-KDBusService::KDBusService(StartupOptions options, QObject *parent)
-    : QObject(parent), d(new KDBusServicePrivate)
-{
-    new KDBusServiceAdaptor(this);
-    new KDBusServiceExtensionsAdaptor(this);
-    QDBusConnectionInterface *bus = nullptr;
+// Wraps a serviceName registration.
+class Registration : public QObject {
+    Q_OBJECT
+public:
+    enum class Register {
+        RegisterWitoutQueue,
+        RegisterWithQueue
+    };
 
-    if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
-        d->errorMessage = QLatin1String("Session bus not found\n"
-                                        "To circumvent this problem try the following command (with Linux and bash)\n"
-                                        "export $(dbus-launch)");
+    Registration(KDBusService *s_, KDBusServicePrivate *d_, KDBusService::StartupOptions options_)
+        : s(s_)
+        , d(d_)
+        , options(options_)
+    {
+        if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
+            d->errorMessage = QLatin1String("Session bus not found\n"
+                                            "To circumvent this problem try the following command (with Linux and bash)\n"
+                                            "export $(dbus-launch)");
+        } else {
+            generateServiceName();
+        }
     }
 
-    if (bus) {
+    void run() {
+        if (bus) {
+            registerOnBus();
+        }
+
+        if (!d->registered && ((options & KDBusService::NoExitOnFailure) == 0)) {
+            qCritical() << d->errorMessage;
+            exit(1);
+        }
+    }
+
+    private:
+
+    void generateServiceName()
+    {
         d->serviceName = d->generateServiceName();
-        QString objectPath = QLatin1Char('/') + d->serviceName;
+        objectPath = QLatin1Char('/') + d->serviceName;
         objectPath.replace(QLatin1Char('.'), QLatin1Char('/'));
         objectPath.replace(QLatin1Char('-'), QLatin1Char('_')); // see spec change at https://bugs.freedesktop.org/show_bug.cgi?id=95129
 
-        if (options & Multiple) {
+        if (options & KDBusService::Multiple) {
             bool inSandbox = false;
             if (!qEnvironmentVariableIsEmpty("XDG_RUNTIME_DIR")) {
                 inSandbox = QFileInfo::exists(QString::fromUtf8(qgetenv("XDG_RUNTIME_DIR")) + QLatin1String("/flatpak-info"));
@@ -105,57 +130,135 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
                 d->serviceName += QLatin1Char('-') + QString::number(QCoreApplication::applicationPid());
             }
         }
+    }
 
-        QDBusConnection::sessionBus().registerObject(QStringLiteral("/MainApplication"), QCoreApplication::instance(),
-                QDBusConnection::ExportAllSlots |
-                QDBusConnection::ExportScriptableProperties |
-                QDBusConnection::ExportAdaptors);
-        QDBusConnection::sessionBus().registerObject(objectPath, this,
-                QDBusConnection::ExportAdaptors);
+    void registerOnBus()
+    {
+        auto bus = QDBusConnection::sessionBus();
+        bool objectRegistered = false;
+        objectRegistered = bus.registerObject(QStringLiteral("/MainApplication"),
+                                              QCoreApplication::instance(),
+                                              QDBusConnection::ExportAllSlots |
+                                              QDBusConnection::ExportScriptableProperties |
+                                              QDBusConnection::ExportAdaptors);
+        if (!objectRegistered) {
+            qWarning() << "Failed to register /MainApplication on DBus";
+            return;
+        }
 
-        d->registered = bus->registerService(d->serviceName) == QDBusConnectionInterface::ServiceRegistered;
+        objectRegistered = bus.registerObject(objectPath, s, QDBusConnection::ExportAdaptors);
+        if (!objectRegistered) {
+            qWarning() << "Failed to register" << objectPath << "on DBus";
+            return;
+        }
 
-        if (!d->registered) {
-            if (options & Unique) {
-                // Already running so it's ok!
-                QVariantMap platform_data;
-                platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
-                if (QCoreApplication::arguments().count() > 1) {
-                    OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
-                    iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
-                    QDBusReply<int> reply = iface.CommandLine(QCoreApplication::arguments(), QDir::currentPath(), platform_data);
-                    if (reply.isValid()) {
-                        exit(reply.value());
-                    } else {
-                        d->errorMessage = reply.error().message();
-                    }
-                } else {
-                    OrgFreedesktopApplicationInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
-                    iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
-                    QDBusReply<void> reply = iface.Activate(platform_data);
-                    if (reply.isValid()) {
-                        exit(0);
-                    } else {
-                        d->errorMessage = reply.error().message();
-                    }
-                }
-            } else {
-                d->errorMessage = QLatin1String("Couldn't register name '")
-                                  + d->serviceName
-                                  + QLatin1String("' with DBUS - another process owns it already!");
-            }
+        attemptRegistration();
 
-        } else {
+        if (d->registered) {
             if (QCoreApplication *app = QCoreApplication::instance()) {
-                connect(app, &QCoreApplication::aboutToQuit, this, &KDBusService::unregister);
+                connect(app, &QCoreApplication::aboutToQuit,
+                        s, &KDBusService::unregister);
             }
         }
     }
 
-    if (!d->registered && ((options & NoExitOnFailure) == 0)) {
-        qCritical() << d->errorMessage;
-        exit(1);
+    void attemptRegistration()
+    {
+        Q_ASSERT(!d->registered);
+
+        auto queueOption = QDBusConnectionInterface::DontQueueService;
+
+        if (options & KDBusService::Unique) {
+            // When a process crashes and gets auto-restarted by KCrash we may
+            // be in this code path "too early". There is a bit of a delay
+            // between the restart and the previous process dropping off of the
+            // bus and thus releasing its registered names. As a result there
+            // is a good chance that if we wait a bit the name will shortly
+            // become registered.
+
+            queueOption = QDBusConnectionInterface::QueueService;
+
+            connect(bus, &QDBusConnectionInterface::serviceRegistered,
+                    this, [this](const QString &service) {
+                if (service != d->serviceName) {
+                    return;
+                }
+
+                d->registered = true;
+                registrationLoop.quit();
+            });
+        }
+
+        d->registered =
+                (bus->registerService(d->serviceName, queueOption) == QDBusConnectionInterface::ServiceRegistered);
+
+        if (d->registered) {
+            return;
+        }
+
+        if (options & KDBusService::Unique) {
+            // Already running so it's ok!
+            QVariantMap platform_data;
+            platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
+            if (QCoreApplication::arguments().count() > 1) {
+                OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
+                iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
+                QDBusReply<int> reply = iface.CommandLine(QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+                if (reply.isValid()) {
+                    exit(reply.value());
+                } else {
+                    d->errorMessage = reply.error().message();
+                }
+            } else {
+                OrgFreedesktopApplicationInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
+                iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
+                QDBusReply<void> reply = iface.Activate(platform_data);
+                if (reply.isValid()) {
+                    exit(0);
+                } else {
+                    d->errorMessage = reply.error().message();
+                }
+            }
+
+            // service did not respond in a valid way....
+            // let's wait to see if our queued registration finishes perhaps.
+            waitForRegistration();
+        }
+
+        if (!d->registered) { // either multi service or failed to reclaim name
+            d->errorMessage = QLatin1String("Couldn't register name '")
+                    + d->serviceName
+                    + QLatin1String("' with DBUS - another process owns it already!");
+        }
     }
+
+    void waitForRegistration()
+    {
+        QTimer quitTimer;
+        // Wait a bit longer when we know this instance was restarted. There's
+        // a very good chance we'll eventually get the name once the defunct
+        // process closes its sockets.
+        quitTimer.start(qEnvironmentVariableIsSet("KCRASH_AUTO_RESTARTED") ? 8000 : 2000);
+        connect(&quitTimer, &QTimer::timeout, &registrationLoop, &QEventLoop::quit);
+        registrationLoop.exec();
+    }
+
+    QDBusConnectionInterface *bus = nullptr;
+    KDBusService *s = nullptr;
+    KDBusServicePrivate *d = nullptr;
+    KDBusService::StartupOptions options;
+    QEventLoop registrationLoop;
+    QString objectPath;
+};
+
+KDBusService::KDBusService(StartupOptions options, QObject *parent)
+    : QObject(parent), d(new KDBusServicePrivate)
+{
+    new KDBusServiceAdaptor(this);
+    new KDBusServiceExtensionsAdaptor(this);
+
+    Registration registration(this, d, options);
+    registration.run();
 }
 
 KDBusService::~KDBusService()
@@ -240,3 +343,5 @@ int KDBusService::CommandLine(const QStringList &arguments, const QString &worki
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     return d->exitValue;
 }
+
+#include "kdbusservice.moc"
