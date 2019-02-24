@@ -59,7 +59,7 @@ public:
         if (parts.isEmpty()) {
             reversedDomain = QStringLiteral("local.");
         } else {
-            Q_FOREACH (const QString &part, parts) {
+            for (const QString &part : parts) {
                 reversedDomain.prepend(QLatin1Char('.'));
                 reversedDomain.prepend(part);
             }
