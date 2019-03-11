@@ -85,7 +85,7 @@ void KDBusInterProcessLock::unlock()
 void KDBusInterProcessLock::waitForLockGranted()
 {
     QEventLoop loop;
-    connect(this, SIGNAL(lockGranted(KDBusInterProcessLock*)), &loop, SLOT(quit()));
+    connect(this, &KDBusInterProcessLock::lockGranted, &loop, &QEventLoop::quit);
     loop.exec();
 }
 

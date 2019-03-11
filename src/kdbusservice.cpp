@@ -147,7 +147,7 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
 
         } else {
             if (QCoreApplication *app = QCoreApplication::instance()) {
-                connect(app, SIGNAL(aboutToQuit()), this, SLOT(unregister()));
+                connect(app, &QCoreApplication::aboutToQuit, this, &KDBusService::unregister);
             }
         }
     }
