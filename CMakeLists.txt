@@ -86,6 +86,6 @@ install(EXPORT KF5DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  F
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}  COMPONENT Devel )
 
 # contains list of debug categories, for kdebugsettings
-install(FILES kdbusaddons.categories DESTINATION ${KDE_INSTALL_CONFDIR})
+install(FILES kdbusaddons.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
