@@ -88,5 +88,3 @@ int main(int argc, char *argv[])
     qDebug() << "exiting deadservice";
     return ret;
 }
-
-#include "kdbussimpleservice.moc"
