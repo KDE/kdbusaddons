@@ -23,7 +23,6 @@
 #include "kdedmodule.h"
 #include "kdbusaddons_debug.h"
 
-#include <QTimer>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
 #include <QDBusMessage>

@@ -19,11 +19,9 @@
 
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
-#include <QDBusInterface>
 #include <QDBusServiceWatcher>
 #include <QDebug>
 #include <QProcess>
-#include <QSignalSpy>
 #include <QTest>
 
 #include <signal.h>

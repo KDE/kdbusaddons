@@ -21,9 +21,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QProcess>
-#include <QTimer>
-
-#include <QtTest>
+#include <QTest>
 
 #include <kdbusinterprocesslock.h>
 
