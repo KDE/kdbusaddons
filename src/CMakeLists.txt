@@ -94,6 +94,8 @@ if(BUILD_QCH)
         LINK_QCHS
             Qt5DBus_QCH
             Qt5Core_QCH
+        INCLUDE_DIRS
+            ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
             KDBUSADDONS_EXPORT
             KDBUSADDONS_DEPRECATED
