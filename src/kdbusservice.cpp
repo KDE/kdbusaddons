@@ -196,7 +196,14 @@ public:
             return;
         }
 
-        if (options & KDBusService::Unique) {
+        if (options & KDBusService::Replace) {
+            auto message = QDBusMessage::createMethodCall(d->serviceName,
+                                                    QStringLiteral("/MainApplication"),
+                                                    QStringLiteral("org.qtproject.Qt.QCoreApplication"),
+                                                    QStringLiteral("quit"));
+            QDBusConnection::sessionBus().asyncCall(message);
+            waitForRegistration();
+        } else if (options & KDBusService::Unique) {
             // Already running so it's ok!
             QVariantMap platform_data;
             platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));

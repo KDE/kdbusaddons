@@ -115,7 +115,17 @@ public:
          * The exit value of a @c Unique instance can be set from the running
          * instance with setExitValue(), the default value is @c 0.
          */
-        NoExitOnFailure = 4
+        NoExitOnFailure = 4,
+        /**
+         * Indicates that if there's already a unique service running, to be quit and replaced
+         * with our own.
+         *
+         * If exported, it will try first quitting the service calling org.qtproject.Qt.QCoreApplication.quit,
+         * which is exported by @class KDBusService by default.
+         *
+         * @since 5.65
+         */
+        Replace = 8
     };
     Q_ENUM(StartupOption)
 
