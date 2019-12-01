@@ -95,13 +95,14 @@ class KDBUSADDONS_EXPORT KDBusService : public QObject
 public:
     /** Options to control the behaviour of KDBusService */
     enum StartupOption {
-        /** Indicates that only one instance of this application should ever
-         * exist.
+        /**
+         * Indicates that only one instance of this application should ever exist.
          *
          * Cannot be combined with @c Multiple.
          */
         Unique = 1,
-        /** Indicates that multiple instances of the application may exist.
+        /**
+         * Indicates that multiple instances of the application may exist.
          *
          * Cannot be combined with @c Unique.  This is the default.
          */
@@ -120,8 +121,8 @@ public:
          * Indicates that if there's already a unique service running, to be quit and replaced
          * with our own.
          *
-         * If exported, it will try first quitting the service calling org.qtproject.Qt.QCoreApplication.quit,
-         * which is exported by @class KDBusService by default.
+         * If exported, it will try first quitting the service calling @c org.qtproject.Qt.QCoreApplication.quit,
+         * which is exported by KDBusService by default.
          *
          * @since 5.65
          */
@@ -230,7 +231,7 @@ Q_SIGNALS:
      *    KWindowSystem::forceActiveWindow(mainWindow->winId());
      * @endcode
      *
-     * If you're using the builtin handling of --help and --version in QCommandLineParser,
+     * If you're using the builtin handling of @c --help and @c --version in QCommandLineParser,
      * you should call parser.process(arguments) before creating the KDBusService instance,
      * since parse() doesn't handle those (and exiting the already-running instance would be wrong anyway).
      *
