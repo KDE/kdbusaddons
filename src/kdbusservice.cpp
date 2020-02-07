@@ -119,11 +119,7 @@ public:
         objectPath.replace(QLatin1Char('-'), QLatin1Char('_')); // see spec change at https://bugs.freedesktop.org/show_bug.cgi?id=95129
 
         if (options & KDBusService::Multiple) {
-            bool inSandbox = false;
-            if (!qEnvironmentVariableIsEmpty("XDG_RUNTIME_DIR")) {
-                inSandbox = QFileInfo::exists(QString::fromUtf8(qgetenv("XDG_RUNTIME_DIR")) + QLatin1String("/flatpak-info"));
-            }
-
+            const bool inSandbox = QFileInfo::exists(QStringLiteral("/flatpak-info"));
             if (inSandbox) {
                 d->serviceName += QStringLiteral(".kdbus-") + QDBusConnection::sessionBus().baseService().replace(QRegularExpression(QStringLiteral("[\\.:]")), QStringLiteral("_"));
             } else {
