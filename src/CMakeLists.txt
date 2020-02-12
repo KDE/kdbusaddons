@@ -10,7 +10,13 @@ set(libkdbusaddons_SRCS
     kdeinitinterface.cpp
     ${libkdbusaddons_QM_LOADER}
 )
-ecm_qt_declare_logging_category(libkdbusaddons_SRCS HEADER kdbusaddons_debug.h IDENTIFIER KDBUSADDONS_LOG CATEGORY_NAME kf5.kdbusaddons)
+ecm_qt_declare_logging_category(libkdbusaddons_SRCS
+    HEADER kdbusaddons_debug.h
+    IDENTIFIER KDBUSADDONS_LOG
+    CATEGORY_NAME kf5.kdbusaddons
+    DESCRIPTION "KDBusAddons"
+    EXPORT KDBUSADDONS
+)
 
 qt5_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
 qt5_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)
@@ -79,6 +85,12 @@ install(FILES
     ${KDBusAddons_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons COMPONENT Devel
+)
+
+ecm_qt_install_logging_categories(
+    EXPORT KDBUSADDONS
+    FILE kdbusaddons.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
 )
 
 if(BUILD_QCH)
