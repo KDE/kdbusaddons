@@ -10,12 +10,14 @@
 
 #include <kdbusaddons_export.h>
 
+#if KDBUSADDONS_ENABLE_DEPRECATED_SINCE(5, 68)
 #include <QDBusConnection>
 
 /**
  * @namespace KDBusConnectionPool
  * Provides utility functions working around the problem
  * of QDBusConnection not being thread-safe.
+ * @deprecated since 5.68 QDBusConnection has been fixed.
  */
 namespace KDBusConnectionPool
 {
@@ -41,9 +43,14 @@ namespace KDBusConnectionPool
  * ends up being called from. Library developers using
  * this facility are strongly encouraged to note this
  * caveat in the library's documentation.
+ *
+ * @deprecated since 5.68 Use QDBusConnection::sessionBus() instead.
+ * QDBusConnection is nowadays safe to use in multiple threads as well.
  */
+KDBUSADDONS_DEPRECATED_VERSION(5, 68, "Use QDBusConnection::sessionBus()")
 KDBUSADDONS_EXPORT QDBusConnection threadConnection();
 }
+#endif
 
 #endif
 

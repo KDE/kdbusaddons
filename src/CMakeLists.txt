@@ -36,7 +36,14 @@ qt5_add_dbus_adaptor(libkdbusaddons_SRCS
    KDBusServiceExtensionsAdaptor)
 
 add_library(KF5DBusAddons ${libkdbusaddons_SRCS})
-generate_export_header(KF5DBusAddons BASE_NAME KDBusAddons)
+ecm_generate_export_header(KF5DBusAddons
+    BASE_NAME KDBusAddons
+    GROUP_BASE_NAME KF
+    VERSION ${KF5_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    DEPRECATION_VERSIONS 5.68
+    EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
+)
 add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
 
 

@@ -11,6 +11,7 @@
 #include <QCoreApplication>
 #include <QThread>
 
+#if KDBUSADDONS_BUILD_DEPRECATED_SINCE(5, 68)
 namespace
 {
 QAtomicInt s_connectionCounter;
@@ -59,4 +60,4 @@ QDBusConnection KDBusConnectionPool::threadConnection()
 
     return s_perThreadConnection.localData()->connection();
 }
-
+#endif

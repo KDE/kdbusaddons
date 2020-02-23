@@ -7,9 +7,9 @@
 */
 
 #include "kdeinitinterface.h"
-#include "kdbusconnectionpool.h"
 #include "kdbusaddons_debug.h"
 
+#include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDir>
 #include <QLockFile>
@@ -21,7 +21,7 @@
 
 void KDEInitInterface::ensureKdeinitRunning()
 {
-    QDBusConnectionInterface *dbusDaemon = KDBusConnectionPool::threadConnection().interface();
+    QDBusConnectionInterface *dbusDaemon = QDBusConnection::sessionBus().interface();
     if (dbusDaemon->isServiceRegistered(QStringLiteral("org.kde.klauncher5"))) {
         return;
     }

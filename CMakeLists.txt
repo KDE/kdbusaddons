@@ -25,6 +25,7 @@ include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMGenerateExportHeader)
 include(ECMMarkNonGuiExecutable)
 include(ECMAddQch)
 
@@ -41,6 +42,8 @@ if(Qt5X11Extras_FOUND)
 else()
     set(HAVE_X11 FALSE)
 endif()
+
+set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
