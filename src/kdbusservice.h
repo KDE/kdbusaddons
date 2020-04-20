@@ -80,7 +80,10 @@ class KDBUSADDONS_EXPORT KDBusService : public QObject
     Q_OBJECT
 
 public:
-    /** Options to control the behaviour of KDBusService */
+    /**
+     * Options to control the behaviour of KDBusService
+     * @see StartupOptions
+     */
     enum StartupOption {
         /**
          * Indicates that only one instance of this application should ever exist.
@@ -117,6 +120,9 @@ public:
     };
     Q_ENUM(StartupOption)
 
+    /**
+     * Stores a combination of #StartupOption values.
+     */
     Q_DECLARE_FLAGS(StartupOptions, StartupOption)
     Q_FLAG(StartupOptions)
 
