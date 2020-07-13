@@ -13,7 +13,8 @@ set(libkdbusaddons_SRCS
 ecm_qt_declare_logging_category(libkdbusaddons_SRCS
     HEADER kdbusaddons_debug.h
     IDENTIFIER KDBUSADDONS_LOG
-    CATEGORY_NAME kf5.kdbusaddons
+    CATEGORY_NAME kf.dbusaddons
+    OLD_CATEGORY_NAMES kf5.kdbusaddons
     DESCRIPTION "KDBusAddons"
     EXPORT KDBUSADDONS
 )
