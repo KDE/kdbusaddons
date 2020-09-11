@@ -3,7 +3,7 @@
 
     SPDX-FileCopyrightText: 2019 Harald Sitter <sitter@kde.org>
 
-    SPDX-License-Identifier: LGPL-2.0-only
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include <QCoreApplication>
