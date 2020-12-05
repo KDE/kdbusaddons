@@ -1,0 +1,64 @@
+# Translation of kdbusaddons5_qt.po to Catalan (Valencian)
+# Copyright (C) 2014-2019 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Josep Ma. Ferrer <txemaq@gmail.com>, 2014.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2015.
+# Empar <montoro_mde@gva.es>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdbusaddons\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2014-03-23 01:50+0000\n"
+"PO-Revision-Date: 2019-06-17 13:12+0200\n"
+"Last-Translator: Empar <montoro_mde@gva.es>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca@valencia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Accelerator-Marker: &\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Qt-Contexts: true\n"
+"X-Project-Style: kde\n"
+
+#: tools/kquitapp/kquitapp.cpp:19
+msgctxt "main|"
+msgid "Quit a D-Bus enabled application easily"
+msgstr "Ix fàcilment d'una aplicació activada des de D-Bus"
+
+#: tools/kquitapp/kquitapp.cpp:20
+msgctxt "main|"
+msgid "Full service name, overrides application name provided"
+msgstr "Nom complet del servei, substitueix el nom subministrat de l'aplicació"
+
+#: tools/kquitapp/kquitapp.cpp:21
+msgctxt "main|"
+msgid "Path in the D-Bus interface to use"
+msgstr "Camí que cal utilitzar en la interfície de D-Bus"
+
+#: tools/kquitapp/kquitapp.cpp:22
+msgctxt "main|"
+msgid "The name of the application to quit"
+msgstr "El nom de l'aplicació per a eixir"
+
+#: tools/kquitapp/kquitapp.cpp:45
+#, qt-format
+msgctxt "main|"
+msgid "Application %1 could not be found using service %2 and path %3."
+msgstr ""
+"No s'ha pogut trobar l'aplicació %1 utilitzant el servei %2 i el camí %3."
+
+#: tools/kquitapp/kquitapp.cpp:51
+#, qt-format
+msgctxt "main|"
+msgid ""
+"Quitting application %1 failed. Error reported was:\n"
+"\n"
+"     %2 : %3"
+msgstr ""
+"Ha fallat en eixir de l'aplicació %1. L'error reportat ha estat:\n"
+"\n"
+"     %2: %3"
