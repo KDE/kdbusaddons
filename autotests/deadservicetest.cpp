@@ -42,12 +42,12 @@ private Q_SLOTS:
         proc1.setProcessChannelMode(QProcess::ForwardedChannels);
         proc1.start();
         QVERIFY(proc1.waitForStarted());
-        m_danglingPids << proc1.pid();
+        m_danglingPids << proc1.processId();
 
         // Spy isn't very suitable here because we'd be racing with proc1 or
         // signal blocking since we'd need to unblock before spying but then
         // there is an ɛ between unblock and spy.
-        Q_PID pid1 = proc1.pid(); // store local, in case the proc disappears
+        qint64 pid1 = proc1.processId(); // store local, in case the proc disappears
         QVERIFY(pid1 >= 0);
         bool proc1Registered = QTest::qWaitFor([&]() {
             QTest::qSleep(1000);
@@ -57,7 +57,7 @@ private Q_SLOTS:
 
         // suspend proc1, we don't want it responding on dbus anymore, but still
         // be running so it holds the name.
-        QCOMPARE(kill(proc1.pid(), SIGSTOP), 0);
+        QCOMPARE(kill(proc1.processId(), SIGSTOP), 0);
 
         // start second instance
         QProcess proc2;
@@ -68,7 +68,7 @@ private Q_SLOTS:
         proc2.setProcessChannelMode(QProcess::ForwardedChannels);
         proc2.start();
         QVERIFY(proc2.waitForStarted());
-        m_danglingPids << proc2.pid();
+        m_danglingPids << proc2.processId();
 
         // sleep a bit. fairly awkward. we need proc2 to be waiting on the name
         // but we can't easily determine when it started waiting. in lieu of
@@ -79,10 +79,10 @@ private Q_SLOTS:
         // Let proc1 go up in flames so that dbus-daemon reclaims the name and
         // gives it to proc2.
         qDebug() << "murder on the orient express";
-        QCOMPARE(0, kill(proc1.pid(), SIGUSR1));
-        QCOMPARE(0, kill(proc1.pid(), SIGCONT));
+        QCOMPARE(0, kill(proc1.processId(), SIGUSR1));
+        QCOMPARE(0, kill(proc1.processId(), SIGCONT));
 
-        Q_PID pid2 = proc2.pid(); // store local, in case the proc disappears
+        qint64 pid2 = proc2.processId(); // store local, in case the proc disappears
         QVERIFY(pid2 >= 0);
         // Wait for service to be owned by proc2.
         bool proc2Registered = QTest::qWaitFor([&]() {
