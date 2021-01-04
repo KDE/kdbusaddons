@@ -58,6 +58,18 @@ public:
         return reversedDomain + app->applicationName();
     }
 
+    static void handlePlatformData(const QVariantMap &platformData)
+    {
+        #if HAVE_X11
+        if (QX11Info::isPlatformX11()) {
+            QByteArray desktopStartupId = platformData.value(QStringLiteral("desktop-startup-id")).toByteArray();
+            if (!desktopStartupId.isEmpty()) {
+                QX11Info::setNextStartupId(desktopStartupId);
+            }
+        }
+        #endif
+    }
+
     bool registered;
     QString serviceName;
     QString errorMessage;
@@ -190,7 +202,16 @@ private:
         } else if (options & KDBusService::Unique) {
             // Already running so it's ok!
             QVariantMap platform_data;
-            platform_data.insert(QStringLiteral("desktop-startup-id"), QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID")));
+            if (QX11Info::isPlatformX11()) {
+                QString startupId = QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID"));
+                if (startupId.isEmpty()) {
+                    startupId = QString::fromUtf8(QX11Info::nextStartupId());
+                }
+                if (!startupId.isEmpty()) {
+                    platform_data.insert(QStringLiteral("desktop-startup-id"), startupId);
+                }
+            }
+
             if (QCoreApplication::arguments().count() > 1) {
                 OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
                 iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
@@ -284,50 +305,34 @@ void KDBusService::unregister()
 
 void KDBusService::Activate(const QVariantMap &platform_data)
 {
-    Q_UNUSED(platform_data);
-#if HAVE_X11
-    if (QX11Info::isPlatformX11()) {
-        QX11Info::setAppTime(QX11Info::getTimestamp());
-    }
-#endif
-    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
+    d->handlePlatformData(platform_data);
     Q_EMIT activateRequested(QStringList(), QString());
-    // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
-    // ^^ same discussion as below
 }
 
 void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_data)
 {
-    Q_UNUSED(platform_data);
-    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
+    d->handlePlatformData(platform_data);
     Q_EMIT openRequested(QUrl::fromStringList(uris));
-    // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
-    // ^^ not needed if the app actually opened a new window.
-    // Solution 1: do it all the time anyway (needs API in QX11Info)
-    // Solution 2: pass the id to the app and let it use KStartupInfo::appStarted if reusing a window
 }
 
 void KDBusService::ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data)
 {
-    Q_UNUSED(platform_data);
+    d->handlePlatformData(platform_data);
+
     // This is a workaround for D-Bus not supporting null variants.
     const QVariant param = maybeParameter.count() == 1 ? maybeParameter.first() : QVariant();
+
     Q_EMIT activateActionRequested(action_name, param);
-    // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
-    // if desktop-startup-id is set, the action is supposed to show a window (since it could be
-    // called when the app is not running)
 }
 
 int KDBusService::CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data)
 {
-    Q_UNUSED(platform_data);
     d->exitValue = 0;
+    d->handlePlatformData(platform_data);
     // The TODOs here only make sense if this method can be called from the GUI.
     // If it's for pure "usage in the terminal" then no startup notification got started.
     // But maybe one day the workspace wants to call this for the Exec key of a .desktop file?
-    // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
     Q_EMIT activateRequested(arguments, workingDirectory);
-    // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     return d->exitValue;
 }
 

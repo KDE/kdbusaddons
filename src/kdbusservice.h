@@ -220,9 +220,15 @@ Q_SIGNALS:
      *        commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
      *        handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
      *    }
-     *    // and for GUI applications, also terminate startup notification and activate the mainwindow:
-     *    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
-     *    KWindowSystem::forceActiveWindow(mainWindow->winId());
+     *
+     *
+     *    For GUI applications on X11 , also terminate startup notification and activate the mainwindow:
+     *    The startup ID will exposed be via QX11Extras::nextStartupId
+     *
+     *    If an existing window is to be raised, call:
+     *    KStartupInfo::setNewStartupId(mainWindow, QX11Extras::nextStartupId);
+     *    mainWindow->raise();
+     *
      * @endcode
      *
      * If you're using the builtin handling of @c --help and @c --version in QCommandLineParser,
