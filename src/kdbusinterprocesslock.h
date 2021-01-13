@@ -11,6 +11,7 @@
 #define KDBUSINTERPROCESSLOCK_H
 
 #include <QObject>
+#include <memory>
 
 #include <kdbusaddons_export.h>
 
@@ -103,7 +104,7 @@ Q_SIGNALS:
 
 private:
     friend class KDBusInterProcessLockPrivate;
-    KDBusInterProcessLockPrivate *const d;
+    std::unique_ptr<KDBusInterProcessLockPrivate> const d;
 
     Q_PRIVATE_SLOT(d, void _k_serviceRegistered(const QString &))
 };

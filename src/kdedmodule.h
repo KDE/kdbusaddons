@@ -12,6 +12,7 @@
 #include <kdbusaddons_export.h>
 
 #include <QObject>
+#include <memory>
 
 class KDEDModulePrivate;
 class Kded;
@@ -87,7 +88,7 @@ Q_SIGNALS:
     void moduleRegistered(const QDBusObjectPath &path);
 
 private:
-    KDEDModulePrivate *const d;
+    std::unique_ptr<KDEDModulePrivate> const d;
 };
 
 #endif

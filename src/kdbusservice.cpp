@@ -251,14 +251,11 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
     new KDBusServiceAdaptor(this);
     new KDBusServiceExtensionsAdaptor(this);
 
-    Registration registration(this, d, options);
+    Registration registration(this, d.get(), options);
     registration.run();
 }
 
-KDBusService::~KDBusService()
-{
-    delete d;
-}
+KDBusService::~KDBusService() = default;
 
 bool KDBusService::isRegistered() const
 {

@@ -12,6 +12,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <memory>
 
 #include <kdbusaddons_export.h>
 
@@ -267,7 +268,7 @@ private:
     friend class KDBusServiceExtensionsAdaptor;
 
 private:
-    KDBusServicePrivate *const d;
+    std::unique_ptr<KDBusServicePrivate> const d;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDBusService::StartupOptions)

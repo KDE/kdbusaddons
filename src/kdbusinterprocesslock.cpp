@@ -46,10 +46,7 @@ KDBusInterProcessLock::KDBusInterProcessLock(const QString &resource)
 {
 }
 
-KDBusInterProcessLock::~KDBusInterProcessLock()
-{
-    delete d;
-}
+KDBusInterProcessLock::~KDBusInterProcessLock() = default;
 
 QString KDBusInterProcessLock::resource() const
 {
