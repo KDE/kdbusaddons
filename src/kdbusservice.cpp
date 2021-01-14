@@ -41,11 +41,7 @@ public:
     {
         const QCoreApplication *app = QCoreApplication::instance();
         const QString domain = app->organizationDomain();
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        const QStringList parts = domain.split(QLatin1Char('.'), QString::SkipEmptyParts);
-#else
         const QStringList parts = domain.split(QLatin1Char('.'), Qt::SkipEmptyParts);
-#endif
 
         QString reversedDomain;
         if (parts.isEmpty()) {
