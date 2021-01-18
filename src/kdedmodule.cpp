@@ -26,7 +26,7 @@ KDEDModule::KDEDModule(QObject *parent)
 
 KDEDModule::~KDEDModule()
 {
-    emit moduleDeleted(this);
+    Q_EMIT moduleDeleted(this);
 }
 
 void KDEDModule::setModuleName(const QString &name)

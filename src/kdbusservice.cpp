@@ -291,7 +291,7 @@ void KDBusService::Activate(const QVariantMap &platform_data)
     }
 #endif
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
-    emit activateRequested(QStringList(), QString());
+    Q_EMIT activateRequested(QStringList(), QString());
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     // ^^ same discussion as below
 }
@@ -300,7 +300,7 @@ void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_dat
 {
     Q_UNUSED(platform_data);
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
-    emit openRequested(QUrl::fromStringList(uris));
+    Q_EMIT openRequested(QUrl::fromStringList(uris));
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     // ^^ not needed if the app actually opened a new window.
     // Solution 1: do it all the time anyway (needs API in QX11Info)
@@ -312,7 +312,7 @@ void KDBusService::ActivateAction(const QString &action_name, const QVariantList
     Q_UNUSED(platform_data);
     // This is a workaround for D-Bus not supporting null variants.
     const QVariant param = maybeParameter.count() == 1 ? maybeParameter.first() : QVariant();
-    emit activateActionRequested(action_name, param);
+    Q_EMIT activateActionRequested(action_name, param);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     // if desktop-startup-id is set, the action is supposed to show a window (since it could be
     // called when the app is not running)
@@ -326,7 +326,7 @@ int KDBusService::CommandLine(const QStringList &arguments, const QString &worki
     // If it's for pure "usage in the terminal" then no startup notification got started.
     // But maybe one day the workspace wants to call this for the Exec key of a .desktop file?
     // TODO QX11Info::setNextStartupId(platform_data.value("desktop-startup-id"))
-    emit activateRequested(arguments, workingDirectory);
+    Q_EMIT activateRequested(arguments, workingDirectory);
     // TODO (via hook) KStartupInfo::appStarted(platform_data.value("desktop-startup-id"))
     return d->exitValue;
 }

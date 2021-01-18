@@ -32,7 +32,7 @@ public:
     void _k_serviceRegistered(const QString &service)
     {
         if (service == m_serviceName) {
-            emit m_parent->lockGranted(m_parent);
+            Q_EMIT m_parent->lockGranted(m_parent);
         }
     }
 
