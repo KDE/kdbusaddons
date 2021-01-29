@@ -40,7 +40,7 @@ add_library(KF5DBusAddons ${libkdbusaddons_SRCS})
 ecm_generate_export_header(KF5DBusAddons
     BASE_NAME KDBusAddons
     GROUP_BASE_NAME KF
-    VERSION ${KF5_VERSION}
+    VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
     DEPRECATION_VERSIONS 5.68
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
@@ -106,7 +106,7 @@ if(BUILD_QCH)
         KF5DBusAddons_QCH
         NAME KDBusAddons
         BASE_NAME KF5DBusAddons
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${KDBusAddons_HEADERS}
