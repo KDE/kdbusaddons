@@ -17,8 +17,8 @@
 #include <QDBusConnectionInterface>
 #include <QDBusReply>
 
-#include "KDBusServiceIface.h"
 #include "FreeDesktopApplpicationIface.h"
+#include "KDBusServiceIface.h"
 
 #include "config-kdbusaddons.h"
 
@@ -33,9 +33,10 @@ class KDBusServicePrivate
 {
 public:
     KDBusServicePrivate()
-        : registered(false),
-          exitValue(0)
-    {}
+        : registered(false)
+        , exitValue(0)
+    {
+    }
 
     QString generateServiceName()
     {
@@ -63,7 +64,8 @@ public:
 };
 
 // Wraps a serviceName registration.
-class Registration : public QObject {
+class Registration : public QObject
+{
     Q_OBJECT
 public:
     enum class Register {
@@ -77,15 +79,17 @@ public:
         , options(options_)
     {
         if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
-            d->errorMessage = QLatin1String("Session bus not found\n"
-                                            "To circumvent this problem try the following command (with Linux and bash)\n"
-                                            "export $(dbus-launch)");
+            d->errorMessage = QLatin1String(
+                "Session bus not found\n"
+                "To circumvent this problem try the following command (with Linux and bash)\n"
+                "export $(dbus-launch)");
         } else {
             generateServiceName();
         }
     }
 
-    void run() {
+    void run()
+    {
         if (bus) {
             registerOnBus();
         }
@@ -96,8 +100,7 @@ public:
         }
     }
 
-    private:
-
+private:
     void generateServiceName()
     {
         d->serviceName = d->generateServiceName();
@@ -108,7 +111,8 @@ public:
         if (options & KDBusService::Multiple) {
             const bool inSandbox = QFileInfo::exists(QStringLiteral("/.flatpak-info"));
             if (inSandbox) {
-                d->serviceName += QStringLiteral(".kdbus-") + QDBusConnection::sessionBus().baseService().replace(QRegularExpression(QStringLiteral("[\\.:]")), QStringLiteral("_"));
+                d->serviceName += QStringLiteral(".kdbus-")
+                    + QDBusConnection::sessionBus().baseService().replace(QRegularExpression(QStringLiteral("[\\.:]")), QStringLiteral("_"));
             } else {
                 d->serviceName += QLatin1Char('-') + QString::number(QCoreApplication::applicationPid());
             }
@@ -139,8 +143,7 @@ public:
 
         if (d->registered) {
             if (QCoreApplication *app = QCoreApplication::instance()) {
-                connect(app, &QCoreApplication::aboutToQuit,
-                        s, &KDBusService::unregister);
+                connect(app, &QCoreApplication::aboutToQuit, s, &KDBusService::unregister);
             }
         }
     }
@@ -161,8 +164,7 @@ public:
 
             queueOption = QDBusConnectionInterface::QueueService;
 
-            connect(bus, &QDBusConnectionInterface::serviceRegistered,
-                    this, [this](const QString &service) {
+            connect(bus, &QDBusConnectionInterface::serviceRegistered, this, [this](const QString &service) {
                 if (service != d->serviceName) {
                     return;
                 }
@@ -172,8 +174,7 @@ public:
             });
         }
 
-        d->registered =
-                (bus->registerService(d->serviceName, queueOption) == QDBusConnectionInterface::ServiceRegistered);
+        d->registered = (bus->registerService(d->serviceName, queueOption) == QDBusConnectionInterface::ServiceRegistered);
 
         if (d->registered) {
             return;
@@ -181,9 +182,9 @@ public:
 
         if (options & KDBusService::Replace) {
             auto message = QDBusMessage::createMethodCall(d->serviceName,
-                                                    QStringLiteral("/MainApplication"),
-                                                    QStringLiteral("org.qtproject.Qt.QCoreApplication"),
-                                                    QStringLiteral("quit"));
+                                                          QStringLiteral("/MainApplication"),
+                                                          QStringLiteral("org.qtproject.Qt.QCoreApplication"),
+                                                          QStringLiteral("quit"));
             QDBusConnection::sessionBus().asyncCall(message);
             waitForRegistration();
         } else if (options & KDBusService::Unique) {
@@ -216,9 +217,7 @@ public:
         }
 
         if (!d->registered) { // either multi service or failed to reclaim name
-            d->errorMessage = QLatin1String("Couldn't register name '")
-                    + d->serviceName
-                    + QLatin1String("' with DBUS - another process owns it already!");
+            d->errorMessage = QLatin1String("Couldn't register name '") + d->serviceName + QLatin1String("' with DBUS - another process owns it already!");
         }
     }
 
@@ -242,7 +241,8 @@ public:
 };
 
 KDBusService::KDBusService(StartupOptions options, QObject *parent)
-    : QObject(parent), d(new KDBusServicePrivate)
+    : QObject(parent)
+    , d(new KDBusServicePrivate)
 {
     new KDBusServiceAdaptor(this);
     new KDBusServiceExtensionsAdaptor(this);

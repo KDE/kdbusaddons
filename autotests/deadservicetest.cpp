@@ -49,10 +49,12 @@ private Q_SLOTS:
         // there is an ɛ between unblock and spy.
         qint64 pid1 = proc1.processId(); // store local, in case the proc disappears
         QVERIFY(pid1 >= 0);
-        bool proc1Registered = QTest::qWaitFor([&]() {
-            QTest::qSleep(1000);
-            return QDBusConnection::sessionBus().interface()->servicePid(s_serviceName).value() == pid1;
-        }, 8000);
+        bool proc1Registered = QTest::qWaitFor(
+            [&]() {
+                QTest::qSleep(1000);
+                return QDBusConnection::sessionBus().interface()->servicePid(s_serviceName).value() == pid1;
+            },
+            8000);
         QVERIFY(proc1Registered);
 
         // suspend proc1, we don't want it responding on dbus anymore, but still
@@ -85,10 +87,12 @@ private Q_SLOTS:
         qint64 pid2 = proc2.processId(); // store local, in case the proc disappears
         QVERIFY(pid2 >= 0);
         // Wait for service to be owned by proc2.
-        bool proc2Registered = QTest::qWaitFor([&]() {
-            QTest::qSleep(1000);
-            return QDBusConnection::sessionBus().interface()->servicePid(s_serviceName).value() == pid2;
-        }, 8000);
+        bool proc2Registered = QTest::qWaitFor(
+            [&]() {
+                QTest::qSleep(1000);
+                return QDBusConnection::sessionBus().interface()->servicePid(s_serviceName).value() == pid2;
+            },
+            8000);
         QVERIFY(proc2Registered);
 
         proc1.kill();

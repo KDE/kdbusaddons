@@ -10,8 +10,8 @@
 #include "kdbusaddons_debug.h"
 
 #include <QDBusConnection>
-#include <QDBusObjectPath>
 #include <QDBusMessage>
+#include <QDBusObjectPath>
 
 class KDEDModulePrivate
 {
@@ -20,7 +20,8 @@ public:
 };
 
 KDEDModule::KDEDModule(QObject *parent)
-    : QObject(parent), d(new KDEDModulePrivate)
+    : QObject(parent)
+    , d(new KDEDModulePrivate)
 {
 }
 
@@ -62,11 +63,10 @@ void KDEDModule::setModuleName(const QString &name)
         // Happens for khotkeys but the module works. Need some time to investigate.
         qCDebug(KDBUSADDONS_LOG) << "registerObject() returned false for" << d->moduleName;
     } else {
-        //qCDebug(KDBUSADDONS_LOG) << "registerObject() successful for" << d->moduleName;
+        // qCDebug(KDBUSADDONS_LOG) << "registerObject() successful for" << d->moduleName;
         // Fix deadlock with Qt 5.6: this has to be delayed until the dbus thread is unlocked
         QMetaObject::invokeMethod(this, "moduleRegistered", Qt::QueuedConnection, Q_ARG(QDBusObjectPath, realPath));
     }
-
 }
 
 QString KDEDModule::moduleName() const
@@ -98,4 +98,3 @@ QString KDEDModule::moduleForMessage(const QDBusMessage &message)
 
     return obj;
 }
-

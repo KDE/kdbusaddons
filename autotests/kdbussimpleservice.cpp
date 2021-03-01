@@ -17,8 +17,8 @@
 #include <unistd.h>
 
 // rlimit
-#include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/time.h>
 
 // USR1.
 // Close all sockets and eventually ABRT. This mimics behavior during KCrash

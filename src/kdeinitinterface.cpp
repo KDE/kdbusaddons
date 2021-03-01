@@ -31,8 +31,7 @@ void KDEInitInterface::ensureKdeinitRunning()
     // If we can't get the lock, then someone else is already in the process of starting kdeinit.
     if (!lock.tryLock()) {
         // Wait for that to happen, by locking again 30 seconds max.
-        if (!lock.tryLock(30000))
-        {
+        if (!lock.tryLock(30000)) {
             qCWarning(KDBUSADDONS_LOG) << "'kdeinit5' is taking more than 30 seconds to start.";
             return;
         }
@@ -45,9 +44,8 @@ void KDEInitInterface::ensureKdeinitRunning()
     QString srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"));
     // If not found in system paths, search other paths
     if (srv.isEmpty()) {
-        const QStringList searchPaths = QStringList()
-            << QCoreApplication::applicationDirPath() // then look where our application binary is located
-            << QLibraryInfo::location(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
+        const QStringList searchPaths = QStringList() << QCoreApplication::applicationDirPath() // then look where our application binary is located
+                                                      << QLibraryInfo::location(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
         srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"), searchPaths);
         if (srv.isEmpty()) {
             qCWarning(KDBUSADDONS_LOG) << "Can not find 'kdeinit5' executable at " << qgetenv("PATH") << searchPaths.join(QStringLiteral(", "));
@@ -62,4 +60,3 @@ void KDEInitInterface::ensureKdeinitRunning()
     // NOTE: kdeinit5 is supposed to finish quickly, certainly in less than 30 seconds.
     QProcess::execute(srv, args);
 }
-

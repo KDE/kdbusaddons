@@ -32,14 +32,14 @@ class QDBusMessage;
  *
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDBUSADDONS_EXPORT KDEDModule: public QObject
+class KDBUSADDONS_EXPORT KDEDModule : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.KDEDModule")
 
     friend class Kded;
-public:
 
+public:
     /**
      * Constructor
      */

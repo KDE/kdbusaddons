@@ -9,20 +9,19 @@
 
 #include "kdbusinterprocesslock.h"
 
-#include <QEventLoop>
 #include <QDBusConnectionInterface>
-
+#include <QEventLoop>
 
 class KDBusInterProcessLockPrivate
 {
 public:
     KDBusInterProcessLockPrivate(const QString &resource, KDBusInterProcessLock *parent)
-        : m_resource(resource), m_parent(parent)
+        : m_resource(resource)
+        , m_parent(parent)
     {
         m_serviceName = QStringLiteral("org.kde.private.lock-%1").arg(m_resource);
 
-        m_parent->connect(QDBusConnection::sessionBus().interface(), SIGNAL(serviceRegistered(QString)),
-                          m_parent, SLOT(_k_serviceRegistered(QString)));
+        m_parent->connect(QDBusConnection::sessionBus().interface(), SIGNAL(serviceRegistered(QString)), m_parent, SLOT(_k_serviceRegistered(QString)));
     }
 
     ~KDBusInterProcessLockPrivate()
@@ -56,8 +55,8 @@ QString KDBusInterProcessLock::resource() const
 void KDBusInterProcessLock::lock()
 {
     QDBusConnection::sessionBus().interface()->registerService(d->m_serviceName,
-            QDBusConnectionInterface::QueueService,
-            QDBusConnectionInterface::DontAllowReplacement);
+                                                               QDBusConnectionInterface::QueueService,
+                                                               QDBusConnectionInterface::DontAllowReplacement);
 }
 
 void KDBusInterProcessLock::unlock()

@@ -9,7 +9,6 @@
 #ifndef KDEINIT_IFACE_H
 #define KDEINIT_IFACE_H
 
-
 #include <kdbusaddons_export.h>
 
 /**

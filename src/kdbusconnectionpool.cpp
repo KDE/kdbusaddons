@@ -7,9 +7,9 @@
 */
 
 #include "kdbusconnectionpool.h"
-#include <QThreadStorage>
 #include <QCoreApplication>
 #include <QThread>
+#include <QThreadStorage>
 
 #if KDBUSADDONS_BUILD_DEPRECATED_SINCE(5, 68)
 namespace

@@ -53,4 +53,3 @@ KDBUSADDONS_EXPORT QDBusConnection threadConnection();
 #endif
 
 #endif
-

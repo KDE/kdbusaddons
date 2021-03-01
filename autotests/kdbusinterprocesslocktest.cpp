@@ -122,4 +122,3 @@ int main(int argc, char *argv[])
 
     return ok ? 0 : 1;
 }
-
