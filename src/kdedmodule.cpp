@@ -52,9 +52,9 @@ void KDEDModule::setModuleName(const QString &name)
         regOptions = QDBusConnection::ExportScriptableContents | QDBusConnection::ExportAdaptors;
     } else {
         // Full functional module. Register everything.
-        regOptions = QDBusConnection::ExportScriptableSlots
-                     | QDBusConnection::ExportScriptableProperties
-                     | QDBusConnection::ExportAdaptors;
+        regOptions = QDBusConnection::ExportScriptableSlots //
+            | QDBusConnection::ExportScriptableProperties //
+            | QDBusConnection::ExportAdaptors;
         qCDebug(KDBUSADDONS_LOG) << "Registration of kded module" << d->moduleName << "without D-Bus interface.";
     }
 

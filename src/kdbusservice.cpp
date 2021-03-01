@@ -68,7 +68,7 @@ class Registration : public QObject {
 public:
     enum class Register {
         RegisterWitoutQueue,
-        RegisterWithQueue
+        RegisterWithQueue,
     };
 
     Registration(KDBusService *s_, KDBusServicePrivate *d_, KDBusService::StartupOptions options_)
@@ -121,9 +121,9 @@ public:
         bool objectRegistered = false;
         objectRegistered = bus.registerObject(QStringLiteral("/MainApplication"),
                                               QCoreApplication::instance(),
-                                              QDBusConnection::ExportAllSlots |
-                                              QDBusConnection::ExportScriptableProperties |
-                                              QDBusConnection::ExportAdaptors);
+                                              QDBusConnection::ExportAllSlots //
+                                                  | QDBusConnection::ExportScriptableProperties //
+                                                  | QDBusConnection::ExportAdaptors);
         if (!objectRegistered) {
             qWarning() << "Failed to register /MainApplication on DBus";
             return;

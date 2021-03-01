@@ -14,7 +14,9 @@ int main(int argc, char **argv)
     }
 
     qDebug() << "sending reparseConfiguration to object Konqueror in konqueror";
-    QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/Konqueror"), QStringLiteral("org.kde.Konqueror"), QStringLiteral("reparseConfiguration"));
+    QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/Konqueror"), //
+                                                      QStringLiteral("org.kde.Konqueror"),
+                                                      QStringLiteral("reparseConfiguration"));
     if (!QDBusConnection::sessionBus().send(message)) {
         qDebug() << "void expected, " << QDBusConnection::sessionBus().lastError().name() << " returned";
     }

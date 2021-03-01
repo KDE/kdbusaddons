@@ -20,9 +20,8 @@ class KDBusConnectionPoolPrivate
 {
 public:
     KDBusConnectionPoolPrivate()
-        : m_connection(QDBusConnection::connectToBus(
-                           QDBusConnection::SessionBus,
-                           QStringLiteral("KDBusConnectionPoolConnection%1").arg(newNumber())))
+        : m_connection(QDBusConnection::connectToBus(QDBusConnection::SessionBus, //
+                                                     QStringLiteral("KDBusConnectionPoolConnection%1").arg(newNumber())))
     {
     }
 
