@@ -1,7 +1,7 @@
 /*
     SPDX-FileCopyrightText: 2006 Aaron Seigo <aseigo@kde.org>
 
-    SPDX-License-Identifier: LGPL-2.0-only
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include <QCommandLineParser>
