@@ -52,7 +52,7 @@ target_link_libraries(KF5DBusAddons PUBLIC Qt5::DBus PRIVATE ${qtx11extras})
 
 target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KDBusAddons>")
 
-set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION_STRING}
+set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION}
                                                SOVERSION ${KDBUSADDONS_SOVERSION}
                                                EXPORT_NAME DBusAddons
 )
