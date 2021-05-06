@@ -43,7 +43,6 @@ public:
         return m_callCount;
     }
 
-private Q_SLOTS:
     void slotActivateRequested(const QStringList &args, const QString &workingDirectory)
     {
         Q_UNUSED(workingDirectory);
@@ -67,6 +66,7 @@ private Q_SLOTS:
         }
     }
 
+private Q_SLOTS:
     void slotProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
     {
         Q_UNUSED(exitStatus)
@@ -97,7 +97,7 @@ private:
     {
         // Duplicated from kglobalsettingstest.cpp - make a shared helper method?
         m_proc = new QProcess(this);
-        connect(m_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(slotProcessFinished(int, QProcess::ExitStatus)));
+        connect(m_proc, &QProcess::finished, this, &TestObject::slotProcessFinished);
         QString appName = QStringLiteral("kdbusservicetest");
 #ifdef Q_OS_WIN
         appName += ".exe";
@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 
     KDBusService service(KDBusService::Unique);
     TestObject testObject(&service);
-    QObject::connect(&service, SIGNAL(activateRequested(QStringList, QString)), &testObject, SLOT(slotActivateRequested(QStringList, QString)));
+    QObject::connect(&service, &KDBusService::activateRequested, &testObject, &TestObject::slotActivateRequested);
 
     // Testcase for the problem coming from the old fork-on-startup solution:
     // the "Activate" D-Bus call would time out if the app took too much time

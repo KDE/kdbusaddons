@@ -21,14 +21,16 @@ public:
     {
         m_serviceName = QStringLiteral("org.kde.private.lock-%1").arg(m_resource);
 
-        m_parent->connect(QDBusConnection::sessionBus().interface(), SIGNAL(serviceRegistered(QString)), m_parent, SLOT(_k_serviceRegistered(QString)));
+        m_parent->connect(QDBusConnection::sessionBus().interface(), &QDBusConnectionInterface::serviceRegistered, m_parent, [this](const QString &service) {
+            serviceRegistered(service);
+        });
     }
 
     ~KDBusInterProcessLockPrivate()
     {
     }
 
-    void _k_serviceRegistered(const QString &service)
+    void serviceRegistered(const QString &service)
     {
         if (service == m_serviceName) {
             Q_EMIT m_parent->lockGranted(m_parent);

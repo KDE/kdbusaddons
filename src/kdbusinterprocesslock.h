@@ -32,8 +32,7 @@ class KDBusInterProcessLockPrivate;
  * @code
  *
  * KDBusInterProcessLock *lock = new KDBusInterProcessLock("myresource");
- * connect(lock, SIGNAL(lockGranted(KDBusInterProcessLock *)),
- *               this, SLOT(doCriticalTask(KDBusInterProcessLock *)));
+ * connect(lock, &KDBusInterProcessLock::lockGranted, this, &MyClass::doCriticalTask);
  * lock->lock();
  *
  * ...
@@ -105,8 +104,6 @@ Q_SIGNALS:
 private:
     friend class KDBusInterProcessLockPrivate;
     std::unique_ptr<KDBusInterProcessLockPrivate> const d;
-
-    Q_PRIVATE_SLOT(d, void _k_serviceRegistered(const QString &))
 };
 
 #endif
