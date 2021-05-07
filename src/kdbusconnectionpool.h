@@ -47,8 +47,9 @@ namespace KDBusConnectionPool
  * @deprecated since 5.68 Use QDBusConnection::sessionBus() instead.
  * QDBusConnection is nowadays safe to use in multiple threads as well.
  */
+KDBUSADDONS_EXPORT
 KDBUSADDONS_DEPRECATED_VERSION(5, 68, "Use QDBusConnection::sessionBus()")
-KDBUSADDONS_EXPORT QDBusConnection threadConnection();
+QDBusConnection threadConnection();
 }
 #endif
 
