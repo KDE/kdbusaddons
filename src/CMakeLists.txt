@@ -19,17 +19,17 @@ ecm_qt_declare_logging_category(libkdbusaddons_SRCS
     EXPORT KDBUSADDONS
 )
 
-qt5_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
-qt5_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)
+qt_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
+qt_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)
 
 
-qt5_add_dbus_adaptor(libkdbusaddons_SRCS
+qt_add_dbus_adaptor(libkdbusaddons_SRCS
    org.freedesktop.Application.xml
    kdbusservice.h
    KDBusService
    kdbusservice_adaptor
    KDBusServiceAdaptor)
-qt5_add_dbus_adaptor(libkdbusaddons_SRCS
+qt_add_dbus_adaptor(libkdbusaddons_SRCS
    org.kde.KDBusService.xml
    kdbusservice.h
    KDBusService
