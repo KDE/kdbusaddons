@@ -1,16 +1,18 @@
 add_subdirectory(tools/kquitapp)
 
-ecm_create_qm_loader(libkdbusaddons_QM_LOADER kdbusaddons5_qt)
+add_library(KF5DBusAddons)
+add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
 
-set(libkdbusaddons_SRCS
+ecm_create_qm_loader(KF5DBusAddons kdbusaddons5_qt)
+
+target_sources(KF5DBusAddons PRIVATE
     kdbusconnectionpool.cpp
     kdbusinterprocesslock.cpp
     kdbusservice.cpp
     kdedmodule.cpp
     kdeinitinterface.cpp
-    ${libkdbusaddons_QM_LOADER}
 )
-ecm_qt_declare_logging_category(libkdbusaddons_SRCS
+ecm_qt_declare_logging_category(KF5DBusAddons
     HEADER kdbusaddons_debug.h
     IDENTIFIER KDBUSADDONS_LOG
     CATEGORY_NAME kf.dbusaddons
@@ -19,24 +21,27 @@ ecm_qt_declare_logging_category(libkdbusaddons_SRCS
     EXPORT KDBUSADDONS
 )
 
-qt_add_dbus_interface(libkdbusaddons_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
-qt_add_dbus_interface(libkdbusaddons_SRCS org.kde.KDBusService.xml KDBusServiceIface)
+set(libkdbusaddons_dbus_SRCS)
+qt_add_dbus_interface(libkdbusaddons_dbus_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
+qt_add_dbus_interface(libkdbusaddons_dbus_SRCS org.kde.KDBusService.xml KDBusServiceIface)
 
-
-qt_add_dbus_adaptor(libkdbusaddons_SRCS
+qt_add_dbus_adaptor(libkdbusaddons_dbus_SRCS
    org.freedesktop.Application.xml
    kdbusservice.h
    KDBusService
    kdbusservice_adaptor
    KDBusServiceAdaptor)
-qt_add_dbus_adaptor(libkdbusaddons_SRCS
+qt_add_dbus_adaptor(libkdbusaddons_dbus_SRCS
    org.kde.KDBusService.xml
    kdbusservice.h
    KDBusService
    kdbusserviceextensions_adaptor
    KDBusServiceExtensionsAdaptor)
 
-add_library(KF5DBusAddons ${libkdbusaddons_SRCS})
+target_sources(KF5DBusAddons PRIVATE
+    ${libkdbusaddons_dbus_SRCS}
+)
+
 ecm_generate_export_header(KF5DBusAddons
     BASE_NAME KDBusAddons
     GROUP_BASE_NAME KF
@@ -45,8 +50,6 @@ ecm_generate_export_header(KF5DBusAddons
     DEPRECATION_VERSIONS 5.68
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
-add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
-
 
 target_link_libraries(KF5DBusAddons PUBLIC Qt5::DBus PRIVATE ${qtx11extras})
 
