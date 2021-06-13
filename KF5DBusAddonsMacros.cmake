@@ -19,6 +19,8 @@ set(_KDBUSADDONSDIR ${CMAKE_CURRENT_LIST_DIR})
 #
 #  kdbusaddons_generate_dbus_service_file(kded5 org.kde.kded5 ${KDE_INSTALL_FULL_BINDIR})
 #
+# Since 5.42.0
+
 function(KDBUSADDONS_GENERATE_DBUS_SERVICE_FILE _executable _name _path)
     set(_file ${CMAKE_CURRENT_BINARY_DIR}/${_name}.service)
     set(_template ${_KDBUSADDONSDIR}/KF5dbus.service.in)
