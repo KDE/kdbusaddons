@@ -68,6 +68,11 @@ public:
             }
         }
         #endif
+
+        const auto xdgActivationToken = platformData.value(QLatin1String("activation-token")).toByteArray();
+        if (!xdgActivationToken.isEmpty()) {
+            qputenv("XDG_ACTIVATION_TOKEN", xdgActivationToken);
+        }
     }
 
     bool registered;
@@ -214,6 +219,10 @@ private:
             }
 #endif
 
+            if (qEnvironmentVariableIsSet("XDG_ACTIVATION_TOKEN")) {
+                platform_data.insert(QStringLiteral("activation-token"), qgetenv("XDG_ACTIVATION_TOKEN"));
+            }
+
             if (QCoreApplication::arguments().count() > 1) {
                 OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
                 iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
@@ -309,12 +318,14 @@ void KDBusService::Activate(const QVariantMap &platform_data)
 {
     d->handlePlatformData(platform_data);
     Q_EMIT activateRequested(QStringList(), QString());
+    qunsetenv("XDG_ACTIVATION_TOKEN");
 }
 
 void KDBusService::Open(const QStringList &uris, const QVariantMap &platform_data)
 {
     d->handlePlatformData(platform_data);
     Q_EMIT openRequested(QUrl::fromStringList(uris));
+    qunsetenv("XDG_ACTIVATION_TOKEN");
 }
 
 void KDBusService::ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data)
@@ -325,6 +336,7 @@ void KDBusService::ActivateAction(const QString &action_name, const QVariantList
     const QVariant param = maybeParameter.count() == 1 ? maybeParameter.first() : QVariant();
 
     Q_EMIT activateActionRequested(action_name, param);
+    qunsetenv("XDG_ACTIVATION_TOKEN");
 }
 
 int KDBusService::CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data)
@@ -335,6 +347,7 @@ int KDBusService::CommandLine(const QStringList &arguments, const QString &worki
     // If it's for pure "usage in the terminal" then no startup notification got started.
     // But maybe one day the workspace wants to call this for the Exec key of a .desktop file?
     Q_EMIT activateRequested(arguments, workingDirectory);
+    qunsetenv("XDG_ACTIVATION_TOKEN");
     return d->exitValue;
 }
 
