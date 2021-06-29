@@ -26,6 +26,7 @@
 #include <QX11Info>
 #endif
 
+#include "kdbusaddons_debug.h"
 #include "kdbusservice_adaptor.h"
 #include "kdbusserviceextensions_adaptor.h"
 
@@ -80,9 +81,8 @@ public:
     {
         if (!QDBusConnection::sessionBus().isConnected() || !(bus = QDBusConnection::sessionBus().interface())) {
             d->errorMessage = QLatin1String(
-                "Session bus not found\n"
-                "To circumvent this problem try the following command (with Linux and bash)\n"
-                "export $(dbus-launch)");
+                "DBus session bus not found. To circumvent this problem try the following command (with bash):\n"
+                "    export $(dbus-launch)");
         } else {
             generateServiceName();
         }
@@ -95,7 +95,7 @@ public:
         }
 
         if (!d->registered && ((options & KDBusService::NoExitOnFailure) == 0)) {
-            qCritical() << d->errorMessage;
+            qCCritical(KDBUSADDONS_LOG) << qPrintable(d->errorMessage);
             exit(1);
         }
     }
@@ -129,13 +129,13 @@ private:
                                                   | QDBusConnection::ExportScriptableProperties //
                                                   | QDBusConnection::ExportAdaptors);
         if (!objectRegistered) {
-            qWarning() << "Failed to register /MainApplication on DBus";
+            qCWarning(KDBUSADDONS_LOG) << "Failed to register /MainApplication on DBus";
             return;
         }
 
         objectRegistered = bus.registerObject(objectPath, s, QDBusConnection::ExportAdaptors);
         if (!objectRegistered) {
-            qWarning() << "Failed to register" << objectPath << "on DBus";
+            qCWarning(KDBUSADDONS_LOG) << "Failed to register" << objectPath << "on DBus";
             return;
         }
 
