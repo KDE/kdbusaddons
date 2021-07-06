@@ -202,6 +202,7 @@ private:
         } else if (options & KDBusService::Unique) {
             // Already running so it's ok!
             QVariantMap platform_data;
+#if HAVE_X11
             if (QX11Info::isPlatformX11()) {
                 QString startupId = QString::fromUtf8(qgetenv("DESKTOP_STARTUP_ID"));
                 if (startupId.isEmpty()) {
@@ -211,6 +212,7 @@ private:
                     platform_data.insert(QStringLiteral("desktop-startup-id"), startupId);
                 }
             }
+#endif
 
             if (QCoreApplication::arguments().count() > 1) {
                 OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
