@@ -249,7 +249,7 @@ private:
         }
 
         if (!d->registered) { // either multi service or failed to reclaim name
-            d->errorMessage = QLatin1String("Couldn't register name '") + d->serviceName + QLatin1String("' with DBUS - another process owns it already!");
+            d->errorMessage = QLatin1String("Failed to register name '") + d->serviceName + QLatin1String("' with DBUS - does this process have permission to use the name, and do no other processes own it already?");
         }
     }
 
