@@ -1,0 +1,7 @@
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'frameworks/extra-cmake-modules': 'master'
+
+Options:
+  test-before-installing: True
