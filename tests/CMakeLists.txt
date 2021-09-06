@@ -12,5 +12,6 @@ endmacro()
 
 kdbusaddons_tests(
    dbuscalltest
+   syncdbusenvtest
 )
 

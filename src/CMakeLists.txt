@@ -11,6 +11,7 @@ target_sources(KF5DBusAddons PRIVATE
     kdbusservice.cpp
     kdedmodule.cpp
     kdeinitinterface.cpp
+    updatelaunchenvironmentjob.cpp
 )
 ecm_qt_declare_logging_category(KF5DBusAddons
     HEADER kdbusaddons_debug.h
@@ -69,6 +70,7 @@ ecm_generate_headers(KDBusAddons_HEADERS
   KDBusService
   KDEDModule
   KDEInitInterface
+  UpdateLaunchEnvironmentJob
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
 
