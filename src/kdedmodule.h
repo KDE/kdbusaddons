@@ -45,7 +45,7 @@ public:
      */
     explicit KDEDModule(QObject *parent = nullptr);
 
-    virtual ~KDEDModule();
+    ~KDEDModule() override;
 
     /**
      * Sets the name of the module, and uses it to register the module to D-Bus.

@@ -152,7 +152,7 @@ public:
      * clients, who will see the service on the bus but will be unable to use
      * the activation methods.
      */
-    ~KDBusService();
+    ~KDBusService() override;
 
     /**
      * Returns true if the D-Bus registration succeeded.

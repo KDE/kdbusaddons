@@ -31,7 +31,7 @@ public:
     {
     }
 
-    ~TestObject()
+    ~TestObject() override
     {
         if (m_proc) {
             m_proc->waitForFinished();

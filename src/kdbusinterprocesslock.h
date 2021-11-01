@@ -66,7 +66,7 @@ public:
     /**
      * Destroys the inter process lock object.
      */
-    ~KDBusInterProcessLock();
+    ~KDBusInterProcessLock() override;
 
     /**
      * Returns the identifier of the resource the lock is set on.
