@@ -7,11 +7,17 @@ ecm_create_qm_loader(KF5DBusAddons kdbusaddons5_qt)
 
 target_sources(KF5DBusAddons PRIVATE
     kdbusconnectionpool.cpp
+    kdbusconnectionpool.h
     kdbusinterprocesslock.cpp
+    kdbusinterprocesslock.h
     kdbusservice.cpp
+    kdbusservice.h
     kdedmodule.cpp
+    kdedmodule.h
     kdeinitinterface.cpp
+    kdeinitinterface.h
     updatelaunchenvironmentjob.cpp
+    updatelaunchenvironmentjob.h
 )
 ecm_qt_declare_logging_category(KF5DBusAddons
     HEADER kdbusaddons_debug.h
