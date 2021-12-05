@@ -18,9 +18,13 @@ include(KDEGitCommitHooks)
 include(ECMQtDeclareLoggingCategory)
 
 set(REQUIRED_QT_VERSION 5.15.2)
-find_package(Qt5DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
-find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE)
+find_package(Qt${QT_MAJOR_VERSION}DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 
+if (QT_MAJOR_VERSION STREQUAL "5")
+    find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} CONFIG)
+elseif (QT_MAJOR_VERSION STREQUAL "6")
+    find_package(Qt6Gui ${REQUIRED_QT_VERSION} CONFIG) # qtx11extras_p.h
+endif()
 
 include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
@@ -37,8 +41,8 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfigVersion.cmake"
                         SOVERSION 5)
 
-if(Qt5X11Extras_FOUND)
-    set(qtx11extras Qt5::X11Extras)
+# qtx11extras_p.h is in Qt6Gui
+if(TARGET Qt5::X11Extras OR TARGET Qt6::Gui)
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
@@ -84,7 +88,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfig.cmake"
 
 install(EXPORT KF5DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  FILE KF5DBusAddonsTargets.cmake  NAMESPACE KF5:: )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}  COMPONENT Devel )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}  COMPONENT Devel )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
