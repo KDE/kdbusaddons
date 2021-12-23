@@ -47,8 +47,9 @@ class KDBusServicePrivate;
  * until after creating a KDBusService object; that way they know they are the
  * original instance of the application.
  *
- * Applications that set the D-Bus activation entries in their desktop files
- * should use Unique mode and connect to the signals emitted by this class.
+ * Applications that set the D-Bus activation entry (DBusActivatable=true) in
+ * their desktop files will use Unique mode and connect to the signals emitted
+ * by this class.
  * Note that the D-Bus interface is exported for Multiple-mode applications as
  * well, so it also makes sense for such applications to connect to the signals
  * emitted by this class.
@@ -214,21 +215,30 @@ Q_SIGNALS:
      *                   See QCoreApplication::arguments().
      *                   This can also be empty.
      *
-     * A typical implementation of the slot would be
+     * A typical implementation of the signal handler would be:
      * @code
      *    if (!arguments.isEmpty()) {
      *        commandLineParser->parse(arguments); // same QCommandLineParser instance as the one used in main()
      *        handleCmdLine(workingDirectory); // shared method with main(), which uses commandLineParser to handle options and positional arguments
      *    }
+     * @endcode
      *
-     *
-     *    For GUI applications on X11 , also terminate startup notification and activate the mainwindow:
-     *    The startup ID will exposed be via QX11Extras::nextStartupId
-     *
-     *    If an existing window is to be raised, call:
-     *    KStartupInfo::setNewStartupId(mainWindow, QX11Extras::nextStartupId);
+     * For GUI applications, the handler also needs to deal with any platform-specific startup ids
+     * and make sure the mainwindow is shown as well as request its activation from the window manager.
+     * For X11, KDBusService makes the id for the Startup Notification protocol available
+     * from QX11Info::nextStartupId(), if there is one.
+     * For Wayland, KDBusService provides the token for the XDG Activation protocol in the
+     * "XDG_ACTIVATION_TOKEN" environment variable and unsets it again after the signal, if there is one.
+     * A typical implementation in the signal handler would be:
+     * @code
+     *    mainWindow->show();
+     *    if (KWindowSystem::isPlatformX11()) {
+     *        KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
+     *    } else if (KWindowSystem::isPlatformWayland()) {
+     *        KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
+     *    }
      *    mainWindow->raise();
-     *
+     *    KWindowSystem::activateWindow(mainWindow->windowHandle());
      * @endcode
      *
      * If you're using the builtin handling of @c --help and @c --version in QCommandLineParser,
@@ -242,6 +252,12 @@ Q_SIGNALS:
     /**
      * Signals that one or more files should be opened in the application.
      *
+     * This signal is emitted to request handling of the respective method of the D-Bus activation.
+     * For GUI applications, the signal handler also needs to deal with any platform-specific startup ids
+     * and make sure the mainwindow is shown as well as request its activation from the window manager.
+     * See documentation of activateRequested(const QStringList &arguments, const QString &)
+     * for details.
+     *
      * @param uris  The URLs of the files to open.
      */
     void openRequested(const QList<QUrl> &uris);
@@ -249,7 +265,13 @@ Q_SIGNALS:
     /**
      * Signals that an application action should be triggered.
      *
-     * See the desktop entry specification for more information.
+     * This signal is emitted to request handling of the respective method of the D-Bus activation.
+     * For GUI applications, the signal handler also needs to deal with any platform-specific startup ids
+     * and make sure the mainwindow is shown as well as request its activation from the window manager.
+     * See documentation of activateRequested(const QStringList &arguments, const QString &)
+     * for details.
+     *
+     * See the desktop entry specification for more information about action activation.
      */
     void activateActionRequested(const QString &actionName, const QVariant &parameter);
 
