@@ -229,14 +229,19 @@ Q_SIGNALS:
      * from QX11Info::nextStartupId(), if there is one.
      * For Wayland, KDBusService provides the token for the XDG Activation protocol in the
      * "XDG_ACTIVATION_TOKEN" environment variable and unsets it again after the signal, if there is one.
+     * The util method @c KWindowSystem::updateStartupId(QWindow *window) (since KF 5.91) takes care of that.
      * A typical implementation in the signal handler would be:
      * @code
      *    mainWindow->show();
+     *    #if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 91, 0)
+     *    KWindowSystem::updateStartupId(mainWindow->windowHandle());
+     *    #else
      *    if (KWindowSystem::isPlatformX11()) {
      *        KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
      *    } else if (KWindowSystem::isPlatformWayland()) {
      *        KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
      *    }
+     *    #endif
      *    mainWindow->raise();
      *    KWindowSystem::activateWindow(mainWindow->windowHandle());
      * @endcode
