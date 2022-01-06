@@ -51,6 +51,7 @@ void KUpdateLaunchEnvironmentJobPrivate::monitorReply(const QDBusPendingReply<> 
     });
 }
 
+// KF6 TODO: add K-prefix to class name
 UpdateLaunchEnvironmentJob::UpdateLaunchEnvironmentJob(const QProcessEnvironment &environment)
     : d(new KUpdateLaunchEnvironmentJobPrivate(this))
 {
