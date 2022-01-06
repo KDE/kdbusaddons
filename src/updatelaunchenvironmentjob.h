@@ -17,6 +17,8 @@ class QString;
 class KUpdateLaunchEnvironmentJobPrivate;
 
 /**
+ * @class UpdateLaunchEnvironmentJob updatelaunchenvironmentjob.h <UpdateLaunchEnvironmentJob>
+ *
  * Job for updating the launch environment.
  *
  * This job adds or updates an environment variable in process environment that will be used
