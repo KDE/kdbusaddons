@@ -14,6 +14,7 @@
 #include <memory>
 
 class QString;
+class KUpdateLaunchEnvironmentJobPrivate;
 
 /**
  * Job for updating the launch environment.
@@ -45,6 +46,7 @@ Q_SIGNALS:
 
 private:
     void start();
-    class Private;
-    std::unique_ptr<Private> const d;
+
+private:
+    std::unique_ptr<KUpdateLaunchEnvironmentJobPrivate> const d;
 };
