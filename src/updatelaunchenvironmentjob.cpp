@@ -58,10 +58,7 @@ UpdateLaunchEnvironmentJob::UpdateLaunchEnvironmentJob(const QProcessEnvironment
     QTimer::singleShot(0, this, &UpdateLaunchEnvironmentJob::start);
 }
 
-UpdateLaunchEnvironmentJob::~UpdateLaunchEnvironmentJob()
-{
-    delete d;
-}
+UpdateLaunchEnvironmentJob::~UpdateLaunchEnvironmentJob() = default;
 
 void UpdateLaunchEnvironmentJob::start()
 {

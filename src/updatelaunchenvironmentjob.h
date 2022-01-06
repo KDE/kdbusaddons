@@ -11,6 +11,8 @@
 
 #include <QProcessEnvironment>
 
+#include <memory>
+
 class QString;
 
 /**
@@ -44,5 +46,5 @@ Q_SIGNALS:
 private:
     void start();
     class Private;
-    Private *const d;
+    std::unique_ptr<Private> const d;
 };
