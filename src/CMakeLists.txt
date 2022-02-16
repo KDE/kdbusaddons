@@ -86,24 +86,6 @@ ecm_generate_headers(KDBusAddons_HEADERS
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
 
-find_package(PythonModuleGeneration)
-
-if (PythonModuleGeneration_FOUND)
-  ecm_generate_python_binding(
-    TARGET KF5::DBusAddons
-    PYTHONNAMESPACE PyKF5
-    MODULENAME KDBusAddons
-    SIP_DEPENDS
-      QtDBus/QtDBusmod.sip
-    HEADERS
-      kdbusconnectionpool.h
-      kdbusinterprocesslock.h
-      kdbusservice.h
-      kdedmodule.h
-      kdeinitinterface.h
-  )
-endif()
-
 install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
