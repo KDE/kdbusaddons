@@ -25,10 +25,11 @@ class QDBusMessage;
  *
  * The base class for KDED modules.
  *
- * KDED modules are realized as shared
- * libraries that are loaded on-demand into kded at runtime.
+ * KDED modules are constructed as shared libraries that are loaded on-demand
+ * into the kded daemon at runtime.
  *
- * See kdelibs/kded/HOWTO for documentation about writing kded modules.
+ * See https://invent.kde.org/frameworks/kded/-/blob/master/docs/HOWTO
+ * for documentation about writing kded modules.
  *
  * @author Waldo Bastian <bastian@kde.org>
  */
