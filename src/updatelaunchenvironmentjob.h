@@ -14,7 +14,7 @@
 #include <memory>
 
 class QString;
-class KUpdateLaunchEnvironmentJobPrivate;
+class UpdateLaunchEnvironmentJobPrivate;
 
 /**
  * @class UpdateLaunchEnvironmentJob updatelaunchenvironmentjob.h <UpdateLaunchEnvironmentJob>
@@ -50,5 +50,5 @@ private:
     void start();
 
 private:
-    std::unique_ptr<KUpdateLaunchEnvironmentJobPrivate> const d;
+    std::unique_ptr<UpdateLaunchEnvironmentJobPrivate> const d;
 };
