@@ -66,6 +66,14 @@ public:
         }
     }
 
+public Q_SLOTS:
+    void firstCall()
+    {
+        QStringList args;
+        args << QStringLiteral("bad call");
+        executeNewChild(args);
+    }
+
 private Q_SLOTS:
     void slotProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
     {
@@ -76,13 +84,6 @@ private Q_SLOTS:
             Q_ASSERT(exitCode == 4);
             secondCall();
         }
-    }
-
-    void firstCall()
-    {
-        QStringList args;
-        args << QStringLiteral("bad call");
-        executeNewChild(args);
     }
 
     void secondCall()
@@ -139,9 +140,11 @@ int main(int argc, char *argv[])
     QStringList args;
     args << QStringLiteral("dummy call");
 
-    QMetaObject::invokeMethod(&service, "activateRequested", Qt::QueuedConnection, Q_ARG(QStringList, args), Q_ARG(QString, QDir::currentPath()));
-    QTimer::singleShot(400, &testObject, SLOT(firstCall()));
-
+    auto activateSignal = [&service, &args]() {
+        service.activateRequested(args, QDir::currentPath());
+    };
+    QMetaObject::invokeMethod(&service, activateSignal, Qt::QueuedConnection);
+    QTimer::singleShot(400, &testObject, &TestObject::firstCall);
     qDebug() << "Running.";
     a.exec();
     qDebug() << "Terminating.";

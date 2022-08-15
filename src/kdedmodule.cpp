@@ -65,7 +65,10 @@ void KDEDModule::setModuleName(const QString &name)
     } else {
         // qCDebug(KDBUSADDONS_LOG) << "registerObject() successful for" << d->moduleName;
         // Fix deadlock with Qt 5.6: this has to be delayed until the dbus thread is unlocked
-        QMetaObject::invokeMethod(this, "moduleRegistered", Qt::QueuedConnection, Q_ARG(QDBusObjectPath, realPath));
+        auto registeredSignal = [this, realPath]() {
+            moduleRegistered(realPath);
+        };
+        QMetaObject::invokeMethod(this, registeredSignal, Qt::QueuedConnection);
     }
 }
 
