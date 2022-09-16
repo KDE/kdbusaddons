@@ -86,7 +86,7 @@ ecm_generate_headers(KDBusAddons_HEADERS
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
 
-install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${KDBusAddons_HEADERS}
