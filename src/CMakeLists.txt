@@ -6,8 +6,6 @@ add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
 ecm_create_qm_loader(KF5DBusAddons kdbusaddons5_qt)
 
 target_sources(KF5DBusAddons PRIVATE
-    kdbusconnectionpool.cpp
-    kdbusconnectionpool.h
     kdbusinterprocesslock.cpp
     kdbusinterprocesslock.h
     kdbusservice.cpp
@@ -19,6 +17,13 @@ target_sources(KF5DBusAddons PRIVATE
     updatelaunchenvironmentjob.cpp
     updatelaunchenvironmentjob.h
 )
+if (QT_MAJOR_VERSION EQUAL "5")
+    target_sources(KF5DBusAddons PRIVATE
+        kdbusconnectionpool.cpp
+        kdbusconnectionpool.h
+    )
+endif()
+
 ecm_qt_declare_logging_category(KF5DBusAddons
     HEADER kdbusaddons_debug.h
     IDENTIFIER KDBUSADDONS_LOG
@@ -77,7 +82,6 @@ configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdb
 
 ecm_generate_headers(KDBusAddons_HEADERS
   HEADER_NAMES
-  KDBusConnectionPool
   KDBusInterProcessLock
   KDBusService
   KDEDModule
@@ -85,11 +89,19 @@ ecm_generate_headers(KDBusAddons_HEADERS
   UpdateLaunchEnvironmentJob
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
+if (QT_MAJOR_VERSION EQUAL "5")
+    ecm_generate_headers(KDBusAddons_Legacy_HEADERS
+        HEADER_NAMES
+        KDBusConnectionPool
+        REQUIRED_HEADERS KDBusAddons_Legacy_HEADERS
+    )
+endif()
 
 install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${KDBusAddons_HEADERS}
+    ${KDBusAddons_Legacy_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel
 )
