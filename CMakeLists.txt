@@ -43,7 +43,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
                         SOVERSION 5)
 
 # qtx11extras_p.h is in Qt6Gui
-if(TARGET Qt5::X11Extras OR TARGET Qt6::Gui)
+if(TARGET Qt5::X11Extras OR (TARGET Qt6::Gui AND NOT WIN32))
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
