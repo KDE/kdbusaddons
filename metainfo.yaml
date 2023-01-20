@@ -12,8 +12,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: KDBusAddons
-   cmake: "KF5::DBusAddons"
-cmakename: KF5DBusAddons
+   cmake: "KF6::DBusAddons"
+cmakename: KF6DBusAddons
 
 public_lib: true
 group: Frameworks

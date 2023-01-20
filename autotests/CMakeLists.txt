@@ -7,11 +7,11 @@ include(ECMAddTests)
 
 if(UNIX)
     add_executable(kdbussimpleservice kdbussimpleservice.cpp)
-    target_link_libraries(kdbussimpleservice Qt${QT_MAJOR_VERSION}::Core KF5::DBusAddons)
+    target_link_libraries(kdbussimpleservice Qt${QT_MAJOR_VERSION}::Core KF6::DBusAddons)
 
     ecm_add_tests(
         deadservicetest.cpp
-        LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::DBusAddons
+        LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF6::DBusAddons
     )
 
     add_dependencies(deadservicetest kdbussimpleservice)
@@ -20,5 +20,5 @@ endif()
 ecm_add_tests(
     kdbusinterprocesslocktest.cpp
     kdbusservicetest.cpp
-    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF5::DBusAddons
+    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF6::DBusAddons
 )

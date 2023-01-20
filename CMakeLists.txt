@@ -39,8 +39,8 @@ include(ECMPoQmTools)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfigVersion.cmake"
-                        SOVERSION 5)
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfigVersion.cmake"
+                        SOVERSION 6)
 
 # qtx11extras_p.h is in Qt6Gui
 if(TARGET Qt5::X11Extras OR (TARGET Qt6::Gui AND NOT WIN32))
@@ -67,31 +67,31 @@ if (BUILD_TESTING)
 endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DBusAddons")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DBusAddons")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5DBusAddons_QCH
-        FILE KF5DBusAddonsQchTargets.cmake
+        TARGETS KF6DBusAddons_QCH
+        FILE KF6DBusAddonsQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5DBusAddonsQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DBusAddonsQchTargets.cmake\")")
 endif()
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5DBusAddonsConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfig.cmake"
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6DBusAddonsConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfig.cmake"
                               INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
                               )
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5DBusAddonsConfigVersion.cmake"
-               "KF5DBusAddonsMacros.cmake"
-               "KF5dbus.service.in"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfigVersion.cmake"
+               "KF6DBusAddonsMacros.cmake"
+               "KF6dbus.service.in"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
-install(EXPORT KF5DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  FILE KF5DBusAddonsTargets.cmake  NAMESPACE KF5:: )
+install(EXPORT KF6DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  FILE KF6DBusAddonsTargets.cmake  NAMESPACE KF6:: )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel)
 

@@ -1,11 +1,11 @@
 add_subdirectory(tools/kquitapp)
 
-add_library(KF5DBusAddons)
-add_library(KF5::DBusAddons ALIAS KF5DBusAddons)
+add_library(KF6DBusAddons)
+add_library(KF6::DBusAddons ALIAS KF6DBusAddons)
 
-ecm_create_qm_loader(KF5DBusAddons kdbusaddons5_qt)
+ecm_create_qm_loader(KF6DBusAddons kdbusaddons5_qt)
 
-target_sources(KF5DBusAddons PRIVATE
+target_sources(KF6DBusAddons PRIVATE
     kdbusinterprocesslock.cpp
     kdbusinterprocesslock.h
     kdbusservice.cpp
@@ -18,13 +18,13 @@ target_sources(KF5DBusAddons PRIVATE
     updatelaunchenvironmentjob.h
 )
 if (QT_MAJOR_VERSION EQUAL "5")
-    target_sources(KF5DBusAddons PRIVATE
+    target_sources(KF6DBusAddons PRIVATE
         kdbusconnectionpool.cpp
         kdbusconnectionpool.h
     )
 endif()
 
-ecm_qt_declare_logging_category(KF5DBusAddons
+ecm_qt_declare_logging_category(KF6DBusAddons
     HEADER kdbusaddons_debug.h
     IDENTIFIER KDBUSADDONS_LOG
     CATEGORY_NAME kf.dbusaddons
@@ -50,11 +50,11 @@ qt_add_dbus_adaptor(libkdbusaddons_dbus_SRCS
    kdbusserviceextensions_adaptor
    KDBusServiceExtensionsAdaptor)
 
-target_sources(KF5DBusAddons PRIVATE
+target_sources(KF6DBusAddons PRIVATE
     ${libkdbusaddons_dbus_SRCS}
 )
 
-ecm_generate_export_header(KF5DBusAddons
+ecm_generate_export_header(KF6DBusAddons
     BASE_NAME KDBusAddons
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -69,11 +69,11 @@ elseif(TARGET Qt6::Gui)
     set(_qt_x11_extras_libs Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 
-target_link_libraries(KF5DBusAddons PUBLIC Qt${QT_MAJOR_VERSION}::DBus PRIVATE ${_qt_x11_extras_libs})
+target_link_libraries(KF6DBusAddons PUBLIC Qt${QT_MAJOR_VERSION}::DBus PRIVATE ${_qt_x11_extras_libs})
 
-target_include_directories(KF5DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
+target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
 
-set_target_properties(KF5DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION}
+set_target_properties(KF6DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION}
                                                SOVERSION ${KDBUSADDONS_SOVERSION}
                                                EXPORT_NAME DBusAddons
 )
@@ -97,7 +97,7 @@ if (QT_MAJOR_VERSION EQUAL "5")
     )
 endif()
 
-install(TARGETS KF5DBusAddons EXPORT KF5DBusAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF6DBusAddons EXPORT KF6DBusAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${KDBusAddons_HEADERS}
@@ -114,9 +114,9 @@ ecm_qt_install_logging_categories(
 
 if(BUILD_QCH)
     ecm_add_qch(
-        KF5DBusAddons_QCH
+        KF6DBusAddons_QCH
         NAME KDBusAddons
-        BASE_NAME KF5DBusAddons
+        BASE_NAME KF6DBusAddons
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -137,5 +137,5 @@ if(BUILD_QCH)
 endif()
 
 include(ECMGeneratePriFile)
-ecm_generate_pri_file(BASE_NAME KDBusAddons LIB_NAME KF5DBusAddons DEPS "dbus" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons)
+ecm_generate_pri_file(BASE_NAME KDBusAddons LIB_NAME KF6DBusAddons DEPS "dbus" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})

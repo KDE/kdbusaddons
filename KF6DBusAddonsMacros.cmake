@@ -23,7 +23,7 @@ set(_KDBUSADDONSDIR ${CMAKE_CURRENT_LIST_DIR})
 
 function(KDBUSADDONS_GENERATE_DBUS_SERVICE_FILE _executable _name _path)
     set(_file ${CMAKE_CURRENT_BINARY_DIR}/${_name}.service)
-    set(_template ${_KDBUSADDONSDIR}/KF5dbus.service.in)
+    set(_template ${_KDBUSADDONSDIR}/KF6dbus.service.in)
     set(NAME ${_name})
     if(WIN32)
         set(EXEC ${_executable})
