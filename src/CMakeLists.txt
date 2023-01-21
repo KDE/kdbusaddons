@@ -17,12 +17,6 @@ target_sources(KF6DBusAddons PRIVATE
     updatelaunchenvironmentjob.cpp
     updatelaunchenvironmentjob.h
 )
-if (QT_MAJOR_VERSION EQUAL "5")
-    target_sources(KF6DBusAddons PRIVATE
-        kdbusconnectionpool.cpp
-        kdbusconnectionpool.h
-    )
-endif()
 
 ecm_qt_declare_logging_category(KF6DBusAddons
     HEADER kdbusaddons_debug.h
@@ -59,7 +53,7 @@ ecm_generate_export_header(KF6DBusAddons
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
     DEPRECATED_BASE_VERSION 0
-    DEPRECATION_VERSIONS 5.68
+    DEPRECATION_VERSIONS
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
@@ -89,19 +83,11 @@ ecm_generate_headers(KDBusAddons_HEADERS
   UpdateLaunchEnvironmentJob
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
-if (QT_MAJOR_VERSION EQUAL "5")
-    ecm_generate_headers(KDBusAddons_Legacy_HEADERS
-        HEADER_NAMES
-        KDBusConnectionPool
-        REQUIRED_HEADERS KDBusAddons_Legacy_HEADERS
-    )
-endif()
 
 install(TARGETS KF6DBusAddons EXPORT KF6DBusAddonsTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
     ${KDBusAddons_HEADERS}
-    ${KDBusAddons_Legacy_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel
 )
