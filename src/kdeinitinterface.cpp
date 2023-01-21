@@ -45,7 +45,7 @@ void KDEInitInterface::ensureKdeinitRunning()
     // If not found in system paths, search other paths
     if (srv.isEmpty()) {
         const QStringList searchPaths = QStringList() << QCoreApplication::applicationDirPath() // then look where our application binary is located
-                                                      << QLibraryInfo::location(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
+                                                      << QLibraryInfo::path(QLibraryInfo::BinariesPath); // look where exec path is (can be set in qt.conf)
         srv = QStandardPaths::findExecutable(QStringLiteral("kdeinit5"), searchPaths);
         if (srv.isEmpty()) {
             qCWarning(KDBUSADDONS_LOG) << "Can not find 'kdeinit5' executable at " << qgetenv("PATH") << searchPaths.join(QStringLiteral(", "));
