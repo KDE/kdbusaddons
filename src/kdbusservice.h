@@ -233,15 +233,7 @@ Q_SIGNALS:
      * A typical implementation in the signal handler would be:
      * @code
      *    mainWindow->show();
-     *    #if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 91, 0)
      *    KWindowSystem::updateStartupId(mainWindow->windowHandle());
-     *    #else
-     *    if (KWindowSystem::isPlatformX11()) {
-     *        KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
-     *    } else if (KWindowSystem::isPlatformWayland()) {
-     *        KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
-     *    }
-     *    #endif
      *    mainWindow->raise();
      *    KWindowSystem::activateWindow(mainWindow->windowHandle());
      * @endcode
