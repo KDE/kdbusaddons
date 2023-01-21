@@ -57,13 +57,11 @@ ecm_generate_export_header(KF6DBusAddons
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
 
-if(TARGET Qt5::X11Extras)
-    set(_qt_x11_extras_libs Qt5::X11Extras)
-elseif(TARGET Qt6::Gui)
+if(TARGET Qt6::Gui)
     set(_qt_x11_extras_libs Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 
-target_link_libraries(KF6DBusAddons PUBLIC Qt${QT_MAJOR_VERSION}::DBus PRIVATE ${_qt_x11_extras_libs})
+target_link_libraries(KF6DBusAddons PUBLIC Qt6::DBus PRIVATE ${_qt_x11_extras_libs})
 
 target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
 

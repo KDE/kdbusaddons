@@ -1,14 +1,12 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(Qt@QT_MAJOR_VERSION@DBus @REQUIRED_QT_VERSION@)
+find_dependency(Qt6DBus @REQUIRED_QT_VERSION@)
 
 if(NOT @BUILD_SHARED_LIBS@)
     # Qt5::DBus target will have been defined by the find_dependency() call above
     # at the time where this file is used
-    if(@Qt5X11Extras_FOUND@)
-        find_dependency(Qt5X11Extras @REQUIRED_QT_VERSION@)
-    elseif(@Qt6Gui_FOUND@)
+    if(@Qt6Gui_FOUND@)
         find_dependency(Qt6Gui @REQUIRED_QT_VERSION@) # qtx11extras_p.h
     endif()
 endif()
