@@ -107,8 +107,8 @@ if(BUILD_QCH)
             ${KDBusAddons_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5DBus_QCH
-            Qt5Core_QCH
+            Qt6DBus_QCH
+            Qt6Core_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
