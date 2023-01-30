@@ -5,7 +5,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include "updatelaunchenvironmentjob.h"
+#include "kupdatelaunchenvironmentjob.h"
 
 #include <QDBusArgument>
 #include <QDBusConnection>
@@ -16,26 +16,26 @@
 
 #include "kdbusaddons_debug.h"
 
-class UpdateLaunchEnvironmentJobPrivate
+class KUpdateLaunchEnvironmentJobPrivate
 {
 public:
-    explicit UpdateLaunchEnvironmentJobPrivate(UpdateLaunchEnvironmentJob *q);
+    explicit KUpdateLaunchEnvironmentJobPrivate(KUpdateLaunchEnvironmentJob *q);
     void monitorReply(const QDBusPendingReply<> &reply);
 
     static bool isPosixName(const QString &name);
     static bool isSystemdApprovedValue(const QString &value);
 
-    UpdateLaunchEnvironmentJob *q;
+    KUpdateLaunchEnvironmentJob *q;
     QProcessEnvironment environment;
     int pendingReplies = 0;
 };
 
-UpdateLaunchEnvironmentJobPrivate::UpdateLaunchEnvironmentJobPrivate(UpdateLaunchEnvironmentJob *q)
+KUpdateLaunchEnvironmentJobPrivate::KUpdateLaunchEnvironmentJobPrivate(KUpdateLaunchEnvironmentJob *q)
     : q(q)
 {
 }
 
-void UpdateLaunchEnvironmentJobPrivate::monitorReply(const QDBusPendingReply<> &reply)
+void KUpdateLaunchEnvironmentJobPrivate::monitorReply(const QDBusPendingReply<> &reply)
 {
     ++pendingReplies;
 
@@ -51,24 +51,23 @@ void UpdateLaunchEnvironmentJobPrivate::monitorReply(const QDBusPendingReply<> &
     });
 }
 
-// KF6 TODO: add K-prefix to class name
-UpdateLaunchEnvironmentJob::UpdateLaunchEnvironmentJob(const QProcessEnvironment &environment)
-    : d(new UpdateLaunchEnvironmentJobPrivate(this))
+KUpdateLaunchEnvironmentJob::KUpdateLaunchEnvironmentJob(const QProcessEnvironment &environment)
+    : d(new KUpdateLaunchEnvironmentJobPrivate(this))
 {
     d->environment = environment;
-    QTimer::singleShot(0, this, &UpdateLaunchEnvironmentJob::start);
+    QTimer::singleShot(0, this, &KUpdateLaunchEnvironmentJob::start);
 }
 
-UpdateLaunchEnvironmentJob::~UpdateLaunchEnvironmentJob() = default;
+KUpdateLaunchEnvironmentJob::~KUpdateLaunchEnvironmentJob() = default;
 
-void UpdateLaunchEnvironmentJob::start()
+void KUpdateLaunchEnvironmentJob::start()
 {
     qDBusRegisterMetaType<QMap<QString, QString>>();
     QMap<QString, QString> dbusActivationEnv;
     QStringList systemdUpdates;
 
     for (const auto &varName : d->environment.keys()) {
-        if (!UpdateLaunchEnvironmentJobPrivate::isPosixName(varName)) {
+        if (!KUpdateLaunchEnvironmentJobPrivate::isPosixName(varName)) {
             qCWarning(KDBUSADDONS_LOG) << "Skipping syncing of environment variable " << varName << "as name contains unsupported characters";
             continue;
         }
@@ -90,7 +89,7 @@ void UpdateLaunchEnvironmentJob::start()
         // Systemd has stricter parsing of valid environment variables
         // https://github.com/systemd/systemd/issues/16704
         // validate here
-        if (!UpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(value)) {
+        if (!KUpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(value)) {
             qCWarning(KDBUSADDONS_LOG) << "Skipping syncing of environment variable " << varName << "as value contains unsupported characters";
             continue;
         }
@@ -119,7 +118,7 @@ void UpdateLaunchEnvironmentJob::start()
     d->monitorReply(systemdActivationReply);
 }
 
-bool UpdateLaunchEnvironmentJobPrivate::isPosixName(const QString &name)
+bool KUpdateLaunchEnvironmentJobPrivate::isPosixName(const QString &name)
 {
     // Posix says characters like % should be 'tolerated', but it gives issues in practice.
     // https://bugzilla.redhat.com/show_bug.cgi?id=1754395
@@ -138,7 +137,7 @@ bool UpdateLaunchEnvironmentJobPrivate::isPosixName(const QString &name)
     return !first;
 }
 
-bool UpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(const QString &value)
+bool KUpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(const QString &value)
 {
     // systemd code checks that a value contains no control characters except \n \t
     // effectively copied from systemd's string_has_cc

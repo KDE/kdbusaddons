@@ -5,7 +5,8 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#pragma once
+#ifndef KUPDATELAUNCHENVIRONMENTJOB_H
+#define KUPDATELAUNCHENVIRONMENTJOB_H
 
 #include <kdbusaddons_export.h>
 
@@ -14,10 +15,10 @@
 #include <memory>
 
 class QString;
-class UpdateLaunchEnvironmentJobPrivate;
+class KUpdateLaunchEnvironmentJobPrivate;
 
 /**
- * @class UpdateLaunchEnvironmentJob updatelaunchenvironmentjob.h <UpdateLaunchEnvironmentJob>
+ * @class KUpdateLaunchEnvironmentJob updatelaunchenvironmentjob.h <KUpdateLaunchEnvironmentJob>
  *
  * Job for updating the launch environment.
  *
@@ -27,21 +28,24 @@ class UpdateLaunchEnvironmentJobPrivate;
  *  - DBus activation
  *  - Systemd units
  *  - Plasma-session
- *  - KInit (deprecated)
  *
  * Environment variables are sanitized before uploading.
  *
  * This object deletes itself after completion, similar to KJobs
  *
- * @since 5.84
+ * Porting from KF5 to KF6:
+ *
+ * The class UpdateLaunchEnvironmentJob was renamed to KUpdateLaunchEnvironmentJob.
+ *
+ * @since 6.0
  */
-class KDBUSADDONS_EXPORT UpdateLaunchEnvironmentJob : public QObject
+class KDBUSADDONS_EXPORT KUpdateLaunchEnvironmentJob : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit UpdateLaunchEnvironmentJob(const QProcessEnvironment &environment);
-    ~UpdateLaunchEnvironmentJob() override;
+    explicit KUpdateLaunchEnvironmentJob(const QProcessEnvironment &environment);
+    ~KUpdateLaunchEnvironmentJob() override;
 
 Q_SIGNALS:
     void finished();
@@ -50,5 +54,7 @@ private:
     void start();
 
 private:
-    std::unique_ptr<UpdateLaunchEnvironmentJobPrivate> const d;
+    std::unique_ptr<KUpdateLaunchEnvironmentJobPrivate> const d;
 };
+
+#endif

@@ -5,7 +5,7 @@
 */
 
 #include <QCoreApplication>
-#include <updatelaunchenvironmentjob.h>
+#include <kupdatelaunchenvironmentjob.h>
 
 // This test syncs the current environment of the spawned process to systemd/whatever
 // akin to dbus-update-activation-environment
@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
     QEventLoop e;
-    auto job = new UpdateLaunchEnvironmentJob(QProcessEnvironment::systemEnvironment());
-    QObject::connect(job, &UpdateLaunchEnvironmentJob::finished, &e, &QEventLoop::quit);
+    auto job = new KUpdateLaunchEnvironmentJob(QProcessEnvironment::systemEnvironment());
+    QObject::connect(job, &KUpdateLaunchEnvironmentJob::finished, &e, &QEventLoop::quit);
     return e.exec();
 }
