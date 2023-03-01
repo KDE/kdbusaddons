@@ -23,17 +23,17 @@ msgctxt "main|"
 msgid "Quit a D-Bus enabled application easily"
 msgstr "Jednostavo napustite program opremljen D‑Busom"
 
-#: tools/kquitapp/kquitapp.cpp:20
+#: tools/kquitapp/kquitapp.cpp:21
 msgctxt "main|"
 msgid "Full service name, overrides application name provided"
 msgstr "Puno ime servisa, potiskuje dato ime programa"
 
-#: tools/kquitapp/kquitapp.cpp:21
+#: tools/kquitapp/kquitapp.cpp:24
 msgctxt "main|"
 msgid "Path in the D-Bus interface to use"
 msgstr "Putanja u D‑Bus sučelju"
 
-#: tools/kquitapp/kquitapp.cpp:22
+#: tools/kquitapp/kquitapp.cpp:27
 msgctxt "main|"
 msgid "The name of the application to quit"
 msgstr "Ime programa koji se napušta"
@@ -44,7 +44,7 @@ msgctxt "main|"
 msgid "Application %1 could not be found using service %2 and path %3."
 msgstr "Program %1 ne može da se nađe kroz servis %2 i putanju %3."
 
-#: tools/kquitapp/kquitapp.cpp:51
+#: tools/kquitapp/kquitapp.cpp:52
 #, qt-format
 msgctxt "main|"
 msgid ""
