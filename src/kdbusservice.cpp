@@ -317,7 +317,7 @@ void KDBusService::unregister()
 void KDBusService::Activate(const QVariantMap &platform_data)
 {
     d->handlePlatformData(platform_data);
-    Q_EMIT activateRequested(QStringList(), QString());
+    Q_EMIT activateRequested(QStringList(QCoreApplication::arguments()[0]), QDir::currentPath());
     qunsetenv("XDG_ACTIVATION_TOKEN");
 }
 
