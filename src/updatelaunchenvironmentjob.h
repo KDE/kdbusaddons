@@ -5,7 +5,8 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#pragma once
+#ifndef KDBUSADDONS_UPDATELAUNCHENVIRONMENTJOB_H
+#define KDBUSADDONS_UPDATELAUNCHENVIRONMENTJOB_H
 
 #include <kdbusaddons_export.h>
 
@@ -52,3 +53,5 @@ private:
 private:
     std::unique_ptr<UpdateLaunchEnvironmentJobPrivate> const d;
 };
+
+#endif
