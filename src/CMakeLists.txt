@@ -3,7 +3,7 @@ add_subdirectory(tools/kquitapp)
 add_library(KF6DBusAddons)
 add_library(KF6::DBusAddons ALIAS KF6DBusAddons)
 
-ecm_create_qm_loader(KF6DBusAddons kdbusaddons5_qt)
+ecm_create_qm_loader(KF6DBusAddons kdbusaddons6_qt)
 
 target_sources(KF6DBusAddons PRIVATE
     kdbusinterprocesslock.cpp
