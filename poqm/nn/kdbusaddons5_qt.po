@@ -1,4 +1,4 @@
-# Translation of kdbusaddons5_qt to Norwegian Nynorsk
+# Translation of kdbusaddons6_qt to Norwegian Nynorsk
 #
 # Karl Ove Hufthammer <karl@huftis.org>, 2007, 2008, 2015.
 # Håvard Korsvoll <korsvoll@skulelinux.no>, 2008.
