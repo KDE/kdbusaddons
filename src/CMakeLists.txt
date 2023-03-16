@@ -12,8 +12,6 @@ target_sources(KF6DBusAddons PRIVATE
     kdbusservice.h
     kdedmodule.cpp
     kdedmodule.h
-    kdeinitinterface.cpp
-    kdeinitinterface.h
     kupdatelaunchenvironmentjob.cpp
     kupdatelaunchenvironmentjob.h
 )
@@ -77,7 +75,6 @@ ecm_generate_headers(KDBusAddons_HEADERS
   KDBusInterProcessLock
   KDBusService
   KDEDModule
-  KDEInitInterface
   KUpdateLaunchEnvironmentJob
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
