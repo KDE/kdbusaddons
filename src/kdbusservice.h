@@ -284,12 +284,13 @@ public Q_SLOTS:
 
 private:
     // fdo.Application spec
-    void Activate(const QVariantMap &platform_data);
-    void Open(const QStringList &uris, const QVariantMap &platform_data);
-    void ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data);
+    KDBUSADDONS_NO_EXPORT void Activate(const QVariantMap &platform_data);
+    KDBUSADDONS_NO_EXPORT void Open(const QStringList &uris, const QVariantMap &platform_data);
+    KDBUSADDONS_NO_EXPORT void ActivateAction(const QString &action_name, const QVariantList &maybeParameter, const QVariantMap &platform_data);
     friend class KDBusServiceAdaptor;
+
     // org.kde.KDBusService
-    int CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data);
+    KDBUSADDONS_NO_EXPORT int CommandLine(const QStringList &arguments, const QString &workingDirectory, const QVariantMap &platform_data);
     friend class KDBusServiceExtensionsAdaptor;
 
 private:

@@ -51,7 +51,7 @@ Q_SIGNALS:
     void finished();
 
 private:
-    void start();
+    KDBUSADDONS_NO_EXPORT void start();
 
 private:
     std::unique_ptr<KUpdateLaunchEnvironmentJobPrivate> const d;
