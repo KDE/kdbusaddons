@@ -32,8 +32,9 @@ include(ECMAddQch)
 
 include(ECMPoQmTools)
 
+set(kdbusaddons_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kdbusaddons_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h"
+                        VERSION_HEADER "${kdbusaddons_version_header}"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfigVersion.cmake"
                         SOVERSION 6)
 
@@ -88,7 +89,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfig.cmake"
 
 install(EXPORT KF6DBusAddonsTargets  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"  FILE KF6DBusAddonsTargets.cmake  NAMESPACE KF6:: )
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_version.h  DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel)
+install(FILES ${kdbusaddons_version_header} DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
