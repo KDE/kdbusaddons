@@ -3,6 +3,12 @@ add_subdirectory(tools/kquitapp)
 add_library(KF6DBusAddons)
 add_library(KF6::DBusAddons ALIAS KF6DBusAddons)
 
+set_target_properties(KF6DBusAddons PROPERTIES
+    VERSION     ${KDBUSADDONS_VERSION}
+    SOVERSION   ${KDBUSADDONS_SOVERSION}
+    EXPORT_NAME DBusAddons
+)
+
 ecm_create_qm_loader(KF6DBusAddons kdbusaddons6_qt)
 
 target_sources(KF6DBusAddons PRIVATE
@@ -62,11 +68,6 @@ endif()
 target_link_libraries(KF6DBusAddons PUBLIC Qt6::DBus PRIVATE ${_qt_x11_extras_libs})
 
 target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
-
-set_target_properties(KF6DBusAddons PROPERTIES VERSION   ${KDBUSADDONS_VERSION}
-                                               SOVERSION ${KDBUSADDONS_SOVERSION}
-                                               EXPORT_NAME DBusAddons
-)
 
 configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdbusaddons.h )
 
