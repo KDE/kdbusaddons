@@ -1,4 +1,4 @@
-# Translation of kdbusaddons5_qt to Northern Sami
+# Translation of kdbusaddons6_qt to Northern Sami
 #
 msgid ""
 msgstr ""
