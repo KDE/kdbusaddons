@@ -1,8 +1,8 @@
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2022-03-29 13:55+0300\n"
+"PO-Revision-Date: 2023-05-24 01:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: tools/kquitapp/kquitapp.cpp:19
 msgctxt "main|"
@@ -21,7 +21,7 @@ msgstr "D-Bus desteği olan bir uygulamadan kolayca çıkın"
 #: tools/kquitapp/kquitapp.cpp:21
 msgctxt "main|"
 msgid "Full service name, overrides application name provided"
-msgstr "Tam servis adı, verilen uygulama adının yerine geçer"
+msgstr "Tam hizmet adı, verilen uygulama adının yerine geçer"
 
 #: tools/kquitapp/kquitapp.cpp:24
 msgctxt "main|"
@@ -37,7 +37,7 @@ msgstr "Çıkılacak uygulamanın adı"
 #, qt-format
 msgctxt "main|"
 msgid "Application %1 could not be found using service %2 and path %3."
-msgstr "%1 uygulaması %2 servisi ve %3 yolu kullanılarak bulunamadı."
+msgstr "%1 uygulaması, %2 hizmeti ve %3 yolu kullanılarak bulunamadı."
 
 #: tools/kquitapp/kquitapp.cpp:52
 #, qt-format
