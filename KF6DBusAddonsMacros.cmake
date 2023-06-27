@@ -17,7 +17,7 @@ set(_KDBUSADDONSDIR ${CMAKE_CURRENT_LIST_DIR})
 #
 # Example:
 #
-#  kdbusaddons_generate_dbus_service_file(kded5 org.kde.kded5 ${KDE_INSTALL_FULL_BINDIR})
+#  kdbusaddons_generate_dbus_service_file(kded6 org.kde.kded6 ${KDE_INSTALL_FULL_BINDIR})
 #
 # Since 5.42.0
 
