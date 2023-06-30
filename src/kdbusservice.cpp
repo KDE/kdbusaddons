@@ -352,3 +352,4 @@ int KDBusService::CommandLine(const QStringList &arguments, const QString &worki
 }
 
 #include "kdbusservice.moc"
+#include "moc_kdbusservice.cpp"

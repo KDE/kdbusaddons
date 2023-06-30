@@ -154,3 +154,5 @@ bool KUpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(const QString &v
     }
     return true;
 }
+
+#include "moc_kupdatelaunchenvironmentjob.cpp"
