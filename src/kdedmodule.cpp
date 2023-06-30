@@ -101,3 +101,5 @@ QString KDEDModule::moduleForMessage(const QDBusMessage &message)
 
     return obj;
 }
+
+#include "moc_kdedmodule.cpp"
