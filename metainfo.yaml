@@ -1,4 +1,4 @@
-maintainer: dfaure
+maintainer:
 description: Addons to QtDBus
 tier: 1
 type: functional
