@@ -38,8 +38,13 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfigVersion.cmake"
                         SOVERSION 6)
 
-# qtx11extras_p.h is in Qt6Gui
-if(TARGET Qt6::Gui AND NOT WIN32)
+option(WITH_X11 "Build X11 support" ON)
+
+if (WIN32 OR APPLE OR ANDROID)
+    set(WITH_X11 OFF)
+endif()
+
+if (WITH_X11)
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
