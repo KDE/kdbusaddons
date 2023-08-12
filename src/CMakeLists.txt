@@ -12,8 +12,6 @@ set_target_properties(KF6DBusAddons PROPERTIES
 ecm_create_qm_loader(KF6DBusAddons kdbusaddons6_qt)
 
 target_sources(KF6DBusAddons PRIVATE
-    kdbusinterprocesslock.cpp
-    kdbusinterprocesslock.h
     kdbusservice.cpp
     kdbusservice.h
     kdedmodule.cpp
@@ -74,7 +72,6 @@ configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdb
 
 ecm_generate_headers(KDBusAddons_HEADERS
   HEADER_NAMES
-  KDBusInterProcessLock
   KDBusService
   KDEDModule
   KUpdateLaunchEnvironmentJob

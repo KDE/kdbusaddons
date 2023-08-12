@@ -18,7 +18,6 @@ if(UNIX)
 endif()
 
 ecm_add_tests(
-    kdbusinterprocesslocktest.cpp
     kdbusservicetest.cpp
     LINK_LIBRARIES Qt6::Test KF6::DBusAddons
 )
