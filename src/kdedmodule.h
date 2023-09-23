@@ -67,11 +67,6 @@ public:
 
 Q_SIGNALS:
     /**
-     * Emitted when the module is being deleted.
-     */
-    void moduleDeleted(KDEDModule *);
-
-    /**
      * Emitted when a mainwindow registers itself.
      */
     void windowRegistered(qlonglong windowId);
