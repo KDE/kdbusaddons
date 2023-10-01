@@ -11,8 +11,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - qmake: KDBusAddons
-   cmake: "KF6::DBusAddons"
+ - cmake: "KF6::DBusAddons"
 cmakename: KF6DBusAddons
 
 public_lib: true
