@@ -4,7 +4,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Amine Say <aminesay@yahoo.fr>, 2007, 2008, 2009.
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2007, 2008, 2009.
-# xavier <ktranslator31@yahoo.fr>, 2013.
+# Xavier Besnard <xavier.besnard@kde.org>, 2013.
 # Vincent Pinon <vpinon@kde.org>, 2016.
 #
 #
