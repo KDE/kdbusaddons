@@ -23,6 +23,7 @@ public:
     void monitorReply(const QDBusPendingReply<> &reply);
 
     static bool isPosixName(const QString &name);
+    static bool isProcessConfinementName(const QString &name);
     static bool isSystemdApprovedValue(const QString &value);
 
     KUpdateLaunchEnvironmentJob *q;
@@ -69,6 +70,10 @@ void KUpdateLaunchEnvironmentJob::start()
     for (const auto &varName : d->environment.keys()) {
         if (!KUpdateLaunchEnvironmentJobPrivate::isPosixName(varName)) {
             qCWarning(KDBUSADDONS_LOG) << "Skipping syncing of environment variable " << varName << "as name contains unsupported characters";
+            continue;
+        }
+        if (KUpdateLaunchEnvironmentJobPrivate::isProcessConfinementName(varName)) {
+            qCWarning(KDBUSADDONS_LOG) << "Skipping syncing of environment variable " << varName << "as name is related to process specific confinement";
             continue;
         }
         const QString value = d->environment.value(varName);
@@ -135,6 +140,14 @@ bool KUpdateLaunchEnvironmentJobPrivate::isPosixName(const QString &name)
         }
     }
     return !first;
+}
+
+bool KUpdateLaunchEnvironmentJobPrivate::isProcessConfinementName(const QString &name)
+{
+    if (name == QStringLiteral("SNAP") || name.startsWith(QStringLiteral("SNAP_"))) {
+        return true;
+    }
+    return false;
 }
 
 bool KUpdateLaunchEnvironmentJobPrivate::isSystemdApprovedValue(const QString &value)
