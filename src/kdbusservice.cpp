@@ -157,12 +157,6 @@ private:
         }
 
         attemptRegistration();
-
-        if (d->registered) {
-            if (QCoreApplication *app = QCoreApplication::instance()) {
-                connect(app, &QCoreApplication::aboutToQuit, s, &KDBusService::unregister);
-            }
-        }
     }
 
     void attemptRegistration()

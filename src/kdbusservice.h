@@ -148,8 +148,7 @@ public:
     /**
      * Destroys this object (but does not unregister the application).
      *
-     * Deleting this object before unregister() is called (either manually or
-     * because QCoreApplication::aboutToQuit() was emitted) could confuse
+     * Deleting this object before unregister() could confuse
      * clients, who will see the service on the bus but will be unable to use
      * the activation methods.
      */
@@ -274,11 +273,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     /**
-     * Unregister from D-Bus.
-     *
-     * This is called automatically when the application is about to quit, to
-     * make sure it doesn't keep receiving calls to its D-Bus interface while it
-     * is doing final cleanups.
+     * Manually unregister the given serviceName from D-Bus.
      */
     void unregister();
 
