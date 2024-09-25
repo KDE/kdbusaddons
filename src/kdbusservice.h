@@ -271,6 +271,12 @@ Q_SIGNALS:
      */
     void activateActionRequested(const QString &actionName, const QVariant &parameter);
 
+    /**
+     * Signals that the application has registered its DBus service successfully, and
+     * is not going to yield to another running instance.
+     */
+    void serviceRegistered();
+
 public Q_SLOTS:
     /**
      * Manually unregister the given serviceName from D-Bus.

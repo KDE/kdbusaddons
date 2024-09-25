@@ -157,6 +157,14 @@ private:
         }
 
         attemptRegistration();
+
+        if (d->registered) {
+            // use a 0-timer single shot so that this is run after the event loop has
+            // a chance to start up and signal connections have been made
+            QTimer::singleShot(0, s, [s = s] {
+                Q_EMIT s->serviceRegistered();
+            });
+        }
     }
 
     void attemptRegistration()
