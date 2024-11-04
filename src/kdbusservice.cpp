@@ -250,10 +250,8 @@ private:
     void waitForRegistration()
     {
         QTimer quitTimer;
-        // Wait a bit longer when we know this instance was restarted. There's
-        // a very good chance we'll eventually get the name once the defunct
-        // process closes its sockets.
-        quitTimer.start(qEnvironmentVariableIsSet("KCRASH_AUTO_RESTARTED") ? 8000 : 2000);
+        // We have to wait for the other application to quit completely which could take a while
+        quitTimer.start(8000);
         connect(&quitTimer, &QTimer::timeout, &registrationLoop, &QEventLoop::quit);
         registrationLoop.exec();
     }
