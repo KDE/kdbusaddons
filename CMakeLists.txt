@@ -40,7 +40,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDBUSADDONS
 
 option(WITH_X11 "Build X11 support" ON)
 
-if (WIN32 OR APPLE OR ANDROID)
+if (WIN32 OR APPLE OR ANDROID OR HAIKU)
     set(WITH_X11 OFF)
 endif()
 
