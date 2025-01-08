@@ -1,0 +1,24 @@
+/*!
+    \page kdbusaddons-index.html
+    \title KDBusAddons
+
+    KDBusAddons is a collection of convenience classes and widgets to manage your app's main window.
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {DBusAddons}
+
+    \section1 API Reference
+
+    \list
+        \li \l{KDBusAddons C++ Classes}
+    \endlist
+
+    \section1 Licenses
+
+    TODO
+*/

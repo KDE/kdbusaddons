@@ -1,0 +1,9 @@
+/*!
+    \module KDBusAddons
+    \title KDBusAddons C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent DBusAddons
+
+    \brief KDBusAddons provides convenience classes on top of QtDBus, as well as an API to create KDED modules.
+*/
