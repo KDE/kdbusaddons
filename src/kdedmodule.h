@@ -54,6 +54,9 @@ public:
      */
     void setModuleName(const QString &name);
 
+    /*!
+     * The name of the module used to register to D-Bus.
+     */
     QString moduleName() const;
 
     /*!
