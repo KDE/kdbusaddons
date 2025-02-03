@@ -10,5 +10,5 @@ sourcedirs = .
 
 outputformats = HTML
 
-depends += qtcore qtwidgets qtxml
+depends += qtcore qtgui qttools
 
