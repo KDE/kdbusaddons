@@ -2,7 +2,7 @@
     \page kdbusaddons-index.html
     \title KDBusAddons
 
-    KDBusAddons is a collection of convenience classes and widgets to manage your app's main window.
+    KDBusAddons provides convenience classes on top of QtDBus, as well as an API to create KDED modules.
 
     \section1 Using the Module
 
