@@ -18,6 +18,7 @@ target_sources(KF6DBusAddons PRIVATE
     kdedmodule.h
     kupdatelaunchenvironmentjob.cpp
     kupdatelaunchenvironmentjob.h
+    kdbuspropertieschangedadaptor.cpp
 )
 
 ecm_qt_declare_logging_category(KF6DBusAddons
@@ -75,6 +76,7 @@ ecm_generate_headers(KDBusAddons_HEADERS
   KDBusService
   KDEDModule
   KUpdateLaunchEnvironmentJob
+  KDBusPropertiesChangedAdaptor
   REQUIRED_HEADERS KDBusAddons_HEADERS
 )
 

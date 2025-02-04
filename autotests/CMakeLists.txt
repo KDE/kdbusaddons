@@ -19,5 +19,6 @@ endif()
 
 ecm_add_tests(
     kdbusservicetest.cpp
+    kdbuspropertieschangedadaptortest.cpp
     LINK_LIBRARIES Qt6::Test KF6::DBusAddons
 )
