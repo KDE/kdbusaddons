@@ -2,6 +2,7 @@
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 find_package(Qt6Test ${REQUIRED_QT_VERSION} REQUIRED CONFIG)
+find_package(Qt6QuickTest ${REQUIRED_QT_VERSION} REQUIRED CONFIG)
 
 include(ECMAddTests)
 
@@ -20,4 +21,9 @@ endif()
 ecm_add_tests(
     kdbusservicetest.cpp
     LINK_LIBRARIES Qt6::Test KF6::DBusAddons
+)
+
+ecm_add_tests(
+    dbusinterfacetest.cpp
+    LINK_LIBRARIES Qt6::QuickTest Qt::Qml KF6::DBusAddons
 )

@@ -17,13 +17,19 @@ include(KDECMakeSettings)
 include(KDEGitCommitHooks)
 include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
+include(ECMQmlModule)
+include(FindPkgConfig)
 
 set(REQUIRED_QT_VERSION 6.8.0)
 find_package(Qt6DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+find_package(Qt6Quick ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 find_package(Qt6Gui ${REQUIRED_QT_VERSION} CONFIG) # qtx11extras_p.h
+
+pkg_check_modules(dbus-1 REQUIRED IMPORTED_TARGET dbus-1)
 
 if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
     find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+    find_package(Qt6DBusPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 endif()
 
 include(GenerateExportHeader)
