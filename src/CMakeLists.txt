@@ -1,4 +1,5 @@
 add_subdirectory(tools/kquitapp)
+add_subdirectory(kdbusxml2qml)
 
 add_library(KF6DBusAddons)
 add_library(KF6::DBusAddons ALIAS KF6DBusAddons)
@@ -66,7 +67,10 @@ if(HAVE_X11)
     target_link_libraries(KF6DBusAddons PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
 endif()
 
-target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
+target_include_directories(KF6DBusAddons
+    INTERFACE
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_CURRENT_BINARY_DIR}>"
+        "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
 
 configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdbusaddons.h )
 
@@ -116,3 +120,4 @@ if(BUILD_QCH)
     )
 endif()
 
+add_subdirectory(qml)
