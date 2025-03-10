@@ -1,0 +1,14 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KDBusAddons
+description = KDBusAddons provides convenience classes on top of QtDBus, as well as an API to create KDED modules.
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+outputformats = HTML
+
+depends += qtcore qtgui qttools
+

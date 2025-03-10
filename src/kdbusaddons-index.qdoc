@@ -1,0 +1,20 @@
+/*!
+    \page kdbusaddons-index.html
+    \title KDBusAddons
+
+    KDBusAddons provides convenience classes on top of QtDBus, as well as an API to create KDED modules.
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {KF6} {DBusAddons} {KF6::DBusAddons}
+
+    \section1 API Reference
+
+    \list
+        \li \l{KDBusAddons C++ Classes}
+    \endlist
+*/
