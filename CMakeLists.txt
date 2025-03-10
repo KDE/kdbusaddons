@@ -33,6 +33,7 @@ include(ECMGenerateHeaders)
 include(ECMGenerateExportHeader)
 include(ECMMarkNonGuiExecutable)
 include(ECMAddQch)
+include(ECMGenerateQDoc)
 
 include(ECMPoQmTools)
 

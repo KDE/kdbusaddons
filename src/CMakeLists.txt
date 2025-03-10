@@ -3,6 +3,8 @@ add_subdirectory(tools/kquitapp)
 add_library(KF6DBusAddons)
 add_library(KF6::DBusAddons ALIAS KF6DBusAddons)
 
+ecm_generate_qdoc(KF6DBusAddons kdbusaddons.qdocconf)
+
 set_target_properties(KF6DBusAddons PROPERTIES
     VERSION     ${KDBUSADDONS_VERSION}
     SOVERSION   ${KDBUSADDONS_SOVERSION}
