@@ -32,7 +32,7 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(ECMGenerateExportHeader)
 include(ECMMarkNonGuiExecutable)
-include(ECMAddQch)
+include(ECMGenerateQDoc)
 
 include(ECMPoQmTools)
 
@@ -56,9 +56,6 @@ endif()
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
-
 ecm_set_disabled_deprecation_versions(
     QT 6.9.0
 )
@@ -73,16 +70,6 @@ endif()
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DBusAddons")
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF6DBusAddons_QCH
-        FILE KF6DBusAddonsQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DBusAddonsQchTargets.cmake\")")
-endif()
 
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF6DBusAddonsConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/KF6DBusAddonsConfig.cmake"
