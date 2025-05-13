@@ -1,8 +1,13 @@
-# Eloy Cuadra <ecuadra@eloihr.net>, 2014.
+# Spanish translations for kdbusaddons6_qt.po package.
+# Copyright (C) 2014-2025 This file is copyright:
+# This file is distributed under the same license as the kdbusaddons package.
+#
+# SPDX-FileCopyrightText: 2014, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"PO-Revision-Date: 2014-03-29 17:46+0100\n"
+"Project-Id-Version: kdbusaddons6_qt\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"PO-Revision-Date: 2025-05-12 13:44+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -11,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #: tools/kquitapp/kquitapp.cpp:19
 msgctxt "main|"
@@ -28,7 +33,7 @@ msgstr ""
 #: tools/kquitapp/kquitapp.cpp:24
 msgctxt "main|"
 msgid "Path in the D-Bus interface to use"
-msgstr "Ruta a usar en la interfaz de D-Bus"
+msgstr "Ruta que se va a usar en la interfaz de D-Bus"
 
 #: tools/kquitapp/kquitapp.cpp:27
 msgctxt "main|"
@@ -50,7 +55,6 @@ msgid ""
 "\n"
 "     %2 : %3"
 msgstr ""
-"Ha ocurrido un fallo al salir de la aplicación %1. El error generado ha "
-"sido:\n"
+"No se ha podido salir de la aplicación %1. El error generado ha sido:\n"
 "\n"
 "     %2 : %3"
