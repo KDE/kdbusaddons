@@ -14,3 +14,16 @@ navigation.landingpage = "KDBusAddons"
 
 depends += qtcore qtgui qttools
 
+qhp.projects            = KDBusAddons
+
+qhp.KDBusAddons.file                = kdbusaddons.qhp
+qhp.KDBusAddons.namespace           = org.kde.kdbusaddons.$QT_VERSION_TAG
+qhp.KDBusAddons.virtualFolder       = kdbusaddons
+qhp.KDBusAddons.indexTitle          = KDBusAddons
+qhp.KDBusAddons.indexRoot           =
+
+qhp.KDBusAddons.subprojects         = classes
+qhp.KDBusAddons.subprojects.classes.title = C++ Classes
+qhp.KDBusAddons.subprojects.classes.indexTitle = KDBusAddons C++ Classes
+qhp.KDBusAddons.subprojects.classes.selectors = class fake:headerfile
+qhp.KDBusAddons.subprojects.classes.sortPages = true
