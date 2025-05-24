@@ -27,3 +27,5 @@ qhp.KDBusAddons.subprojects.classes.title = C++ Classes
 qhp.KDBusAddons.subprojects.classes.indexTitle = KDBusAddons C++ Classes
 qhp.KDBusAddons.subprojects.classes.selectors = class fake:headerfile
 qhp.KDBusAddons.subprojects.classes.sortPages = true
+
+tagfile = kdbusaddons.tags
