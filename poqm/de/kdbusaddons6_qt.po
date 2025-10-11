@@ -1,5 +1,5 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2014.
-# Frederik Schwarzer <schwarzer@kde.org>, 2014.
+# SPDX-FileCopyrightText: 2014 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2014 Frederik Schwarzer <schwarzer@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdbusaddons6_qt\n"
