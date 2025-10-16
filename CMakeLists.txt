@@ -18,7 +18,7 @@ include(KDEGitCommitHooks)
 include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
 
-set(REQUIRED_QT_VERSION 6.7.0)
+set(REQUIRED_QT_VERSION 6.8.0)
 find_package(Qt6DBus ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 find_package(Qt6Gui ${REQUIRED_QT_VERSION} CONFIG) # qtx11extras_p.h
 
