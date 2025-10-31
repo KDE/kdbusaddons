@@ -86,11 +86,6 @@ class Registration : public QObject
 {
     Q_OBJECT
 public:
-    enum class Register {
-        RegisterWitoutQueue,
-        RegisterWithQueue,
-    };
-
     Registration(KDBusService *s_, KDBusServicePrivate *d_, KDBusService::StartupOptions options_)
         : s(s_)
         , d(d_)
