@@ -30,6 +30,8 @@
 #include "kdbusservice_adaptor.h"
 #include "kdbusserviceextensions_adaptor.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 class KDBusServicePrivate
 {
 public:
@@ -207,6 +209,23 @@ private:
                 }
             }
 #endif
+
+            if (qgetenv("XDG_SESSION_TYPE") == QByteArrayLiteral("wayland") && qgetenv("XDG_ACTIVATION_TOKEN").isEmpty()) {
+                const auto konsoleService = qEnvironmentVariable("KONSOLE_DBUS_SERVICE");
+                const auto konsoleSession = qEnvironmentVariable("KONSOLE_DBUS_SESSION");
+                const auto konsoleActivationCookie = qEnvironmentVariable("KONSOLE_DBUS_ACTIVATION_COOKIE");
+                if (!konsoleService.isEmpty() && !konsoleSession.isEmpty() && !konsoleActivationCookie.isEmpty()) {
+                    auto message = QDBusMessage::createMethodCall(konsoleService, konsoleSession, u"org.kde.konsole.Session"_s, u"activationToken"_s);
+                    message.setArguments({konsoleActivationCookie});
+
+                    if (const auto tokenAnswer = QDBusConnection::sessionBus().call(message);
+                        tokenAnswer.type() == QDBusMessage::ReplyMessage && !tokenAnswer.arguments().isEmpty()) {
+                        if (const auto token = tokenAnswer.arguments().first().toString(); !token.isEmpty()) {
+                            platform_data.insert(u"activation-token"_s, token.toUtf8());
+                        }
+                    }
+                }
+            }
 
             if (qEnvironmentVariableIsSet("XDG_ACTIVATION_TOKEN")) {
                 platform_data.insert(QStringLiteral("activation-token"), qgetenv("XDG_ACTIVATION_TOKEN"));
