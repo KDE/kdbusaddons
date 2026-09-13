@@ -72,7 +72,7 @@ target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_IN
 
 configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdbusaddons.h )
 
-ecm_generate_headers(KDBusAddons_HEADERS
+ecm_generate_headers(KDBusAddons_CamelCase_HEADERS
   HEADER_NAMES
   KDBusService
   KDEDModule
@@ -84,6 +84,7 @@ install(TARGETS KF6DBusAddons EXPORT KF6DBusAddonsTargets ${KF_INSTALL_TARGETS_D
 
 install(FILES
     ${KDBusAddons_HEADERS}
+    ${KDBusAddons_CamelCase_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdbusaddons_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons COMPONENT Devel
 )
@@ -92,4 +93,17 @@ ecm_qt_install_logging_categories(
     EXPORT KDBUSADDONS
     FILE kdbusaddons.categories
     DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
+
+ecm_add_installed_library_check(KF6DBusAddons
+    PACKAGE_NAME "KF6DBusAddons"
+    PACKAGE_TARGET_NAMESPACE "KF6::"
+)
+
+ecm_installed_library_check_include_strings(KF6DBusAddons
+    HEADERS ${KDBusAddons_CamelCase_HEADERS}
+)
+
+ecm_installed_library_check_version_preprocessor_macros(KF6DBusAddons
+    PREFIX KDBUSADDONS
 )
