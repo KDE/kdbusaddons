@@ -70,6 +70,8 @@ endif()
 
 target_include_directories(KF6DBusAddons INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDBusAddons>")
 
+target_compile_features(KF6DBusAddons INTERFACE cxx_std_20)
+
 configure_file(config-kdbusaddons.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kdbusaddons.h )
 
 ecm_generate_headers(KDBusAddons_CamelCase_HEADERS

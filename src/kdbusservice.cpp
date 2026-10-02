@@ -262,11 +262,18 @@ private:
 };
 
 KDBusService::KDBusService(StartupOptions options, QObject *parent)
+    : KDBusService(options, [](KDBusService *) {}, parent)
+{
+}
+
+KDBusService::KDBusService(StartupOptions options, void (*makeExtraAdaptors)(KDBusService *), QObject *parent)
     : QObject(parent)
     , d(new KDBusServicePrivate)
 {
     new KDBusServiceAdaptor(this);
     new KDBusServiceExtensionsAdaptor(this);
+
+    makeExtraAdaptors(this);
 
     Registration registration(this, d.get(), options);
     registration.run();

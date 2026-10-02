@@ -12,11 +12,13 @@
 
 #include <QObject>
 #include <QUrl>
+#include <concepts>
 #include <memory>
 
 #include <kdbusaddons_export.h>
 
 class KDBusServicePrivate;
+class QDBusAbstractAdaptor;
 
 /*!
  * \class KDBusService
@@ -143,6 +145,17 @@ public:
      * \c org.kde.kuiserver without the PID.
      */
     explicit KDBusService(StartupOptions options = Multiple, QObject *parent = nullptr);
+
+    template<std::derived_from<QDBusAbstractAdaptor>... T>
+    static auto withExtraAdaptors(StartupOptions options, QObject *parent = nullptr)
+    {
+        return KDBusService(
+            options,
+            [](KDBusService *s) {
+                (new T(s), ...);
+            },
+            parent);
+    }
 
     /*!
      * Destroys this object (but does not unregister the application).
@@ -292,6 +305,7 @@ private:
     friend class KDBusServiceExtensionsAdaptor;
 
 private:
+    KDBusService(StartupOptions, void (*)(KDBusService *), QObject *);
     std::unique_ptr<KDBusServicePrivate> const d;
 };
 
