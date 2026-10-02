@@ -39,7 +39,7 @@ public:
     {
     }
 
-    QString generateServiceName()
+    QString generateAppServiceName()
     {
         const QCoreApplication *app = QCoreApplication::instance();
         const QString domain = app->organizationDomain();
@@ -77,6 +77,8 @@ public:
 
     bool registered;
     QString serviceName;
+    // if we registered the s
+    QString secondaryServiceName;
     QString errorMessage;
     int exitValue;
 };
@@ -115,7 +117,7 @@ public:
 private:
     void generateServiceName()
     {
-        d->serviceName = d->generateServiceName();
+        d->serviceName = d->generateAppServiceName();
         objectPath = QLatin1Char('/') + d->serviceName;
         objectPath.replace(QLatin1Char('.'), QLatin1Char('/'));
         objectPath.replace(QLatin1Char('-'), QLatin1Char('_')); // see spec change at https://bugs.freedesktop.org/show_bug.cgi?id=95129
@@ -268,6 +270,16 @@ KDBusService::KDBusService(StartupOptions options, QObject *parent)
 
     Registration registration(this, d.get(), options);
     registration.run();
+    if (d->registered && (options & StartupOption::Multiple)) {
+        const auto appServiceName = d->generateAppServiceName();
+        auto bus = QDBusConnection::sessionBus().interface();
+        connect(bus, &QDBusConnectionInterface::serviceRegistered, this, [appServiceName, this](const QString &service) {
+            if (service == appServiceName) {
+                d->secondaryServiceName = service;
+            }
+        });
+        bus->registerService(appServiceName, QDBusConnectionInterface::QueueService);
+    }
 }
 
 KDBusService::~KDBusService() = default;
@@ -299,6 +311,9 @@ void KDBusService::unregister()
         return;
     }
     bus->unregisterService(d->serviceName);
+    if (!d->secondaryServiceName.isEmpty()) {
+        bus->unregisterService(d->secondaryServiceName);
+    }
 }
 
 void KDBusService::Activate(const QVariantMap &platform_data)

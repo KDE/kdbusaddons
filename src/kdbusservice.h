@@ -12,11 +12,19 @@
 
 #include <QObject>
 #include <QUrl>
+#include <concepts>
 #include <memory>
 
 #include <kdbusaddons_export.h>
 
 class KDBusServicePrivate;
+class QDBusAbstractAdaptor;
+
+template<std::derived_from<QDBusAbstractAdaptor>... T>
+struct ExtraAdaptorT {
+};
+template<typename... T>
+static constexpr ExtraAdaptorT<T...> ExtraAdaptor{};
 
 /*!
  * \class KDBusService
@@ -52,6 +60,8 @@ class KDBusServicePrivate;
  * Note that the D-Bus interface is exported for Multiple-mode applications as
  * well, so it also makes sense for such applications to connect to the signals
  * emitted by this class.
+ * Since version XX registration for the name without the PID is queued also
+ * for Multiple-mode applications, to enable them to be marked as \c DBusActivatable.
  *
  * \note In order to avoid a race, the application should export its objects to
  * D-Bus before allowing the event loop to run (for example, by calling
@@ -131,6 +141,12 @@ public:
      * \c Multiple mode.
      */
     explicit KDBusService(StartupOptions options = Multiple, QObject *parent = nullptr);
+
+    template<typename... T>
+    KDBusService(StartupOptions options, ExtraAdaptorT<T...>, QObject *parent = nullptr)
+        : KDBusService(options, (new T(this), ..., parent))
+    {
+    }
 
     /*!
      * Destroys this object (but does not unregister the application).
