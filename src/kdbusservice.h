@@ -52,6 +52,11 @@ class KDBusServicePrivate;
  * Note that the D-Bus interface is exported for Multiple-mode applications as
  * well, so it also makes sense for such applications to connect to the signals
  * emitted by this class.
+ * Multiple-mode applications can also opt in to additionally register the
+ * name without the PID suffix by setting \c Activatable in addition to \c Multiple.
+ * This allows them to be be marked as \c DBusActivatable. The registration is
+ * queued which means when the instance that owns the non-suffixed name exist
+ * another running instance will take over the name.
  *
  * \note In order to avoid a race, the application should export its objects to
  * D-Bus before allowing the event loop to run (for example, by calling
@@ -104,12 +109,17 @@ public:
      * If exported, it will try first quitting the service calling
      * \c org.qtproject.Qt.QCoreApplication.quit,
      * which is exported by KDBusService by default.
+     * \value [since 6.32] Activatable
+     * In addition to the PID-suffixed name, queue registration of the
+     * application name without the PID. This option only has an effect when
+     * combined with \c Multiple.
      */
     enum StartupOption {
         Unique = 1,
         Multiple = 2,
         NoExitOnFailure = 4,
-        Replace = 8
+        Replace = 8,
+        Activatable = 16,
     };
     Q_ENUM(StartupOption)
     Q_DECLARE_FLAGS(StartupOptions, StartupOption)
@@ -129,6 +139,8 @@ public:
      * The above will make KDBusService register as \c org.kde.kuiserver in \c Unique
      * mode, and \c org.kde.kuiserver-1234 (if the process has PID \c 1234) in
      * \c Multiple mode.
+     * Combining \c Multiple with \c Activatable will queue registration of
+     * \c org.kde.kuiserver without the PID.
      */
     explicit KDBusService(StartupOptions options = Multiple, QObject *parent = nullptr);
 
