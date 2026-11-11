@@ -17,7 +17,6 @@
 #include <QDBusConnectionInterface>
 #include <QDBusReply>
 
-#include "FreeDesktopApplpicationIface.h"
 #include "KDBusServiceIface.h"
 
 #include "config-kdbusaddons.h"
@@ -212,24 +211,13 @@ private:
                 platform_data.insert(QStringLiteral("activation-token"), qgetenv("XDG_ACTIVATION_TOKEN"));
             }
 
-            if (QCoreApplication::arguments().count() > 1) {
-                OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
-                iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
-                QDBusReply<int> reply = iface.CommandLine(QCoreApplication::arguments(), QDir::currentPath(), platform_data);
-                if (reply.isValid()) {
-                    exit(reply.value());
-                } else {
-                    d->errorMessage = reply.error().message();
-                }
+            OrgKdeKDBusServiceInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
+            iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
+            QDBusReply<int> reply = iface.CommandLine(QCoreApplication::arguments(), QDir::currentPath(), platform_data);
+            if (reply.isValid()) {
+                exit(reply.value());
             } else {
-                OrgFreedesktopApplicationInterface iface(d->serviceName, objectPath, QDBusConnection::sessionBus());
-                iface.setTimeout(5 * 60 * 1000); // Application can take time to answer
-                QDBusReply<void> reply = iface.Activate(platform_data);
-                if (reply.isValid()) {
-                    exit(0);
-                } else {
-                    d->errorMessage = reply.error().message();
-                }
+                d->errorMessage = reply.error().message();
             }
 
             // service did not respond in a valid way....

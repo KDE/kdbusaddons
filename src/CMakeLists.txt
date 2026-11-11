@@ -32,7 +32,6 @@ ecm_qt_declare_logging_category(KF6DBusAddons
 )
 
 set(libkdbusaddons_dbus_SRCS)
-qt_add_dbus_interface(libkdbusaddons_dbus_SRCS org.freedesktop.Application.xml FreeDesktopApplpicationIface)
 qt_add_dbus_interface(libkdbusaddons_dbus_SRCS org.kde.KDBusService.xml KDBusServiceIface)
 
 qt_add_dbus_adaptor(libkdbusaddons_dbus_SRCS
